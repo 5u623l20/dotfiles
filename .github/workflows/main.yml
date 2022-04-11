@@ -51,10 +51,7 @@ jobs:
         run: chezmoi data
 
       - name: Print directory tree
-        run: find ~/ -type d -d 1
-          #\( -path Desktop -o -path Documents -o -path Downloads \) -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'
-          #tree ~/ -a -I '.cargo|.composer|*ActionsService|.docker|.dotnet|.ghcup|.nvm|.rustup|factory|perflog|runners|warmup|work'
-
+        run: tree ~/ -a -I '.Azure|.Trash|.aliyun|.android|.azcopy|.azure-devops|.bash_sessions|.cabal|.cargo|.conda|.dotnet|.fastlane|.ghcup|.gradle|.npm|.nvm|.rustup|.sbt|.ssh|.subversion|.vcpkg|.yarn|Desktop|Documents|Downloads|Library|Movies|Music|Pictures|bootstrap|hostedtoolcache|project|runners|target|work'
 #    continue-on-error: true
 #    strategy:
 #      matrix:
