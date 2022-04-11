@@ -36,7 +36,7 @@ jobs:
         run: chezmoi data
 
       - name: Print directory tree
-        run: tree ~/ -I 'factory|perflog'
+        run: tree ~/ -I 'factory|perflog|runners|warmup|work'
 
 #  molecule:
 #    name: Molecule
