@@ -12,11 +12,9 @@
     stripComponents = 1
     refreshPeriod = "168h"
 {{- end }}
-{{- if and (not .ephemeral) (not .headless) (.personal)}}
+{{- if and (not .ephemeral) (not .headless) (.personal) (not .chezmoi.os "darwin")}}
 {{-   $fontDir := "" }}
-{{-   if eq .chezmoi.os "darwin" }}
-{{-     $fontDir = "Library/Fonts" }}
-{{-   else if eq .chezmoi.os "linux" }}
+{{-   if eq .chezmoi.os "linux" }}
 {{-     $fontDir = ".local/share/fonts" }}
 {{-   end }}
 ["{{ $fontDir }}/Fira Code SemiBold Nerd Font Complete Mono.ttf"]
