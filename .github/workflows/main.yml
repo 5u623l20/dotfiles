@@ -1,0 +1,80 @@
+---
+name: CI
+'on':
+  pull_request:
+  push:
+    branches:
+      - master
+  #schedule:
+  #  - cron: "30 7 * * 3"
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+#defaults:
+#  run:
+#    working-directory: ''
+
+jobs:
+  ubuntu20:
+    name: Ubunto-20.04
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Install and initialize chezmoi
+        run: sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply $GITHUB_ACTOR
+
+      - name: Present working directory
+        run: pwd
+
+      - name: Username
+        run: whoami
+
+      - name: Execute chezmoi data
+        run: chezmoi data
+
+      - name: Print directory tree
+        run: tree ~/
+
+#  molecule:
+#    name: Molecule
+#    runs-on: macos-10.15
+#    continue-on-error: true
+#    strategy:
+#      matrix:
+#        distro:
+#          - debian/bullseye64
+#          - debian/buster64
+#          - generic/freebsd12
+#          - generic/freebsd13
+#          - generic/ubuntu1804
+#          - generic/ubuntu2004
+#    steps:
+#      - name: Check out the codebase.
+#        uses: actions/checkout@v2
+#        with:
+#          path: '5u623l20.ntp'
+#
+#      - name: Set up Python 3.
+#        uses: actions/setup-python@v2
+#        with:
+#          python-version: '3.x'
+#
+#      - name: Install test dependencies.
+#        run: pip3 install ansible molecule[vagrant] molecule-vagrant
+#
+#      - name: Cache Vagrant boxes
+#        uses: actions/cache@v2
+#        with:
+#          path: ~/.vagrant.d/boxes
+#          key: ${{ runner.os }}-vagrant-${{ matrix.distro }}
+#          restore-keys: |
+#            ${{ runner.os }}-vagrant-${{ matrix.distro }}
+#
+#      - name: Run Molecule tests.
+#        run: molecule test
+#        env:
+#          PY_COLORS: '1'
+#          ANSIBLE_FORCE_COLOR: '1'
+#          MOLECULE_DISTRO: ${{ matrix.distro }}
+#
