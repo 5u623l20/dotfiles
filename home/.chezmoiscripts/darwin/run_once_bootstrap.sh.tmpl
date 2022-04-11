@@ -16,7 +16,7 @@ tap "homebrew/services"
 brew "tree"
 EOF
 
-{{-   if or (eq $hostname "bofhs-mbp") (eq $hostname "bofhs-mini") -}}
+{{-   if or (eq .hostname "bofhs-mbp") (eq .hostname "bofhs-mini") -}}
 brew bundle --no-lock --file=/dev/stdin <<EOF
 tap "ko1nksm/getoptions"
 brew "ansible"
