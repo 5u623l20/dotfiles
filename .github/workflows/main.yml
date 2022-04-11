@@ -51,7 +51,8 @@ jobs:
         run: chezmoi data
 
       - name: Print directory tree
-        run: tree ~/ -a -I '.cargo|.composer|*ActionsService|.docker|.dotnet|.ghcup|.nvm|.rustup|factory|perflog|runners|warmup|work'
+        run: find ~/ -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'
+          #tree ~/ -a -I '.cargo|.composer|*ActionsService|.docker|.dotnet|.ghcup|.nvm|.rustup|factory|perflog|runners|warmup|work'
 
 #    continue-on-error: true
 #    strategy:
