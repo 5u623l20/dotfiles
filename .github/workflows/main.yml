@@ -29,14 +29,11 @@ jobs:
           cd
           sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply $GITHUB_ACTOR
 
-      - name: Path
-        run: echo $PATH
-
       - name: Execute chezmoi data
         run: chezmoi data
 
       - name: Print directory tree
-        run: tree ~/ -I 'factory|perflog|runners|warmup|work'
+        run: tree ~/ -a -I 'factory|perflog|runners|warmup|work'
 
 #  molecule:
 #    name: Molecule
