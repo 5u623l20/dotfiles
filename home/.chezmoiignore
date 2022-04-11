@@ -1,0 +1,19 @@
+{{- if ne .chezmoi.os "freebsd" }}
+.exrc
+.local/bin/pdr
+{{- end }}
+{{- if (or (eq .chezmoi.os "darwin") (eq .chezmoi.os "freebsd")) -}}
+.bashrc
+.config/bash
+{{- end }}
+{{ if not .personal }}
+.config/kitty
+.config/neomutt
+.mbsyncrc
+{{ end }}
+{{- if not .gotroot }}
+.zsh
+.zshenv
+.zshrc
+.zlogout
+{{- end }}
