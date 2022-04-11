@@ -47,9 +47,6 @@ jobs:
           cd
           sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply $GITHUB_ACTOR
 
-      - name: List installed packages
-        run: brew list -1
-
       - name: Execute chezmoi data
         run: chezmoi data
 
