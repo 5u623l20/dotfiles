@@ -12,7 +12,7 @@
     stripComponents = 1
     refreshPeriod = "168h"
 {{- end }}
-{{- if and (not .ephemeral) (not .headless) (.personal) (not .chezmoi.os "darwin")}}
+{{- if and (not .ephemeral) (not .headless) (.personal) (ne .chezmoi.os "darwin")}}
 {{-   $fontDir := "" }}
 {{-   if eq .chezmoi.os "linux" }}
 {{-     $fontDir = ".local/share/fonts" }}
