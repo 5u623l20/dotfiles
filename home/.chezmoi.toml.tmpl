@@ -28,7 +28,7 @@
 {{-   if eq $hostname "pdr" "rpi4a" -}}
 {{-     $headless = true -}}
 {{-     $gotroot = true -}}
-{{-   else if eq $hostname "bofhs-mbp" -}}
+{{-   else if or (eq $hostname "bofhs-mbp") (eq .chezmoi.os "darwin") -}}
 {{-     $personal = true -}}
 {{-     $gotroot = true -}}
 {{-   else if lookPath "sudo" }}
