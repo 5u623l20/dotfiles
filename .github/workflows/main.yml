@@ -21,14 +21,14 @@ jobs:
     name: Ubunto-20.04
     runs-on: ubuntu-20.04
     steps:
+      - name: Update $PATH
+        run: echo "$HOME/bin" >> $GITHUB_PATH
+
       - name: Install and initialize chezmoi
         run: sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply $GITHUB_ACTOR
 
-      - name: Present working directory
-        run: pwd
-
-      - name: Username
-        run: whoami
+      - name: Path
+        run: echo $PATH
 
       - name: Execute chezmoi data
         run: chezmoi data
