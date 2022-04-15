@@ -33,7 +33,7 @@ jobs:
       - name: Update $PATH
         run: echo "$HOME/bin" >> $GITHUB_PATH
       - name: Install curl
-        if: matrix.pkgbin != ""
+        if: matrix.pkgbin != ''
         run: ${{ matrix.pkgbin }}
       - name: Install and initialize chezmoi
         if: matrix.vagrant == 'no'
