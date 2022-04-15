@@ -5,89 +5,48 @@ name: CI
   push:
     branches:
       - main
-  #schedule:
-  #  - cron: "30 7 * * 3"
 
 concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
 
-#defaults:
-#  run:
-#    working-directory: ''
-
 jobs:
-  ubuntu20:
-    name: Ubunto-20.04
-    runs-on: ubuntu-20.04
+  install-execute:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Ubuntu-20.04
+            platform: ubuntu-20.04
+            vagrant: no
+          - name: Monterey
+            platform: macos-latest
+            vagrant: no
+          - name: Alpine-3.15.4
+            platform: ubuntu-20.04
+            vagrant: no
+            container: alpine:3.15.4
+
+    continue-on-error: true
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.platform }}
+    container: ${{ matrix.container }}
     steps:
       - name: Update $PATH
         run: echo "$HOME/bin" >> $GITHUB_PATH
-
-      - name: Install and initialize chezmoi
+      - name: Install and initialize chezmoi [Hosts]
+        if: matrix.vagrant == 'no'
         run: |
           cd
           sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply $GITHUB_ACTOR
-
-      - name: Execute chezmoi data
-        run: chezmoi data
-
-      - name: Print directory tree
-        run: tree ~/ -a -I '.cargo|.composer|*ActionsService|.docker|.dotnet|.ghcup|.nvm|.rustup|factory|perflog|runners|warmup|work'
-
-  macos:
-    name: Monterey
-    runs-on: macos-11
-    steps:
-      - name: Update $PATH
-        run: echo "$HOME/bin" >> $GITHUB_PATH
-
-      - name: Install and initialize chezmoi
+      - name: Install and initialize chezmoi [Docker]
+        if: matrix.vagrant == 'no'
         run: |
           cd
           sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply $GITHUB_ACTOR
-
       - name: Execute chezmoi data
+        if: matrix.vagrant == 'no'
         run: chezmoi data
-
       - name: Print directory tree
-        run: tree ~/ -a -I '.Azure|.Trash|.aliyun|.android|.azcopy|.azure-devops|.bash_sessions|.cabal|.cargo|.conda|.dotnet|.fastlane|.ghcup|.gradle|.npm|.nvm|.rustup|.sbt|.ssh|.subversion|.vcpkg|.yarn|Desktop|Documents|Downloads|Library|Movies|Music|Pictures|bootstrap|hostedtoolcache|project|runners|target|work'
-#    continue-on-error: true
-#    strategy:
-#      matrix:
-#        distro:
-#          - debian/bullseye64
-#          - debian/buster64
-#          - generic/freebsd12
-#          - generic/freebsd13
-#          - generic/ubuntu1804
-#          - generic/ubuntu2004
-#    steps:
-#      - name: Check out the codebase.
-#        uses: actions/checkout@v2
-#        with:
-#          path: '5u623l20.ntp'
-#
-#      - name: Set up Python 3.
-#        uses: actions/setup-python@v2
-#        with:
-#          python-version: '3.x'
-#
-#      - name: Install test dependencies.
-#        run: pip3 install ansible molecule[vagrant] molecule-vagrant
-#
-#      - name: Cache Vagrant boxes
-#        uses: actions/cache@v2
-#        with:
-#          path: ~/.vagrant.d/boxes
-#          key: ${{ runner.os }}-vagrant-${{ matrix.distro }}
-#          restore-keys: |
-#            ${{ runner.os }}-vagrant-${{ matrix.distro }}
-#
-#      - name: Run Molecule tests.
-#        run: molecule test
-#        env:
-#          PY_COLORS: '1'
-#          ANSIBLE_FORCE_COLOR: '1'
-#          MOLECULE_DISTRO: ${{ matrix.distro }}
-#
+        if: matrix.vagrant == 'no'
+        run: tree ~/ -a -I '.Azure|.Trash|.aliyun|.android|.azcopy|.azure-devops|.bash_sessions|.cabal|.cargo|.conda|.dotnet|.fastlane|.ghcup|.gradle|.npm|.nvm|.rustup|.sbt|.ssh|.subversion|.vcpkg|.yarn|Desktop|Documents|Downloads|Library|Movies|Music|Pictures|bootstrap|hostedtoolcache|project|runners|target|work|.composer|*ActionsService|.docker|.dotnet|.ghcup|.nvm|.rustup|factory|perflog|warmup'
