@@ -19,13 +19,11 @@ jobs:
           - name: Ubuntu-20.04
             platform: ubuntu-20.04
             vagrant: no
-          - name: Monterey
-            platform: macos-latest
-            vagrant: no
           - name: Alpine-3.15.4
             platform: ubuntu-20.04
             vagrant: no
             container: alpine:3.15.4
+            pkgbin: "apk add curl"
 
     continue-on-error: true
     name: ${{ matrix.name }}
@@ -34,12 +32,10 @@ jobs:
     steps:
       - name: Update $PATH
         run: echo "$HOME/bin" >> $GITHUB_PATH
-      - name: Install and initialize chezmoi [Hosts]
-        if: matrix.vagrant == 'no'
-        run: |
-          cd
-          sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply $GITHUB_ACTOR
-      - name: Install and initialize chezmoi [Docker]
+      - name: Install curl
+        if: matrix.pkgbin != ""
+        run: ${{ matrix.pkgbin }}
+      - name: Install and initialize chezmoi
         if: matrix.vagrant == 'no'
         run: |
           cd
