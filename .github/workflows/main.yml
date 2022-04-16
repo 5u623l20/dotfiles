@@ -26,6 +26,46 @@ jobs:
             container: alpine:3.15.4
             pkgbin: "apk add tree"
             fetchbin: "wget -qO- "
+          - name: AmazonLinux-2
+            platform: ubuntu-20.04
+            vagrant: no
+            container: amazonlinux:2
+            fetchbin: "curl -fsLS "
+          - name: ArchLinux
+            platform: ubuntu-20.04
+            vagrant: no
+            container: archlinux
+            fetchbin: "curl -fsLS "
+          - name: CentOS7
+            platform: ubuntu-20.04
+            vagrant: no
+            container: centos:7
+            fetchbin: "curl -fsLS "
+          - name: Debian11
+            platform: ubuntu-20.04
+            vagrant: no
+            container: debian:11
+            fetchbin: "curl -fsLS "
+          - name: Fedora34
+            platform: ubuntu-20.04
+            vagrant: no
+            container: fedora:34
+            fetchbin: "curl -fsLS "
+          - name: OpenSuse-Tumbleweed
+            platform: ubuntu-20.04
+            vagrant: no
+            container: opensuse/tumbleweed
+            fetchbin: "curl -fsLS "
+          - name: RedHat8
+            platform: ubuntu-20.04
+            vagrant: no
+            container: redhat/ubi8-minimal
+            fetchbin: "curl -fsLS "
+          - name: RockyLinux8
+            platform: ubuntu-20.04
+            vagrant: no
+            container: rockylinux:8
+            fetchbin: "curl -fsLS "
 
     continue-on-error: true
     name: ${{ matrix.name }}
