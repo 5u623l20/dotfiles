@@ -36,7 +36,7 @@ jobs:
             platform: ubuntu-20.04
             vagrant: no
             container: archlinux
-            pkgbin: "pacman -S tree"
+            pkgbin: "pacman -Sy tree"
             fetchbin: "curl -fsLS "
           - name: CentOS7
             platform: ubuntu-20.04
@@ -48,7 +48,8 @@ jobs:
             platform: ubuntu-20.04
             vagrant: no
             container: debian:11
-            fetchbin: "wget -qO- "
+            pkgbin: "apt install -y curl"
+            fetchbin: "curl -fsLS "
           - name: Fedora34
             platform: ubuntu-20.04
             vagrant: no
@@ -59,13 +60,13 @@ jobs:
             platform: ubuntu-20.04
             vagrant: no
             container: redhat/ubi8-minimal
-            pkgbin: "yum install -y tar"
+            pkgbin: "dnf install -y tar"
             fetchbin: "curl -fsLS "
           - name: RockyLinux8
             platform: ubuntu-20.04
             vagrant: no
             container: rockylinux:8
-            pkgbin: "yum install -y tar"
+            pkgbin: "yum install -y tar tree"
             fetchbin: "curl -fsLS "
 
     continue-on-error: true
