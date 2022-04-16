@@ -62,6 +62,7 @@ readonly PSUEDONAME
 readonly REV
 
 if [ ! "$(command -v chezmoi)" ]; then
+    echo "chezmoi could not be found"
     bin_dir="$HOME/bin"
 	CHEZMOI_BIN="$bin_dir/chezmoi"
     case "${OS}" in
@@ -105,6 +106,7 @@ if [ ! "$(command -v chezmoi)" ]; then
 			;;
 	esac
 else
+    echo "chezmoi was found"
 	CHEZMOI_BIN=chezmoi
     ${CHEZMOI_BIN} upgrade
     ${CHEZMOI_BIN} update
