@@ -30,41 +30,42 @@ jobs:
             platform: ubuntu-20.04
             vagrant: no
             container: amazonlinux:2
+            pkgbin: "yum install -y tar"
             fetchbin: "curl -fsLS "
           - name: ArchLinux
             platform: ubuntu-20.04
             vagrant: no
             container: archlinux
+            pkgbin: "pacman -S tree"
             fetchbin: "curl -fsLS "
           - name: CentOS7
             platform: ubuntu-20.04
             vagrant: no
             container: centos:7
+            pkgbin: "yum install -y tree"
             fetchbin: "curl -fsLS "
           - name: Debian11
             platform: ubuntu-20.04
             vagrant: no
             container: debian:11
-            fetchbin: "curl -fsLS "
+            fetchbin: "wget -qO- "
           - name: Fedora34
             platform: ubuntu-20.04
             vagrant: no
             container: fedora:34
-            fetchbin: "curl -fsLS "
-          - name: OpenSuse-Tumbleweed
-            platform: ubuntu-20.04
-            vagrant: no
-            container: opensuse/tumbleweed
+            pkgbin: "dnf install -y tree"
             fetchbin: "curl -fsLS "
           - name: RedHat8
             platform: ubuntu-20.04
             vagrant: no
             container: redhat/ubi8-minimal
+            pkgbin: "yum install -y tar"
             fetchbin: "curl -fsLS "
           - name: RockyLinux8
             platform: ubuntu-20.04
             vagrant: no
             container: rockylinux:8
+            pkgbin: "yum install -y tar"
             fetchbin: "curl -fsLS "
 
     continue-on-error: true
