@@ -26,17 +26,11 @@ jobs:
             container: alpine:3.15.4
             pkgbin: "apk add tree"
             fetchbin: "wget -qO- "
-          - name: AmazonLinux-2
-            platform: ubuntu-20.04
-            vagrant: no
-            container: amazonlinux:2
-            pkgbin: "yum install -y tar"
-            fetchbin: "curl -fsLS "
           - name: ArchLinux
             platform: ubuntu-20.04
             vagrant: no
             container: archlinux
-            pkgbin: "pacman -Sy tree"
+            pkgbin: "pacman -Sy --noconfirm tree"
             fetchbin: "curl -fsLS "
           - name: CentOS7
             platform: ubuntu-20.04
@@ -48,7 +42,7 @@ jobs:
             platform: ubuntu-20.04
             vagrant: no
             container: debian:11
-            pkgbin: "apt install -y curl"
+            pkgbin: "apt-get update && apt-get install -y curl"
             fetchbin: "curl -fsLS "
           - name: Fedora34
             platform: ubuntu-20.04
@@ -60,7 +54,7 @@ jobs:
             platform: ubuntu-20.04
             vagrant: no
             container: redhat/ubi8-minimal
-            pkgbin: "dnf install -y tar"
+            pkgbin: "yum install -y tar"
             fetchbin: "curl -fsLS "
           - name: RockyLinux8
             platform: ubuntu-20.04
