@@ -62,7 +62,6 @@ readonly PSUEDONAME
 readonly REV
 
 if [ ! "$(command -v chezmoi)" ]; then
-    echo "chezmoi could not be found"
     bin_dir="$HOME/bin"
 	CHEZMOI_BIN="$bin_dir/chezmoi"
     case "${OS}" in
@@ -92,7 +91,6 @@ if [ ! "$(command -v chezmoi)" ]; then
             ${CHEZMOI_BIN} init -a 5u623l20
             ;;
         *)
-            echo "I am ${OS}"
 			if [ "$(command -v curl)" ]; then
 				sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply $GITHUB_USERNAME
                 echo "Installed"
@@ -106,7 +104,6 @@ if [ ! "$(command -v chezmoi)" ]; then
 			;;
 	esac
 else
-    echo "chezmoi was found"
 	CHEZMOI_BIN=chezmoi
     ${CHEZMOI_BIN} upgrade
     ${CHEZMOI_BIN} update
