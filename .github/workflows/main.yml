@@ -41,7 +41,7 @@ jobs:
         if: matrix.vagrant == 'no'
         run: |
           cd
-          sh -c "$(${{ matrix.fetchbin }} https://raw.githubusercontent.com/5u623l20/dotfiles/main/install)"
+          sh -c "$(${{ matrix.fetchbin }}https://raw.githubusercontent.com/5u623l20/dotfiles/main/install)"
       - name: Execute chezmoi data
         if: matrix.vagrant == 'no'
         run: chezmoi data

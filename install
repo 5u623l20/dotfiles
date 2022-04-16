@@ -93,8 +93,10 @@ if [ ! "$(command -v chezmoi)" ]; then
         "*")
 			if [ "$(command -v curl)" ]; then
 				sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply $GITHUB_USERNAME
+                echo "Installed"
 			elif [ "$(command -v wget)" ]; then
 				sh -c "$(wget -qO- chezmoi.io/get)" -- init --apply $GITHUB_USERNAME
+                echo "Installed"
 			else
 				echo "To install chezmoi, you must have curl or wget installed." >&2
 				exit 1
