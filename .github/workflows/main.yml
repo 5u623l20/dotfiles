@@ -42,19 +42,13 @@ jobs:
             platform: ubuntu-20.04
             vagrant: no
             container: debian:11
-            pkgbin: "apt-get update && apt-get install -y curl"
+            pkgbin: "apt-get update && apt-get install -y curl tree"
             fetchbin: "curl -fsLS "
           - name: Fedora34
             platform: ubuntu-20.04
             vagrant: no
             container: fedora:34
             pkgbin: "dnf install -y tree"
-            fetchbin: "curl -fsLS "
-          - name: RedHat8
-            platform: ubuntu-20.04
-            vagrant: no
-            container: redhat/ubi8-minimal
-            pkgbin: "yum install -y tar"
             fetchbin: "curl -fsLS "
           - name: RockyLinux8
             platform: ubuntu-20.04

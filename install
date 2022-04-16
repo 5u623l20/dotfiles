@@ -3,13 +3,13 @@
 set -e # -e: exit on error
 
 OS=`uname`
+ARCH=`uname -p`
 CHEZMOI_VERSION="2.15.1"
 GITHUB_USERNAME="5u623l20"
 
 case "${OS}" in
   "SunOS")
         OS=Solaris
-        ARCH=`uname -p`
         OSSTR="${OS} ${REV}(${ARCH} `uname -v`)"
         ;;
   "AIX")
@@ -17,7 +17,6 @@ case "${OS}" in
         ;;
   "FreeBSD")
         OS=FreeBSD
-        ARCH=`uname -p`
         ;;
   "Darwin")
         OS=MacOS
@@ -26,29 +25,13 @@ case "${OS}" in
         if [ -f /etc/os-release ] ; then
             . /etc/os-release
             OS=$ID
-            echo "This dist has os-release"
-        elif [ -f /etc/debian_version ] ; then
-            DistroBasedOn='Debian'
-            if [ -f /etc/lsb-release ] ; then
-                DIST=`cat /etc/lsb-release | grep '^DISTRIB_ID' | awk -F=  '{ print $2 }'`
-                PSUEDONAME=`cat /etc/lsb-release | grep '^DISTRIB_CODENAME' | awk -F=  '{ print $2 }'`
-                REV=`cat /etc/lsb-release | grep '^DISTRIB_RELEASE' | awk -F=  '{ print $2 }'`
-                echo "This dist has lsb-release"
-            fi
-            echo "This dist has debian-version"
         fi
         ;;
   "*")
         ;;
 esac
 
-echo $OS
-echo $ARCH
 readonly OS
-readonly DIST
-readonly DistroBasedOn
-readonly PSUEDONAME
-readonly REV
 
 if [ ! "$(command -v chezmoi)" ]; then
     bin_dir="$HOME/bin"
