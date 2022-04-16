@@ -1,0 +1,108 @@
+#!/bin/sh
+
+set -e # -e: exit on error
+
+OS=`uname`
+CHEZMOI_VERSION="2.15.1"
+GITHUB_USERNAME="5u623l20"
+
+case "${OS}" in
+  "SunOS")
+        OS=Solaris
+        ARCH=`uname -p`
+        OSSTR="${OS} ${REV}(${ARCH} `uname -v`)"
+        ;;
+  "AIX")
+        OS=AIX
+        ;;
+  "FreeBSD")
+        OS=FreeBSD
+        ARCH=`uname -p`
+        ;;
+  "Darwin")
+        OS=MacOS
+        ;;
+  "Linux")
+        if [ -f /etc/os-release ] ; then
+            . /etc/os-release
+            OS=$ID
+            echo "This dist has os-release"
+        elif [ -f /etc/redhat-release ] ; then
+            DistroBasedOn='RedHat'
+            DIST=`cat /etc/redhat-release |sed s/\ release.*//`
+            PSUEDONAME=`cat /etc/redhat-release | sed s/.*\(// | sed s/\)//`
+            REV=`cat /etc/redhat-release | sed s/.*release\ // | sed s/\ .*//`
+            echo "This dist has redhat-release"
+        elif [ -f /etc/SuSE-release ] ; then
+            DistroBasedOn='SuSe'
+            PSUEDONAME=`cat /etc/SuSE-release | tr "\n" ' '| sed s/VERSION.*//`
+            REV=`cat /etc/SuSE-release | tr "\n" ' ' | sed s/.*=\ //`
+            echo "This dist has SuSe-release"
+        elif [ -f /etc/debian_version ] ; then
+            DistroBasedOn='Debian'
+            if [ -f /etc/lsb-release ] ; then
+                DIST=`cat /etc/lsb-release | grep '^DISTRIB_ID' | awk -F=  '{ print $2 }'`
+                PSUEDONAME=`cat /etc/lsb-release | grep '^DISTRIB_CODENAME' | awk -F=  '{ print $2 }'`
+                REV=`cat /etc/lsb-release | grep '^DISTRIB_RELEASE' | awk -F=  '{ print $2 }'`
+                echo "This dist has lsb-release"
+            fi
+            echo "This dist has debian-version"
+        fi
+        ;;
+  "*")
+        ;;
+esac
+
+echo $OS
+echo $ARCH
+readonly OS
+readonly DIST
+readonly DistroBasedOn
+readonly PSUEDONAME
+readonly REV
+
+if [ ! "$(command -v chezmoi)" ]; then
+    bin_dir="$HOME/bin"
+	CHEZMOI_BIN="$bin_dir/chezmoi"
+    case "${OS}" in
+        "FreeBSD")
+            if [ ! -d "${bin_dir}" ]; then
+                mkdir -p "${bin_dir}"
+            fi
+            TMPDIR=$(mktemp -d)
+            CHEZMOI_FILE_NAME="chezmoi_${CHEZMOI_VERSION}_freebsd_${ARCH}.tar.gz"
+            CHEZMOI_URL="https://github.com/twpayne/chezmoi/releases/download/v${CHEZMOI_VERSION}/${CHEZMOI_FILE_NAME}"
+            CHECKSUMS="chezmoi_${CHEZMOI_VERSION}_checksums.txt"
+            CHECKSUMS_URL="https://github.com/twpayne/chezmoi/releases/download/v${CHEZMOI_VERSION}/${CHECKSUMS}"
+            fetch -o "${TMPDIR}/${CHECKSUMS}" "${CHECKSUMS_URL}" || exit 1
+            fetch -o "${TMPDIR}/${CHEZMOI_FILE_NAME}" "${CHEZMOI_URL}" || exit 1
+            HASH_GOT=$(sha256 -q "${TMPDIR}/${CHEZMOI_FILE_NAME}" 2>/dev/null) || return 1
+            HASH_WANT=$(grep "${CHEZMOI_FILE_NAME}" "${TMPDIR}/${CHECKSUMS}" 2>/dev/null | tr '\t' ' ' | cut -d ' ' -f 1)
+            if [ -z "${HASH_WANT}" ]; then
+                echo "Unable to find checksum for ${CHEZMOI_FILE_NAME} in ${CHECKSUMS}"
+                return 1
+            fi
+            if [ "${HASH_WANT}" != "${HASH_GOT}" ]; then
+                echo "Checksum for ${CHEZMOI_FILE_NAME} did not verify ${HASH_WANT} vs ${HASH_GOT}"
+                return 1
+            fi
+            cd ${TMPDIR}
+            tar -zxvf ${TMPDIR}/${CHEZMOI_FILE_NAME} -C ${bin_dir} chezmoi
+            ${CHEZMOI_BIN} init -a 5u623l20
+            ;;
+        "*")
+			if [ "$(command -v curl)" ]; then
+				sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply $GITHUB_USERNAME
+			elif [ "$(command -v wget)" ]; then
+				sh -c "$(wget -qO- chezmoi.io/get)" -- init --apply $GITHUB_USERNAME
+			else
+				echo "To install chezmoi, you must have curl or wget installed." >&2
+				exit 1
+			fi
+			;;
+	esac
+else
+	CHEZMOI_BIN=chezmoi
+    ${CHEZMOI_BIN} upgrade
+    ${CHEZMOI_BIN} update
+fi
