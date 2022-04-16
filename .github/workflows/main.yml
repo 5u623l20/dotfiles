@@ -19,11 +19,13 @@ jobs:
           - name: Ubuntu-20.04
             platform: ubuntu-20.04
             vagrant: no
+            fetchbin: "curl -fsLS "
           - name: Alpine-3.15.4
             platform: ubuntu-20.04
             vagrant: no
             container: alpine:3.15.4
-            pkgbin: "apk add curl tree"
+            pkgbin: "apk add tree"
+            fetchbin: "wget -qO- "
 
     continue-on-error: true
     name: ${{ matrix.name }}
@@ -39,7 +41,7 @@ jobs:
         if: matrix.vagrant == 'no'
         run: |
           cd
-          sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply $GITHUB_ACTOR
+          sh -c "$(${{ matrix.fetchbin }} https://raw.githubusercontent.com/5u623l20/dotfiles/main/install)"
       - name: Execute chezmoi data
         if: matrix.vagrant == 'no'
         run: chezmoi data
