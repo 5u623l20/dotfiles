@@ -90,7 +90,8 @@ if [ ! "$(command -v chezmoi)" ]; then
             tar -zxvf ${TMPDIR}/${CHEZMOI_FILE_NAME} -C ${bin_dir} chezmoi
             ${CHEZMOI_BIN} init -a 5u623l20
             ;;
-        "*")
+        *)
+            echo "I am ${OS}"
 			if [ "$(command -v curl)" ]; then
 				sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply $GITHUB_USERNAME
                 echo "Installed"
