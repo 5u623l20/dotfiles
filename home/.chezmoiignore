@@ -1,6 +1,7 @@
 {{- if ne .chezmoi.os "freebsd" }}
 .exrc
 .local/bin/pdr
+.profile
 {{- end }}
 {{- if (or (eq .chezmoi.os "darwin") (eq .chezmoi.os "freebsd")) -}}
 .bashrc
