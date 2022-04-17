@@ -1,0 +1,41 @@
+# vim: set ft=sh :
+
+# default file permissions -rw------- / drwx------
+umask 077
+
+set -o vi
+
+# some useful aliases
+alias bye="echo 'bye'; exit"
+alias cls='clear'
+alias df="df -h"
+alias g='egrep -i'
+alias h='fc -l'
+alias j=jobs
+alias l='ls -l'
+alias ll='ls -laFo'
+alias m="$PAGER"
+alias gcc='gcc -Wall -W -Wpointer-arith -Wbad-function-cast -std=c99'
+alias gcc_debug='gcc -ggdb3'
+alias gcc_optimize='gcc -fforce-mem -fforce-addr -finline-functions \
+                           -fstrength-reduce  -floop-optimize -O3'
+alias gcc_wall= 'gcc -Wall -Wpointer-arith -Wcast-qual -Wcast-align \
+                   -Wconversion -Waggregate-return -Wstrict-prototypes \
+                   -Wmissing-prototypes -Wmissing-declarations \
+                   -Wredundant-decls -Winline -Wnested-externs -std=c99 \
+                   -march=i686 -pipe'
+alias cp='cp -ivRL'
+alias la='ls -aFG'
+alias ll='ls -laFhHo'
+alias ls='ls -FGH'
+alias mute='mixer pcm 0:0'
+alias mv='mv -v'
+alias pgr="$PAGER"
+alias rm='rm -d'
+alias rmdir='rmdir -v'
+
+# set prompt: ``username@hostname:directory $ '' 
+PS1="\u@\h:\w \$ "
+
+# search path for cd(1)
+CDPATH=:$HOME

@@ -2,6 +2,7 @@
 .exrc
 .local/bin/pdr
 .profile
+.shrc
 {{- end }}
 {{- if (or (eq .chezmoi.os "darwin") (eq .chezmoi.os "freebsd")) -}}
 .bashrc
