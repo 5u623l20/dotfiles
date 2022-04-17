@@ -28,19 +28,19 @@ if [ -x /usr/local/bin/vim ]; then
     alias e='/usr/local/bin/vim'
     if [ -x /usr/local/bin/view ]; then
         alias v='/usr/local/bin/view'
-    fi
-elif [ -x /usr/bin/vim ]; then
-    EDITOR='/usr/bin/vim'; export EDITOR
-    VISUAL='/usr/bin/vim'; export VISUAL
-    alias e='/usr/bin/vim'
-    if [ -x /usr/bin/view ]; then
-        alias v='/usr/bin/view'
+    elif [ -x /usr/local/bin/bat ]; then
+        alias v='/usr/local/bin/bat'
     fi
 elif [ -x /usr/bin/vi ]; then
     EDITOR='/usr/bin/vi'; export EDITOR
     VISUAL='/usr/bin/vi'; export VISUAL
     # on some systems where vim is not installed, I tend to type vim
     alias e='/usr/bin/vi'
+    if [ -x /usr/local/bin/bat ]; then
+        alias v='/usr/local/bin/bat'
+    elif [ -x /usr/bin/view ]; then
+        alias v='/usr/bin/view'
+    fi
 fi
 FCEDIT=$EDITOR;  export FCEDIT
 HISTEDIT=$EDITOR; export HISTEDIT
