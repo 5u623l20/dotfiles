@@ -917,7 +917,6 @@ complete service \
   p@1@'`service -l`'@
 unset commands c p
 
-# Some common completions
 complete gpart	'p/1/(add backup bootcode commit create delete destroy modify recover resize restore set show undo unset)/' \
         'n/add/x:-t type [-a alignment] [-b start] [-s size] [-i index] [-l label] -f flags geom/' \
         'n/backup/x:geom/' \
@@ -960,6 +959,56 @@ complete scp	"c,*:/,F:/," \
         'c/*@/$hosts/:/'
 complete sysctl 'n/*/`sysctl -Na`/'
 complete tmux	'n/*/(attach detach has kill-server kill-session lsc lscm ls lockc locks new refresh rename showmsgs source start suspendc switchc)/'
+
+set zpool_cmd =	(create destroy add remove list iostat status\
+        online offline clear attach detach replace scrub\
+        import export upgrade history get set)
+
+set zfs_cmd =	(create destroy snapshot rollback clone promote\
+        rename list set get inherit mount unmount\
+        share unshare send receive)
+
+complete zpool \
+        'p/1/$zpool_cmd/'\
+        'n/destroy/`zpool list -H -o name`/'\
+        'n/add/`zpool list -H -o name`/'\
+        'n/remove/`zpool list -H -o name`/'\
+        'n/list/`zpool list -H -o name`/'\
+        'n/iostat/`zpool list -H -o name`/'\
+        'n/status/`zpool list -H -o name`/'\
+        'n/online/`zpool list -H -o name`/'\
+        'n/offline/`zpool list -H -o name`/'\
+        'n/clear/`zpool list -H -o name`/'\
+        'n/attach/`zpool list -H -o name`/'\
+        'n/detach/`zpool list -H -o name`/'\
+        'n/replace/`zpool list -H -o name`/'\
+        'n/scrub/`zpool list -H -o name`/'\
+        'n/import/`zpool list -H -o name`/'\
+        'n/export/`zpool list -H -o name`/'\
+        'n/upgrade/`zpool list -H -o name`/'\
+        'n/history/`zpool list -H -o name`/'\
+        'N/get/`zpool list -H -o name`/'\
+        'N/set/`zpool list -H -o name`/'
+
+complete zfs \
+        'p/1/$zfs_cmd/'\
+        'n/create/`zfs list -H -o name`/'\
+        'n/destroy/`zfs list -H -o name`/'\
+        'n/snapshot/`zfs list -H -o name`/'\
+        'n/rollback/`zfs list -H -t snapshot -o name`/'\
+        'n/clone/`zfs list -H -t snapshot -o name`/'\
+        'n/promote/`zfs list -H -o name`/'\
+        'n/rename/`zfs list -H -o name`/'\
+        'n/list/`zfs list -H -o name`/'\
+        'N/set/`zfs list -H -o name`/'\
+        'N/get/`zfs list -H -o name`/'\
+        'n/inherit/`zfs list -H -o name`/'\
+        'n/mount/`zfs list -H -o name`/'\
+        'n/unmount/`zfs list -H -o name`/'\
+        'n/share/`zfs list -H -o name`/'\
+        'n/unshare/`zfs list -H -o name`/'\
+        'n/send/`zfs list -H -t snapshot -o name`/'\
+        'n/receive/`zfs list -H -o name`/'
 
 if ( $?_unset_noglob ) unset noglob _unset_noglob
 
