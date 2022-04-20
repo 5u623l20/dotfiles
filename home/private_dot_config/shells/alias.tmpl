@@ -1,3 +1,6 @@
+###############################################################################
+#################################COMMON ALIASES################################
+###############################################################################
 bye() {
     echo 'bye'
     exit
@@ -5,6 +8,11 @@ bye() {
 cls () { clear }
 cp () { cp -ivRL "$@" }
 df () { df -h }
+if command_exists emacs; then
+emacs() {
+    emacs -nw "$@"
+}
+fi
 g () { egrep -i "$1" }
 gcc () { gcc -Wall -W -Wpointer-arith -Wbad-function-cast -std=c99 "$@" }
 gcc_debug() { gcc -ggdb3 "$@" }
@@ -27,34 +35,18 @@ mv() { mv -v "$@" }
 pgr() { "$PAGER" }
 rm() { rm -d "$@" }
 rmdir() { rmdir -v "$@" }
+v() {
+    if command_exists batcat; then
+        batcat --theme OneHalfDark "$@"
+    elif command_exists bat; then
+        bat --theme OneHalfDark "$@"
+    else
+        cat "$@"
+    fi
+}
 
 case ${SHELL##*/} in
     zsh|bash)
-###############################################################################
-#################################COMMON ALIASES################################
-###############################################################################
-#        if (( $+commands[batcat] )); then
-#            alias cat=batcat --theme OneHalfDark
-#        elif (( $+commands[bat] )); then
-#            alias cat=bat --theme OneHalfDark
-#        fi
-#
-###############################################################################
-#################################EDITOR ALIASES################################
-###############################################################################
-#        if (( $+commands[nvim] )); then
-#            alias vi=$(command -v nvim)
-#            alias e=$(command -v nvim)
-#        elif (( $+commands[vim] )); then
-#            alias vi=$(command -v vim)
-#            alias e=$(command -v vim)
-#        else
-#            alias e=$(command -v vi)
-#        fi
-#        if (( $+commands[emacs] )); then
-#            alias emacs="emacs -nw"
-#        fi
-#
 ###############################################################################
 #################################NMAP ALIASES##################################
 ###############################################################################
@@ -868,7 +860,7 @@ case ${SHELL##*/} in
 #          sort -n | \
 #          awk '{print $1" "$2}'
 #        }
-        {{ end -}}
+        {{ end }}
         ;;
     csh)
         ;;
