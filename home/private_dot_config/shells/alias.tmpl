@@ -1,0 +1,889 @@
+bye() {
+    echo 'bye'
+    exit
+}
+cls () { clear }
+cp () { cp -ivRL "$@" }
+df () { df -h }
+g () { egrep -i "$1" }
+gcc () { gcc -Wall -W -Wpointer-arith -Wbad-function-cast -std=c99 "$@" }
+gcc_debug() { gcc -ggdb3 "$@" }
+gcc_optimize() { gcc -fforce-mem -fforce-addr -finline-functions \
+    -fstrength-reduce  -floop-optimize -O3 "$@" }
+gcc_wall() { gcc -Wall -Wpointer-arith -Wcast-qual -Wcast-align \
+    -Wconversion -Waggregate-return -Wstrict-prototypes \
+    -Wmissing-prototypes -Wmissing-declarations \
+    -Wredundant-decls -Winline -Wnested-externs -std=c99 \
+    -march=i686 -pipe "$@" }
+h() { fc -l }
+j() { jobs }
+l() { ls -l "$@" }
+la() { ls -aFG "$@" }
+ll() { ls -laFhHo "$@" }
+ls() { ls -FGH "$@" }
+m() { "$PAGER" }
+mute() { mixer pcm 0:0 }
+mv() { mv -v "$@" }
+pgr() { "$PAGER" }
+rm() { rm -d "$@" }
+rmdir() { rmdir -v "$@" }
+
+case ${SHELL##*/} in
+    zsh|bash)
+################################################################################
+##################################COMMON ALIASES################################
+################################################################################
+#        if (( $+commands[batcat] )); then
+#            alias cat=batcat --theme OneHalfDark
+#        elif (( $+commands[bat] )); then
+#            alias cat=bat --theme OneHalfDark
+#        fi
+#
+################################################################################
+##################################EDITOR ALIASES################################
+################################################################################
+#        if (( $+commands[nvim] )); then
+#            alias vi=$(command -v nvim)
+#            alias e=$(command -v nvim)
+#        elif (( $+commands[vim] )); then
+#            alias vi=$(command -v vim)
+#            alias e=$(command -v vim)
+#        else
+#            alias e=$(command -v vi)
+#        fi
+#        if (( $+commands[emacs] )); then
+#            alias emacs="emacs -nw"
+#        fi
+#
+################################################################################
+##################################NMAP ALIASES##################################
+################################################################################
+## Nmap options are:
+##  -sS - TCP SYN scan
+##  -v - verbose
+##  -T1 - timing of scan. Options are paranoid (0), sneaky (1), polite (2), normal (3), aggressive (4), and insane (5)
+##  -sF - FIN scan (can sneak through non-stateful firewalls)
+##  -PE - ICMP echo discovery probe
+##  -PP - timestamp discovery probe
+##  -PY - SCTP init ping
+##  -g - use given number as source port
+##  -A - enable OS detection, version detection, script scanning, and traceroute (aggressive)
+##  -O - enable OS detection
+##  -sA - TCP ACK scan
+##  -F - fast scan
+##  --script=vuln - also access vulnerabilities in target
+#
+#        if (( $+commands[nmap] )); then
+#            alias nmap_open_ports="nmap --open"
+#            alias nmap_list_interfaces="nmap --iflist"
+#            alias nmap_slow="${SUDO}nmap -sS -v -T1"
+#            alias nmap_fin="${SUDO}nmap -sF -v"
+#            alias nmap_full="${SUDO}nmap -sS -T4 -PE -PP -PS80,443 -PY -g 53 -A -p1-65535 -v"
+#            alias nmap_check_for_firewall="${SUDO}nmap -sA -p1-65535 -v -T4"
+#            alias nmap_ping_through_firewall="nmap -PS -PA"
+#            alias nmap_fast="nmap -F -T5 --version-light --top-ports 300"
+#            alias nmap_detect_versions="${SUDO}nmap -sV -p1-65535 -O --osscan-guess -T4 -Pn"
+#            alias nmap_check_for_vulns="nmap --script=vuln"
+#            alias nmap_full_udp="${SUDO}nmap -sS -sU -T4 -A -v -PE -PS22,25,80 -PA21,23,80,443,3389 "
+#            alias nmap_traceroute="${SUDO}nmap -sP -PE -PS22,25,80 -PA21,23,80,3389 -PU -PO --traceroute "
+#            alias nmap_full_with_scripts="${SUDO}nmap -sS -sU -T4 -A -v -PE -PP -PS21,22,23,25,80,113,31339 -PA80,113,443,10042 -PO --script all "
+#            alias nmap_web_safe_osscan="${SUDO}nmap -p 80,443 -O -v --osscan-guess --fuzzy "
+#            alias nmap_ping_scan="nmap -n -sP"
+#        fi
+#
+################################################################################
+##################################VAGRANT ALIASES###############################
+################################################################################
+#        if (( $+commands[vagrant] )); then
+#            alias vgi="vagrant init"
+#            alias vup="vagrant up"
+#            alias vd="vagrant destroy"
+#            alias vdf="vagrant destroy -f"
+#            alias vssh="vagrant ssh"
+#            alias vsshc="vagrant ssh-config"
+#            alias vrdp="vagrant rdp"
+#            alias vh="vagrant halt"
+#            alias vssp="vagrant suspend"
+#            alias vst="vagrant status"
+#            alias vre="vagrant resume"
+#            alias vgs="vagrant global-status"
+#            alias vpr="vagrant provision"
+#            alias vr="vagrant reload"
+#            alias vrp="vagrant reload --provision"
+#            alias vp="vagrant push"
+#            alias vsh="vagrant share"
+#            alias vba="vagrant box add"
+#            alias vbr="vagrant box remove"
+#            alias vbl="vagrant box list"
+#            alias vbo="vagrant box outdated"
+#            alias vbu="vagrant box update"
+#            alias vpli="vagrant plugin install"
+#            alias vpll="vagrant plugin list"
+#            alias vplun="vagrant plugin uninstall"
+#            alias vplu="vagrant plugin update"
+#        fi
+#
+################################################################################
+##################################rsync ALIASES#################################
+################################################################################
+#        if (( $+commands[rsync] )); then
+#            alias rsync-copy="rsync -avz --progress -h"
+#            alias rsync-move="rsync -avz --progress -h --remove-source-files"
+#            alias rsync-update="rsync -avzu --progress -h"
+#            alias rsync-synchronize="rsync -avzu --delete --progress -h"
+#
+#            cpv() {
+#              rsync -pogbr -hhh --backup-dir=/tmp/rsync -e /dev/null --progress "$@"
+#            }
+#        fi
+#
+################################################################################
+##################################ANSIBLE ALIASES###############################
+################################################################################
+#        if (( $+commands[ansible] )); then
+#            # Functions
+#            function ansible-version(){
+#              ansible --version
+#            }
+#
+#            function ansible-role-init(){
+#              if ! [ -z $1 ] ; then
+#                echo "Ansible Role : $1 Creating...."
+#                ansible-galaxy init $1
+#                tree $1
+#              else
+#                echo "Usage : ansible-role-init <role name>"
+#                echo "Example : ansible-role-init role1"
+#              fi
+#            }
+#
+#            # Alias
+#            alias a='ansible '
+#            alias aconf='ansible-config '
+#            alias acon='ansible-console '
+#            alias aver='ansible-version'
+#            alias arinit='ansible-role-init'
+#            alias ap='ansible-playbook '
+#            alias ainv='ansible-inventory '
+#            alias adoc='ansible-doc '
+#            alias al='ansible-pull '
+#            alias aval='ansible-vault'
+#            alias avc='ansible-vault create'
+#            alias ave='ansible-vault edit'
+#            alias avr='ansible-vault rekey'
+#            alias avenc='ansible-vault encrypt'
+#            alias avdec='ansible-vault decrypt'
+#            alias avv='ansible-vault view'
+#            alias aga='ansible-galaxy'
+#            alias agad='ansible-galaxy delete'
+#            alias agai='ansible-galaxy install'
+#            alias agaim='ansible-galaxy import'
+#            alias againf='ansible-galaxy info'
+#            alias agal='ansible-galaxy list'
+#            alias agalog='ansible-galaxy login'
+#            alias agar='ansible-galaxy remove'
+#            alias agas='ansible-galaxy search'
+#        fi
+#
+################################################################################
+##################################ARCANIST ALIASES##############################
+################################################################################
+#        if (( $+commands[arc] )); then
+#            alias ara='arc amend'
+#            alias arb='arc branch'
+#            alias arco='arc cover'
+#            alias arci='arc commit'
+#            alias ard='arc diff'
+#            alias ardc='arc diff --create'
+#            alias ardnu='arc diff --nounit'
+#            alias ardnupc='arc diff --nounit --plan-changes'
+#            alias ardpc='arc diff --plan-changes'
+#            alias ardp='arc diff --preview' # creates a new diff in the phab interface
+#            alias are='arc export'
+#            alias arh='arc help'
+#            alias arl='arc land'
+#            alias arli='arc lint'
+#            alias arls='arc list'
+#
+#            ardu() {
+#              arc diff --update "${1:t}"    # Both `ardu https://arcanist-url.com/<REVISION>`, and `ardu <REVISION>` work.
+#            }
+#
+#            arpa() {
+#              arc patch "${1:t}"            # Both `arpa https://arcanist-url.com/<REVISION>`, and `arpa <REVISION>` work.
+#            }
+#        fi
+#
+################################################################################
+##################################base64 ALIASES################################
+################################################################################
+#        if (( $+commands[base64] )); then
+#            encode64() {
+#              if [[ $# -eq 0 ]]; then
+#                cat | base64
+#              else
+#                printf '%s' $1 | base64
+#              fi
+#            }
+#
+#            decode64() {
+#              if [[ $# -eq 0 ]]; then
+#                cat | base64 --decode
+#              else
+#                printf '%s' $1 | base64 --decode
+#              fi
+#            }
+#            alias e64=encode64
+#            alias d64=decode64
+#        fi
+#
+################################################################################
+##################################tmux ALIASES################################
+################################################################################
+#        alias tmux='tmux -f "$TMUX_CONFIG"'
+#
+#        {{ if eq .chezmoi.os "darwin" -}}
+#################################################################################
+##################################macOS ALIASES##################################
+#################################################################################
+#################################################################################
+#############################apache specific aliases#############################
+#################################################################################
+#        alias apachestart="${SUDO}apachectl start"
+#        alias apachestop="${SUDO}apachectl stop"
+#        alias apacherestart="${SUDO}apachectl restart"
+#################################################################################
+############################macports specific aliases############################
+#################################################################################
+#        if (( $+commands[port] )); then
+#          alias pc="${SUDO}port clean --all installed"
+#          alias pi="${SUDO}port install"
+#          alias pu="${SUDO}port selfupdate"
+#          alias puni="${SUDO}port uninstall inactive"
+#          alias pU="${SUDO}port upgrade outdated"
+#          alias puU="pu && puU"
+#          alias pac="${SUDO}port reclaim"
+#        fi
+#################################################################################
+############################command specific aliases#############################
+#################################################################################
+#        if [[ -x /usr/local/bin/ssh ]]; then
+#          alias ssh="/usr/local/bin/ssh"
+#        fi
+#        alias ldd="otool -L"
+#        alias lock="pmset displaysleepnow"
+#
+#        {{ else if eq .chezmoi.os "freebsd" -}}
+################################################################################
+#################################freebsd ALIASES################################
+################################################################################
+#        alias cdp="cd /usr/local/poudriere/ports/default"
+#        alias svn="svnlite"
+#        alias portlint="portlint -abct"
+#        alias p="${SUDO}pkg"
+#        alias pb="${SUDO}pkg bootstrap -fy"
+#        alias pc="${SUDO}pkg remove -fay"
+#        alias pi="${SUDO}pkg install -y"
+#        alias pu="${SUDO}pkg update"
+#        alias pU="${SUDO}pkg upgrade"
+#        alias puU="pu && puU"
+#        alias pac="${SUDO}pkg autoremove -y && ${SUDO} pkg clean -ay"
+#
+#        {{ else if eq .chezmoi.osRelease.id "arch" -}}
+################################################################################
+################################archlinux ALIASES###############################
+################################################################################
+########################################
+##               Pacman                #
+########################################
+#
+#        alias pacupg="${SUDO}pacman -Syu"                     # Sync with repositories before upgrading packages
+#        alias pacin="${SUDO}pacman -S"                        # Install packages from the repositories
+#        alias pacins="${SUDO}pacman -U"                       # Install a package from a local file
+#        alias pacre="${SUDO}pacman -R"                        # Remove packages, keeping its settings and dependencies
+#        alias pacrem="${SUDO}pacman -Rns"                     # Remove packages, including its settings and dependencies
+#        alias pacrep="pacman -Si"                             # Display information about a package in the repositories
+#        alias pacreps="pacman -Ss"                            # Search for packages in the repositories
+#        alias pacloc="pacman -Qi"                             # Display information about a package in the local database
+#        alias paclocs="pacman -Qs"                            # Search for packages in the local database
+#        alias pacinsd="${SUDO}pacman -S --asdeps"             # Install packages as dependencies of another package
+#        alias pacmir="${SUDO}pacman -Syy"                     # Force refresh of all package lists after updating mirrorlist
+#        alias paclsorphans="${SUDO}pacman -Qdt"               # List all orphaned packages
+#        alias pacrmorphans="${SUDO}pacman -Rs $(pacman -Qtdq)"# Delete all orphaned packages
+#        alias pacfileupg="${SUDO}pacman -Fy"                  # Download fresh package databases from the server
+#        alias pacfiles="pacman -F"                            # Search package file names for matching strings
+#        alias pacls="pacman -Ql"                              # List files in a package
+#        alias pacown="pacman -Qo"                             # Show which package owns a file
+#        alias pacupd="${SUDO}pacman -Sy"                      # Update and refresh local package, ABS and AUR databases
+#
+## List all explicitly installed packages with a description
+#        function paclist() {
+#          pacman -Qqe | \
+#            xargs -I "{}" \
+#              expac "${bold_color}% 20n ${fg_no_bold[white]}%d${reset_color}" "{}"
+#        }
+#
+## List all disowned files in your system
+#        function pacdisowned() {
+#          local tmp db fs
+#          tmp=${TMPDIR-/tmp}/pacman-disowned-$UID-$$
+#          db=$tmp/db
+#          fs=$tmp/fs
+#
+#          mkdir "$tmp"
+#          trap "rm -rf "$tmp"" EXIT
+#
+#          pacman -Qlq | sort -u > "$db"
+#
+#          find /bin /etc /lib /sbin /usr ! -name lost+found \
+#            \( -type d -printf "%p/\n" -o -print \) | sort > "$fs"
+#
+#          comm -23 "$fs" "$db"
+#        }
+#
+## Get all keys for developers and trusted users
+#        alias pacmanallkeys="${SUDO}pacman-key --refresh-keys"
+#
+## Locally trust all keys passed as parameters
+#        function pacmansignkeys() {
+#          local key
+#          for key in $@; do
+#            ${SUDO}pacman-key --recv-keys $key
+#            ${SUDO}pacman-key --lsign-key $key
+#            printf "trust\n3\n" | sudo gpg --homedir /etc/pacman.d/gnupg \
+#              --no-permission-warning --command-fd 0 --edit-key $key
+#          done
+#        }
+#
+#        if (( $+commands[xdg-open] )); then
+#          # Open the website of an ArchLinux package
+#          function pacweb() {
+#            if [[ $# = 0 || "$1" =~ "--help|-h" ]]; then
+#              local underline_color="\e[${color[underline]}m"
+#              echo "$0 - open the website of an ArchLinux package"
+#              echo
+#              echo "Usage:"
+#              echo "    $bold_color$0$reset_color ${underline_color}target${reset_color}"
+#              return 1
+#            fi
+#
+#            local pkg="$1"
+#            local infos="$(LANG=C pacman -Si "$pkg")"
+#            if [[ -z "$infos" ]]; then
+#              return
+#            fi
+#            local repo="$(grep -m 1 "^Repo" <<< "$infos" | grep -oP "[^ ]+$")"
+#            local arch="$(grep -m 1 "^Arch" <<< "$infos" | grep -oP "[^ ]+$")"
+#            xdg-open "https://www.archlinux.org/packages/$repo/$arch/$pkg/" &>/dev/null
+#          }
+#        fi
+#
+########################################
+##             AUR helpers             #
+########################################
+#        if (( $+commands[aura] )); then
+#          alias auin="${SUDO}aura -S"                         # Install packages from the repositories
+#          alias aurin="${SUDO}aura -A"                        # Install packages from the repositories
+#          alias auins="${SUDO}aura -U"                        # Install a package from a local file
+#          alias auinsd="${SUDO}aura -S --asdeps"              # Install packages as dependencies of another package (repositories only)
+#          alias aurinsd="${SUDO}aura -A --asdeps"             # Install packages as dependencies of another package (AUR only)
+#          alias auloc="aura -Qi"                              # Display information about a package in the local database
+#          alias aulocs="aura -Qs"                             # Search for packages in the local database
+#          alias aulst="aura -Qe"                              # List installed packages including from AUR (tagged as "local")
+#          alias aumir="${SUDO}aura -Syy"                      # Force refresh of all package lists after updating mirrorlist
+#          alias aurph="${SUDO}aura -Oj"                       # Remove orphans using aura
+#          alias aure="${SUDO}aura -R"                         # Remove packages, keeping its settings and dependencies
+#          alias aurem="${SUDO}aura -Rns"                      # Remove packages, including its settings and unneeded dependencies
+#          alias aurep="aura -Si"                              # Display information about a package in the repositories
+#          alias aurrep="aura -Ai"                             # Display information about a package from AUR
+#          alias aureps="aura -As --both"                      # Search for packages in the repositories and AUR
+#          alias auras="aura -As --both"                       # Search for packages in the repositories and AUR
+#          alias auupd="${SUDO}aura -Sy"                       # Update and refresh local package, ABS and AUR databases
+#          alias auupg="${SUDO}sh -c "aura -Syu              && aura -Au""
+#                                                              # Sync with repositories before upgrading all packages (from AUR too)
+#          alias ausu="${SUDO} sh -c "aura -Syu --no-confirm && aura -Au --no-confirm""
+#                                                              # Same as `auupg`, but without confirmation
+#          alias upgrade="${SUDO}aura -Syu"                    # Sync with repositories before upgrading packages
+#
+#          # extra bonus specially for aura
+#          alias auown="aura -Qqo"                             # Search for packages that own the specified file(s)
+#          alias auls="aura -Qql"                              # List all files owned by a given package
+#          function auownloc() { aura -Qi  $(aura -Qqo $@); }  # Display information about a package that owns the specified file(s)
+#          function auownls () { aura -Qql $(aura -Qqo $@); }  # List all files owned by a package that owns the specified file(s)
+#        fi
+#
+#        if (( $+commands[trizen] )); then
+#          alias trconf="trizen -C"                # Fix all configuration files with vimdiff
+#          alias trupg="trizen -Syua"              # Sync with repositories before upgrading all packages (from AUR too)
+#          alias trsu="trizen -Syua --noconfirm"   # Same as `trupg`, but without confirmation
+#          alias trin="trizen -S"                  # Install packages from the repositories
+#          alias trins="trizen -U"                 # Install a package from a local file
+#          alias trre="trizen -R"                  # Remove packages, keeping its settings and dependencies
+#          alias trrem="trizen -Rns"               # Remove packages, including its settings and unneeded dependencies
+#          alias trrep="trizen -Si"                # Display information about a package in the repositories
+#          alias trreps="trizen -Ss"               # Search for packages in the repositories
+#          alias trloc="trizen -Qi"                # Display information about a package in the local database
+#          alias trlocs="trizen -Qs"               # Search for packages in the local database
+#          alias trlst="trizen -Qe"                # List installed packages including from AUR (tagged as "local")
+#          alias trorph="trizen -Qtd"              # Remove orphans using yaourt
+#          alias trinsd="trizen -S --asdeps"       # Install packages as dependencies of another package
+#          alias trmir="trizen -Syy"               # Force refresh of all package lists after updating mirrorlist
+#          alias trupd="trizen -Sy"                # Update and refresh local package, ABS and AUR databases
+#          alias upgrade="trizen -Syu"             # Sync with repositories before upgrading packages
+#        fi
+#
+#        if (( $+commands[yay] )); then
+#          alias yaconf="yay -Pg"                  # Print current configuration
+#          alias yaupg="yay -Syu"                  # Sync with repositories before upgrading packages
+#          alias yasu="yay -Syu --noconfirm"       # Same as `yaupg`, but without confirmation
+#          alias yain="yay -S"                     # Install packages from the repositories
+#          alias yains="yay -U"                    # Install a package from a local file
+#          alias yare="yay -R"                     # Remove packages, keeping its settings and dependencies
+#          alias yarem="yay -Rns"                  # Remove packages, including its settings and unneeded dependencies
+#          alias yarep="yay -Si"                   # Display information about a package in the repositories
+#          alias yareps="yay -Ss"                  # Search for packages in the repositories
+#          alias yaloc="yay -Qi"                   # Display information about a package in the local database
+#          alias yalocs="yay -Qs"                  # Search for packages in the local database
+#          alias yalst="yay -Qe"                   # List installed packages including from AUR (tagged as "local")
+#          alias yaorph="yay -Qtd"                 # Remove orphans using yay
+#          alias yainsd="yay -S --asdeps"          # Install packages as dependencies of another package
+#          alias yamir="yay -Syy"                  # Force refresh of all package lists after updating mirrorlist
+#          alias yaupd="yay -Sy"                   # Update and refresh local package, ABS and AUR databases
+#          alias upgrade="yay -Syu"                # Sync with repositories before upgrading packages
+#        fi
+#
+#        {{ else if eq .chezmoi.osRelease.id "centos" -}}
+#################################################################################
+##################################centos ALIASES#################################
+#################################################################################
+#################################################################################
+############################ yum specific aliases ###############################
+#################################################################################
+#        alias yc="${SUDO}yum clean all"               # Cleans the cache.
+#        alias yh="yum history"                        # Displays history.
+#        alias yi="${SUDO}yum install"                 # Installs package(s).
+#        alias ygl="yum grouplist"                     # list package groups
+#        alias yl="yum list"                           # Lists packages.
+#        alias yli="yum list installed"                # Lists installed packages.
+#        alias yp="yum info"                           # Displays package information.
+#        alias yr="${SUDO}yum remove"                  # Removes package(s).
+#        alias ys="yum search"                         # Searches for a package.
+#        alias yu="${SUDO}yum update"                  # Updates packages.
+#        alias yU="${SUDO}yum upgrade"                 # Upgrades packages.
+#        alias ymc="${SUDO}yum makecache"              # rebuilds the yum package list
+#        alias ygi="${SUDO}yum groupinstall"           # install package group
+#        alias ygr="${SUDO}yum groupremove"            # remove pagage group
+#        alias yrl="${SUDO}yum remove --remove-leaves" # remove package and leaves
+#
+#        {{ else if eq .chezmoi.osRelease.id "debian" -}}
+################################################################################
+##################################debian ALIASES################################
+################################################################################
+#################################################################################
+############################ apt specific aliases ###############################
+#################################################################################
+#        if [[ -z $APT || -z $APT_UPGR ]]; then
+#          if [[ -e $commands[apt] ]]; then
+#            APT='apt'
+#            APT_UPGR='upgrade'
+#          elif [[ -e $commands[aptitude] ]]; then
+#            APT='aptitude'
+#            APT_UPGR='safe-upgrade'
+#            alias api='aptitude'              # Same functionality as `apt-get`, provides extra options
+#            alias aps='aptitude search'       # Searches installed packages using aptitude
+#            alias as="aptitude -F '* %p -> %d \n(%v/%V)' --no-gui --disable-columns search"
+#                                              # Print searched packages using a custom format
+#            alias kclean="$SUDOaptitude remove -P ?and(~i~nlinux-(ima|hea) ?not(~n`uname -r`))"
+#                                              # Remove ALL kernel images and headers EXCEPT the one in use
+#            alias allpkgs='aptitude search -F "%p" --disable-columns ~i'
+#                                              # print all installed packages
+#            alias kclean="$SUDOaptitude remove -P ?and(~i~nlinux-(ima|hea) ?not(~n`uname -r`))"
+#                                              # Remove ALL kernel images and headers EXCEPT the one in use
+#          else
+#            APT='apt-get'
+#            APT_UPGR='upgrade'
+#          fi
+#        fi
+#
+#        alias age="$SUDO$APT"             # Run apt-get with $SUDO
+#        alias acs='apt-cache search'      # Search the apt-cache with the specified criteria
+#        alias afs='apt-file search --regexp'
+#                                            # Perform a regular expression apt-file search
+#        alias ags='apt-get source'        # Fetch the source for the specified package
+#        alias acp='apt-cache policy'      # Display the package source priorities
+#        alias aga="$SUDO$APT autoclean"
+#                                          # Clears out the local reposityory of retrieved package files that can no longer be downloaded
+#        alias agb="$SUDO$APT build-dep"   # Installs/Removes packages to satisfy the dependencies of a specified build pkg
+#        alias agc="$SUDO$APT clean"       # Clears out the local repository of retrieved package files leaving everything from the lock files
+#        alias agd="$SUDOapt-get dselect-upgrade"
+#                                          # Follows dselect choices for package installation
+#        alias agi="$SUDO$APT install"     # Install the specified package
+#        alias agp="$SUDO$APT purge"       # Remove a package including any configuration files
+#        alias agr="$SUDO$APT remove"      # Remove a package
+#        alias agu="$SUDO$APT update"      # Update package list
+#        alias agud="$SUDO$APT update && $SUDO$APT dist-upgrade"
+#                                          # Update packages list and perform a distribution upgrade
+#        alias agug="$SUDO$APT $APT_UPGR"  # Upgrade available packages
+#        alias aguu="$SUDO$APT update && $SUDO$APT $APT_UPGR"
+#                                          # Update packages list and upgrade available packages
+#        alias afu="$SUDOapt-file update"  # Update the files in packages
+#        alias ail="sed -e 's/  */ /g' -e 's/ *//' | cut -s -d ' ' -f 1 | xargs $SUDO$APT install"
+#                                          # Install all packages given on the command line while using only the first word of each line
+#
+## Install all .deb files in the current directory.
+## Warning: you will need to put the glob in single quotes if you use:
+## glob_subst
+#        alias dia="$SUDOdpkg -i ./*.deb"
+#        alias di="$SUDOdpkg -i"           # Install all .deb files in the current directory
+#
+#        alias mydeb='time dpkg-buildpackage -rfakeroot -us -uc'
+#                                          # Create a basic .deb package
+#
+#### Completion
+##
+## Registers a compdef for $1 that calls $APT with the commands $2
+## To do that it creates a new completion function called _APT_$2
+##
+#        function apt_pref_compdef() {
+#          local f fb
+#          f="_APT_${2}"
+#
+#          eval "function ${f}() {
+#            shift words;
+#            service=\"\$APT\";
+#            words=(\"\$APT\" '$2' \$words);
+#            ((CURRENT++))
+#            test \"\${APT}\" = 'aptitude' && _aptitude || _apt
+#          }"
+#
+#          compdef "$f" "$1"
+#        }
+#
+#        apt_pref_compdef aac "autoclean"
+#        apt_pref_compdef abd "build-dep"
+#        apt_pref_compdef ac  "clean"
+#        apt_pref_compdef ad  "update"
+#        apt_pref_compdef afu "update"
+#        apt_pref_compdef au  "$APT_UPGR"
+#        apt_pref_compdef ai  "install"
+#        apt_pref_compdef ail "install"
+#        apt_pref_compdef ap  "purge"
+#        apt_pref_compdef ar  "remove"
+#        apt_pref_compdef ads "dselect-upgrade"
+#
+#### Functions
+## create a simple script that can be used to 'duplicate' a system
+#        function apt-copy() {
+#          print '#!/bin/sh'"\n" > apt-copy.sh
+#
+#          cmd='$APT install'
+#
+#          for p in ${(f)"$(aptitude search -F "%p" --disable-columns \~i)"}; {
+#            cmd="${cmd} ${p}"
+#          }
+#
+#          print $cmd "\n" >> apt-copy.sh
+#
+#          chmod +x apt-copy.sh
+#        }
+#
+## Prints apt history
+## Usage:
+##   apt-history install
+##   apt-history upgrade
+##   apt-history remove
+##   apt-history rollback
+##   apt-history list
+## Prints the Apt history of the specified action
+#        function apt-history() {
+#          case "$1" in
+#            install)
+#              zgrep --no-filename 'install ' $(ls -rt /var/log/dpkg*)
+#              ;;
+#            upgrade|remove)
+#              zgrep --no-filename $1 $(ls -rt /var/log/dpkg*)
+#              ;;
+#            rollback)
+#              zgrep --no-filename upgrade $(ls -rt /var/log/dpkg*) | \
+#                grep "$2" -A10000000 | \
+#                grep "$3" -B10000000 | \
+#                awk '{print $4"="$5}'
+#              ;;
+#            list)
+#              zgrep --no-filename '' $(ls -rt /var/log/dpkg*)
+#              ;;
+#            *)
+#              echo "Parameters:"
+#              echo " install - Lists all packages that have been installed."
+#              echo " upgrade - Lists all packages that have been upgraded."
+#              echo " remove - Lists all packages that have been removed."
+#              echo " rollback - Lists rollback information."
+#              echo " list - Lists all contains of dpkg logs."
+#              ;;
+#          esac
+#        }
+#
+## Kernel-package building shortcut
+#        function kerndeb() {
+#          # temporarily unset MAKEFLAGS ( '-j3' will fail )
+#          MAKEFLAGS=$( print - $MAKEFLAGS | perl -pe 's/-j\s*[\d]+//g' )
+#          print '$MAKEFLAGS set to '"'$MAKEFLAGS'"
+#          appendage='-custom' # this shows up in $(uname -r)
+#          revision=$(date +"%Y%m%d") # this shows up in the .deb file name
+#
+#          make-kpkg clean
+#
+#          time fakeroot make-kpkg --append-to-version "$appendage" --revision \
+#            "$revision" kernel_image kernel_headers
+#        }
+#
+## List packages by size
+#        function apt-list-packages() {
+#          dpkg-query -W --showformat='${Installed-Size} ${Package} ${Status}\n' | \
+#          grep -v deinstall | \
+#          sort -n | \
+#          awk '{print $1" "$2}'
+#        }
+#
+#        {{ else if eq .chezmoi.osRelease.id "fedora" -}}
+################################################################################
+##################################fedora ALIASES################################
+################################################################################
+#################################################################################
+############################ dnf specific aliases ###############################
+#################################################################################
+#        alias dnfc="${SUDO}dnf clean all"             # Cleans the cache.
+#        alias dnfh="dnf history"                      # Displays history.
+#        alias dnfi="${SUDO}dnf install"               # Installs package(s).
+#        alias dnfl="dnf list"                         # Lists packages.
+#        alias dnfL="dnf list installed"               # Lists installed packages.
+#        alias dnfp="dnf info"                         # Displays package information.
+#        alias dnfr="${SUDO}dnf remove"                # Removes package(s).
+#        alias dnfs="dnf search"                       # Searches for a package.
+#        alias dnfu="${SUDO}dnf update"                # Updates packages.
+#        alias dnfU="${SUDO}dnf upgrade"               # Upgrades packages.
+#        alias dnfgl="dnf grouplist"                   # List package groups
+#        alias dnfmc="dnf makecache"                   # Generate metadata cache
+#        alias dnfgi="${SUDO}dnf groupinstall"         # Install package group
+#        alias dnfgr="${SUDO}dnf groupremove"          # Remove package group
+#
+#        {{ else if eq .chezmoi.osRelease.id "opensuse" -}}
+###############################################################################
+################################opensuse ALIASES###############################
+###############################################################################
+###############################################################################
+########################### zypper specific aliases ###########################
+###############################################################################
+##Main commands
+#        alias zy="$SUDOzypper"                # call zypper
+#        alias zh="zypper -h"                  # print help
+#        alias zhse="zypper -h se"             # print help for the search command
+#        alias zlicenses="zypper licenses"     # prints a report about licenses and EULAs of installed packages
+#        alias zps="$SUDOzypper ps"            # list process using deleted files
+#        alias zshell="$SUDOzypper shell"      # open a zypper shell session
+#        alias zsource-download="$SUDOzypper source-download"
+#                                                # download source rpms for all installed packages
+#        alias ztos="zypper tos"               # shows the ID string of the target operating system
+#        alias zvcmp="zypper vcmp"             # tell whether version1 is older or newer than version2
+#
+##Packages commands
+#        alias zin="$SUDOzypper in"            # install packages
+#        alias zinr="$SUDOzypper inr"          # install newly added packages recommended by already installed ones
+#        alias zrm="$SUDOzypper rm"            # remove packages
+#        alias zsi="$SUDOzypper si"            # install source of a package
+#        alias zve="$SUDOzypper ve"            # verify dependencies of installed packages
+#
+##Updates commands
+#        alias zdup="$SUDOzypper dup"          # upgrade packages
+#        alias zlp="zypper lp"                 # list necessary patches
+#        alias zlu="zypper lu"                 # list updates
+#        alias zpchk="$SUDOzypper pchk"        # check for patches
+#        alias zup="$SUDOzypper up"            # update packages
+#        alias zpatch="$SUDOzypper patch"      # install patches
+#
+##Request commands
+#        alias zif="zypper if"                     # display info about packages
+#        alias zpa="zypper pa"                     # list packages
+#        alias zpatch-info="zypper patch-info"     # display info about patches
+#        alias zpattern-info="zypper pattern-info" # display info about patterns
+#        alias zproduct-info="zypper product-info" # display info about products
+#        alias zpch="zypper pch"                   # list all patches
+#        alias zpd="zypper pd"                     # list products
+#        alias zpt="zypper pt"                     # list patterns
+#        alias zse="zypper se"                     # search for packages
+#        alias zwp="zypper wp"                     # list all packages providing the specified capability
+#
+##Repositories commands
+#        alias zar="$SUDOzypper ar"        # add a repository
+#        alias zcl="$SUDOzypper clean"     # clean cache
+#        alias zlr="zypper lr"             # list repositories
+#        alias zmr="$SUDOzypper mr"        # modify repositories
+#        alias znr="$SUDOzypper nr"        # rename repositories (for the alias only)
+#        alias zref="$SUDOzypper ref"      # refresh repositories
+#        alias zrr="$SUDOzypper rr"        # remove repositories
+#
+##Services commands
+#        alias zas="$SUDOzypper as"        # adds a service specified by URI to the system
+#        alias zms="$SUDOzypper ms"        # modify properties of specified services
+#        alias zrefs="$SUDOzypper refs"    # refreshing a service mean executing the service"s special task
+#        alias zrs="$SUDOzypper rs"        # remove specified repository index service from the system
+#        alias zls="zypper ls"             # list services defined on the system
+#
+##Package Locks Management commands
+#        alias zal="$SUDOzypper al"        # add a package lock
+#        alias zcl="$SUDOzypper cl"        # remove unused locks
+#        alias zll="zypper ll"             # list currently active package locks
+#        alias zrl="$SUDOzypper rl"        # remove specified package lock
+#
+#        {{ else if eq .chezmoi.osRelease.id "ubuntu" -}}
+#################################################################################
+################################ubuntu ALIASES###################################
+#################################################################################
+#################################################################################
+############################ apt specific aliases ###############################
+#################################################################################
+## Aliases
+## Commands that use `$APT` will use `apt` if installed or defer to `apt-get` otherwise.
+#        (( $+commands[apt] )) && APT=apt || APT=apt-get
+#
+## Search the apt-cache with the specified criteria
+#        alias acs='apt-cache search'
+#
+## Perform a regular expression apt-file search
+#        alias afs='apt-file search --regexp'
+#
+## Fetch the source for the specified package
+#        alias ags="$APT source"
+#
+## Display the package source priorities
+#        alias acp='apt-cache policy'
+#
+##List all installed packages
+#        alias agli='apt list --installed'
+#
+## List available updates only
+#        alias aglu='apt list --upgradable'
+#
+## Generates or updates the apt-file package database
+#        alias afu="$SUDOapt-file update"
+#
+## Remove the specified PPA
+#        alias ppap="$SUDOppa-purge"
+#
+## Run apt-get with $SUDO
+#        alias age="$SUDO$APT"
+## Clears out the local reposityory of retrieved package files that can no longer be downloaded
+#        alias aga="$SUDO$APT autoclean"
+## Installs/Removes packages to satisfy the dependencies of a specified build pkg
+#        alias agb="$SUDO$APT build-dep"
+## Clears out the local repository of retrieved package files leaving everything from the lock files
+#        alias agc="$SUDO$APT clean"
+## Follows dselect choices for package installation
+#        alias agd="$SUDO$APT dselect-upgrade"
+## Install the specified package
+#        alias agi="$SUDO$APT install"
+## Remove a package including any configuration files
+#        alias agp="$SUDO$APT purge"
+## Remove a package
+#        alias agr="$SUDO$APT remove"
+## Update package list
+#        alias agu="$SUDO$APT update"
+## Update packages list and perform a distribution upgrade
+#        alias agud="$SUDO$APT update && $SUDO$APT dist-upgrade"
+## Upgrade available packages
+#        alias agug="$SUDO$APT upgrade"
+## Update packages list and upgrade available packages
+#        alias aguu="$SUDO$APT update && $SUDO$APT upgrade"
+## Remove automatically installed packages no longer needed
+#        alias agar="$SUDO$APT autoremove"
+#
+## print all installed packages
+#        alias allpkgs='dpkg --get-selections | grep -v deinstall'
+#
+## Create a basic .deb package
+#        alias mydeb='time dpkg-buildpackage -rfakeroot -us -uc'
+#
+#### Functions
+## apt-add-repository with automatic install/upgrade of the desired package
+## Usage: aar ppa:xxxxxx/xxxxxx [packagename]
+## If packagename is not given as 2nd argument the function will ask for it and guess the default by taking
+## the part after the / from the ppa name which is sometimes the right name for the package you want to install
+#        function aar() {
+#          if [ -n "$2" ]; then
+#            PACKAGE=$2
+#          else
+#            read "PACKAGE?Type in the package name to install/upgrade with this ppa [${1##*/}]: "
+#          fi
+#
+#          if [ -z "$PACKAGE" ]; then
+#            PACKAGE=${1##*/}
+#          fi
+#
+#          $SUDOapt-add-repository $1 && $SUDO$APT update
+#          $SUDO$APT install $PACKAGE
+#        }
+#
+## Prints apt history
+## Usage:
+##   apt-history install
+##   apt-history upgrade
+##   apt-history remove
+##   apt-history rollback
+##   apt-history list
+## Prints the Apt history of the specified action
+#        function apt-history() {
+#          case "$1" in
+#            install)
+#              zgrep --no-filename 'install ' $(ls -rt /var/log/dpkg*)
+#              ;;
+#            upgrade|remove)
+#              zgrep --no-filename $1 $(ls -rt /var/log/dpkg*)
+#              ;;
+#            rollback)
+#              zgrep --no-filename upgrade $(ls -rt /var/log/dpkg*) | \
+#                grep "$2" -A10000000 | \
+#                grep "$3" -B10000000 | \
+#                awk '{print $4"="$5}'
+#              ;;
+#            list)
+#              zgrep --no-filename '' $(ls -rt /var/log/dpkg*)
+#              ;;
+#            *)
+#              echo "Parameters:"
+#              echo " install - Lists all packages that have been installed."
+#              echo " upgrade - Lists all packages that have been upgraded."
+#              echo " remove - Lists all packages that have been removed."
+#              echo " rollback - Lists rollback information."
+#              echo " list - Lists all contains of dpkg logs."
+#              ;;
+#          esac
+#        }
+#
+## Kernel-package building shortcut
+#        function kerndeb() {
+#          # temporarily unset MAKEFLAGS ( '-j3' will fail )
+#          MAKEFLAGS=$( print - $MAKEFLAGS | perl -pe 's/-j\s*[\d]+//g' )
+#          print '$MAKEFLAGS set to '"'$MAKEFLAGS'"
+#          appendage='-custom' # this shows up in $(uname -r)
+#          revision=$(date +"%Y%m%d") # this shows up in the .deb file name
+#
+#          make-kpkg clean
+#
+#          time fakeroot make-kpkg --append-to-version "$appendage" --revision \
+#            "$revision" kernel_image kernel_headers
+#        }
+#
+## List packages by size
+#        function apt-list-packages() {
+#          dpkg-query -W --showformat='${Installed-Size} ${Package} ${Status}\n' | \
+#          grep -v deinstall | \
+#          sort -n | \
+#          awk '{print $1" "$2}'
+#        }
+#        {{ end -}}
+        ;;
+    csh)
+        ;;
+esac
+
+# vim: ft=sh:
