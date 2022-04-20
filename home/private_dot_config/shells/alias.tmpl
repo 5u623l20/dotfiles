@@ -1,21 +1,19 @@
 ###############################################################################
-#################################COMMON ALIASES################################
+#################################COMMON ALIASES ###############################
 ###############################################################################
 bye() {
     echo 'bye'
     exit
 }
-cls () { clear }
-cp () { cp -ivRL "$@" }
-df () { df -h }
+cls() { clear; }
+cp() { cp -ivRL "$@"; }
+df() { df -h; }
 if command_exists emacs; then
-emacs() {
-    emacs -nw "$@"
-}
+emacs() { emacs -nw "$@"; }
 fi
-g () { egrep -i "$1" }
-gcc () { gcc -Wall -W -Wpointer-arith -Wbad-function-cast -std=c99 "$@" }
-gcc_debug() { gcc -ggdb3 "$@" }
+g() { egrep -i "$1"; }
+gcc() { gcc -Wall -W -Wpointer-arith -Wbad-function-cast -std=c99 "$@"; }
+gcc_debug() { gcc -ggdb3 "$@"; }
 gcc_optimize() { gcc -fforce-mem -fforce-addr -finline-functions \
     -fstrength-reduce  -floop-optimize -O3 "$@" }
 gcc_wall() { gcc -Wall -Wpointer-arith -Wcast-qual -Wcast-align \
@@ -23,18 +21,18 @@ gcc_wall() { gcc -Wall -Wpointer-arith -Wcast-qual -Wcast-align \
     -Wmissing-prototypes -Wmissing-declarations \
     -Wredundant-decls -Winline -Wnested-externs -std=c99 \
     -march=i686 -pipe "$@" }
-h() { fc -l }
-j() { jobs }
-l() { ls -l "$@" }
-la() { ls -aFG "$@" }
-ll() { ls -laFhHo "$@" }
-ls() { ls -FGH "$@" }
-m() { "$PAGER" }
-mute() { mixer pcm 0:0 }
-mv() { mv -v "$@" }
-pgr() { "$PAGER" }
-rm() { rm -d "$@" }
-rmdir() { rmdir -v "$@" }
+h() { fc -l; }
+j() { jobs; }
+l() { ls -l "$@"; }
+la() { ls -aFG "$@"; }
+ll() { ls -laFhHo "$@"; }
+ls() { ls -FGH "$@"; }
+m() { "$PAGER"; }
+mute() { mixer pcm 0:0; }
+mv() { mv -v "$@"; }
+pgr() { "$PAGER"; }
+rm() { rm -d "$@"; }
+rmdir() { rmdir -v "$@"; }
 v() {
     if command_exists batcat; then
         batcat --theme OneHalfDark "$@"
@@ -45,46 +43,31 @@ v() {
     fi
 }
 
+###############################################################################
+#################################NMAP ALIASES #################################
+###############################################################################
+if command_exists nmap; then
+    nmap_open_ports() { nmap --open; }
+    nmap_list_interfaces() { nmap --iflist; }
+    nmap_slow() { "${SUDO}"nmap -sS -v -T1 "$@"; }
+    nmap_fin() { "${SUDO}"nmap -sF -v "$@"; }
+    nmap_full() { "${SUDO}"nmap -sS -T4 -PE -PP -PS80,443 -PY -g 53 -A -p1-65535 -v "$@"; }
+    nmap_check_for_firewall() { "${SUDO}"nmap -sA -p1-65535 -v -T4 "$@"; }
+    nmap_ping_through_firewall() { "${SUDO}"nmap -PS -PA "$@"; }
+    nmap_fast() { "${SUDO}"nmap -F -T5 --version-light --top-ports 300 "$@"; }
+    nmap_detect_versions() { "${SUDO}"nmap -sV -p1-65535 -O --osscan-guess -T4 -Pn "$@"; }
+    nmap_check_for_vulns() { "${SUDO}"nmap --script=vuln "$@"; }
+    nmap_full_udp() { "${SUDO}"nmap -sS -sU -T4 -A -v -PE -PS22,25,80 -PA21,23,80,443,3389 "$@"; }
+    nmap_traceroute() { "${SUDO}"nmap -sP -PE -PS22,25,80 -PA21,23,80,3389 -PU -PO --traceroute "$@"; }
+    nmap_full_with_scripts() { "${SUDO}"nmap -sS -sU -T4 -A -v -PE -PP -PS21,22,23,25,80,113,31339 -PA80,113,443,10042 -PO --script all "$@"; }
+    nmap_web_safe_osscan() { ${SUDO}nmap -p 80,443 -O -v --osscan-guess --fuzzy "$@"; }
+    nmap_ping_scan() { nmap -n -sP "$@"; }
+fi
+
 case ${SHELL##*/} in
     zsh|bash)
 ###############################################################################
-#################################NMAP ALIASES##################################
-###############################################################################
-# Nmap options are:
-#  -sS - TCP SYN scan
-#  -v - verbose
-#  -T1 - timing of scan. Options are paranoid (0), sneaky (1), polite (2), normal (3), aggressive (4), and insane (5)
-#  -sF - FIN scan (can sneak through non-stateful firewalls)
-#  -PE - ICMP echo discovery probe
-#  -PP - timestamp discovery probe
-#  -PY - SCTP init ping
-#  -g - use given number as source port
-#  -A - enable OS detection, version detection, script scanning, and traceroute (aggressive)
-#  -O - enable OS detection
-#  -sA - TCP ACK scan
-#  -F - fast scan
-#  --script=vuln - also access vulnerabilities in target
-#
-#        if (( $+commands[nmap] )); then
-#            alias nmap_open_ports="nmap --open"
-#            alias nmap_list_interfaces="nmap --iflist"
-#            alias nmap_slow="${SUDO}nmap -sS -v -T1"
-#            alias nmap_fin="${SUDO}nmap -sF -v"
-#            alias nmap_full="${SUDO}nmap -sS -T4 -PE -PP -PS80,443 -PY -g 53 -A -p1-65535 -v"
-#            alias nmap_check_for_firewall="${SUDO}nmap -sA -p1-65535 -v -T4"
-#            alias nmap_ping_through_firewall="nmap -PS -PA"
-#            alias nmap_fast="nmap -F -T5 --version-light --top-ports 300"
-#            alias nmap_detect_versions="${SUDO}nmap -sV -p1-65535 -O --osscan-guess -T4 -Pn"
-#            alias nmap_check_for_vulns="nmap --script=vuln"
-#            alias nmap_full_udp="${SUDO}nmap -sS -sU -T4 -A -v -PE -PS22,25,80 -PA21,23,80,443,3389 "
-#            alias nmap_traceroute="${SUDO}nmap -sP -PE -PS22,25,80 -PA21,23,80,3389 -PU -PO --traceroute "
-#            alias nmap_full_with_scripts="${SUDO}nmap -sS -sU -T4 -A -v -PE -PP -PS21,22,23,25,80,113,31339 -PA80,113,443,10042 -PO --script all "
-#            alias nmap_web_safe_osscan="${SUDO}nmap -p 80,443 -O -v --osscan-guess --fuzzy "
-#            alias nmap_ping_scan="nmap -n -sP"
-#        fi
-#
-###############################################################################
-#################################VAGRANT ALIASES###############################
+#################################VAGRANT ALIASES ##############################
 ###############################################################################
 #        if (( $+commands[vagrant] )); then
 #            alias vgi="vagrant init"
