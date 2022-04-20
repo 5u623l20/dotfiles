@@ -1,0 +1,138 @@
+# vim: ft=zsh
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# Source Zit file
+source "${ZIT_MODULES_PATH}/zit/zit.zsh"
+# Let Zit manage Zit upgrades
+zit-in "https://github.com/thiagokokada/zit" "zit"
+
+# Install zsh-completions
+zit-in "https://github.com/zsh-users/zsh-completions" "zsh-completions" "zsh-completions.plugin.zsh"
+
+{{ if eq .chezmoi.os "darwin" -}}
+# Running my gpg-agent from my own host I am sitting in front of.
+# Load ssh identities and gpg-agents plugin
+if [[ -d ~/.gnupg ]]; then
+	source $ZDOTDIR/plugins/gpg-agent.zsh
+fi
+{{- end }}
+
+{{- if (and (ne .chezmoi.os "darwin") (ne .chezmoi.hostname "pdr.bofh.network")) -}}
+# Not running gpg-agent if it's a remote host.
+# In case we need to automate scripts and use ssh-agent from remote-host
+# we will run ssh-agent and load the keys only if the keys are present.
+# Load ssh identities and ssh-agents plugin
+typeset -a IDENTS
+if [[ -d ~/.ssh ]]; then
+	for file in ~/.ssh/*.pub(N); do
+      if [[ -f ${file%.pub} ]]; then
+        IDENTS+=${file:t:r}
+      fi
+	done
+	if [[ ! -z $IDENTS ]] ; then
+		zstyle :omz:plugins:ssh-agent identities $IDENTS
+        source $ZDOTDIR/plugins/ssh-agent.zsh
+	fi
+fi
+{{- end }}
+
+# Load powerlevel10k theme
+# If terminal supports 256 color then we will load p10k theme
+# otherwise stick with a p10k 8-color basic theme
+if [[ $terminfo[colors] -ge 256 ]]; then
+  [[ -f $ZDOTDIR/p10k.zsh ]] && source $ZDOTDIR/p10k.zsh
+else
+  [[ -f $ZDOTDIR/p10k-8colors.zsh ]] && source $ZDOTDIR/p10k-8colors.zsh
+fi
+# Install and load powerlevel10k theme
+zit-il "https://github.com/romkatv/powerlevel10k" "powerlevel10k" "powerlevel10k.zsh-theme"
+
+# Install and Load zsh-autosuggestions
+zit-il "https://github.com/zsh-users/zsh-autosuggestions" "zsh-autosuggestions" "zsh-autosuggestions.zsh"
+
+# Install and Load zsh-syntax-highlighting
+zit-il "https://github.com/zsh-users/zsh-syntax-highlighting" "zsh-syntax-highlighting" "zsh-syntax-highlighting.zsh"
+
+# Install and Load zsh-fzf-history-search
+zit-il "https://github.com/joshskidmore/zsh-fzf-history-search" "zsh-fzf-history-search" "zsh-fzf-history-search.zsh"
+
+#Load zsh-history-substring-search
+source $ZDOTDIR/plugins/zsh-history-substring-search.zsh
+
+# Load broot 
+if (( $+commands[broot] )); then
+  if [[ -f $XDG_CONFIG_HOME/broot/launcher/bash/br ]]; then
+    source $XDG_CONFIG_HOME/broot/launcher/bash/br
+  fi
+fi
+
+# Install Load and Setup junegunn/fzf
+zit-in "https://github.com/junegunn/fzf" "fzf"
+# Auto-completion
+[[ $- == *i* ]] && source $ZDOTDIR/plugins/fzf/shell/completion.zsh 2> /dev/null
+# Key bindings
+source $ZDOTDIR/plugins/fzf/shell/key-bindings.zsh
+
+# Install and Load zsh-z
+zit-il "https://github.com/agkozak/zsh-z.git" "zsh-z" "zsh-z.plugin.zsh"
+
+# Load nvm
+zit-il "https://github.com/lukechilds/zsh-nvm" "zsh-nvm" "zsh-nvm.plugin.zsh"
+
+HISTFILE="$XDG_DATA_HOME/zsh/history"
+[[ -f "$HISTFILE" ]] || { mkdir -p "$HISTFILE:h" && touch "$HISTFILE" }
+HISTSIZE=10000
+SAVEHIST=10000
+
+zstyle ':completion:*' menu select
+zstyle ':completion:*' completer _complete
+zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' '+l:|=* r:|=*'
+
+# Load autocompletions
+{{ if eq .chezmoi.os "darwin" -}}
+fpath=(/usr/local/share/zsh/site-functions $fpath)
+{{- else if eq .chezmoi.os "freebsd" -}}
+fpath=(/usr/local/share/zsh/site-functions $fpath)
+{{- end }}
+fpath=($ZDOTDIR/plugins/zsh-completions/src $fpath)
+autoload -Uz $fpath/*(.:t)
+source $ZDOTDIR/functions/completions
+fpath=($ZDOTDIR/functions/common $fpath)
+
+autoload -U compinit && compinit
+zmodload -i zsh/complist
+
+#Load ls
+source $ZDOTDIR/plugins/ls.zsh
+
+source $XDG_CONFIG_HOME/shells/alias
+
+unsetopt menu_complete
+unsetopt flowcontrol
+
+setopt prompt_subst
+setopt always_to_end
+setopt append_history
+setopt auto_menu
+setopt complete_in_word
+setopt extended_history
+setopt hist_expire_dups_first
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt hist_verify
+setopt inc_append_history
+setopt interactivecomments
+setopt share_history
+
+# Load custom key-bindings
+source $ZDOTDIR/key-bindings.zsh
+
+# script to compile ZSH files and speed-up loading
+# should be called last
+zit-lo "zit" "extras/compile-zsh-files.zsh"
+
