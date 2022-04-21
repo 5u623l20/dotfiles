@@ -59,198 +59,192 @@ if command_exists nmap; then
     alias nmap_web_safe_osscan="${SUDO}nmap -p 80,443 -O -v --osscan-guess --fuzzy"
     alias nmap_ping_scan="nmap -n -sP"
 fi
-
-case ${SHELL##*/} in
-    zsh|bash)
 ###############################################################################
 #################################VAGRANT ALIASES ##############################
 ###############################################################################
-#        if (( $+commands[vagrant] )); then
-#            alias vgi="vagrant init"
-#            alias vup="vagrant up"
-#            alias vd="vagrant destroy"
-#            alias vdf="vagrant destroy -f"
-#            alias vssh="vagrant ssh"
-#            alias vsshc="vagrant ssh-config"
-#            alias vrdp="vagrant rdp"
-#            alias vh="vagrant halt"
-#            alias vssp="vagrant suspend"
-#            alias vst="vagrant status"
-#            alias vre="vagrant resume"
-#            alias vgs="vagrant global-status"
-#            alias vpr="vagrant provision"
-#            alias vr="vagrant reload"
-#            alias vrp="vagrant reload --provision"
-#            alias vp="vagrant push"
-#            alias vsh="vagrant share"
-#            alias vba="vagrant box add"
-#            alias vbr="vagrant box remove"
-#            alias vbl="vagrant box list"
-#            alias vbo="vagrant box outdated"
-#            alias vbu="vagrant box update"
-#            alias vpli="vagrant plugin install"
-#            alias vpll="vagrant plugin list"
-#            alias vplun="vagrant plugin uninstall"
-#            alias vplu="vagrant plugin update"
-#        fi
-#
+if command_exists vagrant; then
+    alias vgi="vagrant init"
+    alias vup="vagrant up"
+    alias vd="vagrant destroy"
+    alias vdf="vagrant destroy -f"
+    alias vssh="vagrant ssh"
+    alias vsshc="vagrant ssh-config"
+    alias vrdp="vagrant rdp"
+    alias vh="vagrant halt"
+    alias vssp="vagrant suspend"
+    alias vst="vagrant status"
+    alias vre="vagrant resume"
+    alias vgs="vagrant global-status"
+    alias vpr="vagrant provision"
+    alias vr="vagrant reload"
+    alias vrp="vagrant reload --provision"
+    alias vp="vagrant push"
+    alias vsh="vagrant share"
+    alias vba="vagrant box add"
+    alias vbr="vagrant box remove"
+    alias vbl="vagrant box list"
+    alias vbo="vagrant box outdated"
+    alias vbu="vagrant box update"
+    alias vpli="vagrant plugin install"
+    alias vpll="vagrant plugin list"
+    alias vplun="vagrant plugin uninstall"
+    alias vplu="vagrant plugin update"
+fi
 ###############################################################################
-#################################rsync ALIASES#################################
+#################################rsync ALIASES ################################
 ###############################################################################
-#        if (( $+commands[rsync] )); then
-#            alias rsync-copy="rsync -avz --progress -h"
-#            alias rsync-move="rsync -avz --progress -h --remove-source-files"
-#            alias rsync-update="rsync -avzu --progress -h"
-#            alias rsync-synchronize="rsync -avzu --delete --progress -h"
-#
-#            cpv() {
-#              rsync -pogbr -hhh --backup-dir=/tmp/rsync -e /dev/null --progress "$@"
-#            }
-#        fi
-#
+if command_exists rsync; then
+    alias rsync-copy="rsync -avz --progress -h"
+    alias rsync-move="rsync -avz --progress -h --remove-source-files"
+    alias rsync-update="rsync -avzu --progress -h"
+    alias rsync-synchronize="rsync -avzu --delete --progress -h"
+
+    cpv() {
+        rsync -pogbr -hhh --backup-dir=/tmp/rsync -e /dev/null --progress "$@"
+    }
+fi
 ###############################################################################
-#################################ANSIBLE ALIASES###############################
+#################################ANSIBLE ALIASES ##############################
 ###############################################################################
-#        if (( $+commands[ansible] )); then
-#            # Functions
-#            function ansible-version(){
-#              ansible --version
-#            }
-#
-#            function ansible-role-init(){
-#              if ! [ -z $1 ] ; then
-#                echo "Ansible Role : $1 Creating...."
-#                ansible-galaxy init $1
-#                tree $1
-#              else
-#                echo "Usage : ansible-role-init <role name>"
-#                echo "Example : ansible-role-init role1"
-#              fi
-#            }
-#
-#            # Alias
-#            alias a='ansible '
-#            alias aconf='ansible-config '
-#            alias acon='ansible-console '
-#            alias aver='ansible-version'
-#            alias arinit='ansible-role-init'
-#            alias ap='ansible-playbook '
-#            alias ainv='ansible-inventory '
-#            alias adoc='ansible-doc '
-#            alias al='ansible-pull '
-#            alias aval='ansible-vault'
-#            alias avc='ansible-vault create'
-#            alias ave='ansible-vault edit'
-#            alias avr='ansible-vault rekey'
-#            alias avenc='ansible-vault encrypt'
-#            alias avdec='ansible-vault decrypt'
-#            alias avv='ansible-vault view'
-#            alias aga='ansible-galaxy'
-#            alias agad='ansible-galaxy delete'
-#            alias agai='ansible-galaxy install'
-#            alias agaim='ansible-galaxy import'
-#            alias againf='ansible-galaxy info'
-#            alias agal='ansible-galaxy list'
-#            alias agalog='ansible-galaxy login'
-#            alias agar='ansible-galaxy remove'
-#            alias agas='ansible-galaxy search'
-#        fi
-#
+    if command_exists ansible; then
+    # Functions
+    ansible-version() {
+        ansible --version
+    }
+
+    ansible-role-init() {
+        if ! [ -z $1 ] ; then
+            echo "Ansible Role : $1 Creating...."
+            ansible-galaxy init $1
+            tree $1
+        else
+            echo "Usage : ansible-role-init <role name>"
+            echo "Example : ansible-role-init role1"
+        fi
+    }
+
+    # Alias
+    alias a='ansible '
+    alias aconf='ansible-config '
+    alias acon='ansible-console '
+    alias aver='ansible-version'
+    alias arinit='ansible-role-init'
+    alias ap='ansible-playbook '
+    alias ainv='ansible-inventory '
+    alias adoc='ansible-doc '
+    alias al='ansible-pull '
+    alias aval='ansible-vault'
+    alias avc='ansible-vault create'
+    alias ave='ansible-vault edit'
+    alias avr='ansible-vault rekey'
+    alias avenc='ansible-vault encrypt'
+    alias avdec='ansible-vault decrypt'
+    alias avv='ansible-vault view'
+    alias aga='ansible-galaxy'
+    alias agad='ansible-galaxy delete'
+    alias agai='ansible-galaxy install'
+    alias agaim='ansible-galaxy import'
+    alias againf='ansible-galaxy info'
+    alias agal='ansible-galaxy list'
+    alias agalog='ansible-galaxy login'
+    alias agar='ansible-galaxy remove'
+    alias agas='ansible-galaxy search'
+fi
 ###############################################################################
 #################################ARCANIST ALIASES##############################
 ###############################################################################
-#        if (( $+commands[arc] )); then
-#            alias ara='arc amend'
-#            alias arb='arc branch'
-#            alias arco='arc cover'
-#            alias arci='arc commit'
-#            alias ard='arc diff'
-#            alias ardc='arc diff --create'
-#            alias ardnu='arc diff --nounit'
-#            alias ardnupc='arc diff --nounit --plan-changes'
-#            alias ardpc='arc diff --plan-changes'
-#            alias ardp='arc diff --preview' # creates a new diff in the phab interface
-#            alias are='arc export'
-#            alias arh='arc help'
-#            alias arl='arc land'
-#            alias arli='arc lint'
-#            alias arls='arc list'
-#
-#            ardu() {
-#              arc diff --update "${1:t}"    # Both `ardu https://arcanist-url.com/<REVISION>`, and `ardu <REVISION>` work.
-#            }
-#
-#            arpa() {
-#              arc patch "${1:t}"            # Both `arpa https://arcanist-url.com/<REVISION>`, and `arpa <REVISION>` work.
-#            }
-#        fi
-#
+if command_exists arc; then
+    alias ara='arc amend'
+    alias arb='arc branch'
+    alias arco='arc cover'
+    alias arci='arc commit'
+    alias ard='arc diff'
+    alias ardc='arc diff --create'
+    alias ardnu='arc diff --nounit'
+    alias ardnupc='arc diff --nounit --plan-changes'
+    alias ardpc='arc diff --plan-changes'
+    alias ardp='arc diff --preview' # creates a new diff in the phab interface
+    alias are='arc export'
+    alias arh='arc help'
+    alias arl='arc land'
+    alias arli='arc lint'
+    alias arls='arc list'
+
+    ardu() {
+        arc diff --update "${1:t}"    # Both `ardu https://arcanist-url.com/<REVISION>`, and `ardu <REVISION>` work.
+    }
+
+    arpa() {
+        arc patch "${1:t}"            # Both `arpa https://arcanist-url.com/<REVISION>`, and `arpa <REVISION>` work.
+    }
+fi
 ###############################################################################
 #################################base64 ALIASES################################
 ###############################################################################
-#        if (( $+commands[base64] )); then
-#            encode64() {
-#              if [[ $# -eq 0 ]]; then
-#                cat | base64
-#              else
-#                printf '%s' $1 | base64
-#              fi
-#            }
-#
-#            decode64() {
-#              if [[ $# -eq 0 ]]; then
-#                cat | base64 --decode
-#              else
-#                printf '%s' $1 | base64 --decode
-#              fi
-#            }
-#            alias e64=encode64
-#            alias d64=decode64
-#        fi
-#
+if command_exists base64; then
+    encode64() {
+        if [[ $# -eq 0 ]]; then
+            cat | base64
+        else
+            printf '%s' $1 | base64
+        fi
+    }
+
+    decode64() {
+    if [[ $# -eq 0 ]]; then
+        cat | base64 --decode
+    else
+        printf '%s' $1 | base64 --decode
+    fi
+    }
+    alias e64=encode64
+    alias d64=decode64
+fi
 ###############################################################################
-#################################tmux ALIASES################################
+#################################tmux ALIASES #################################
 ###############################################################################
-#        alias tmux='tmux -f "$TMUX_CONFIG"'
-#
-#        {{ if eq .chezmoi.os "darwin" -}}
+if command_exists tmux; then
+    alias tmux="tmux -f $TMUX_CONFIG"
+fi
+
+{{ if eq .chezmoi.os "darwin" -}}
 ################################################################################
-#################################macOS ALIASES##################################
+#################################macOS ALIASES #################################
 ################################################################################
 ################################################################################
-############################apache specific aliases#############################
+############################apache specific aliases ############################
 ################################################################################
-#        alias apachestart="${SUDO}apachectl start"
-#        alias apachestop="${SUDO}apachectl stop"
-#        alias apacherestart="${SUDO}apachectl restart"
+if command_exists apachectl; then
+    alias apachestart="${SUDO}apachectl start"
+    alias apachestop="${SUDO}apachectl stop"
+    alias apacherestart="${SUDO}apachectl restart"
+fi
 #################################################################################
 ############################command specific aliases#############################
 #################################################################################
-#        if [[ -x /usr/local/bin/ssh ]]; then
-#          alias ssh="/usr/local/bin/ssh"
-#        fi
-#        alias ldd="otool -L"
-#        alias lock="pmset displaysleepnow"
-#
-        {{ else if eq .chezmoi.os "freebsd" -}}
-###############################################################################
-################################freebsd ALIASES################################
-###############################################################################
-#        alias cdp="cd /usr/local/poudriere/ports/default"
-#        alias svn="svnlite"
-#        alias portlint="portlint -abct"
-#        alias p="${SUDO}pkg"
-#        alias pb="${SUDO}pkg bootstrap -fy"
-#        alias pc="${SUDO}pkg remove -fay"
-#        alias pi="${SUDO}pkg install -y"
-#        alias pu="${SUDO}pkg update"
-#        alias pU="${SUDO}pkg upgrade"
-#        alias puU="pu && puU"
-#        alias pac="${SUDO}pkg autoremove -y && ${SUDO} pkg clean -ay"
+if [ -x /usr/local/bin/ssh ]; then
+    alias ssh="/usr/local/bin/ssh"
+fi
+alias ldd="otool -L"
+alias lock="pmset displaysleepnow"
 
-        {{ else if eq .chezmoi.osRelease.id "arch" -}}
+{{ else if eq .chezmoi.os "freebsd" -}}
 ###############################################################################
-###############################archlinux ALIASES###############################
+################################freebsd ALIASES ###############################
+###############################################################################
+alias cdp="cd /usr/local/poudriere/ports/default"
+alias portlint="portlint -abct"
+alias p="${SUDO}pkg"
+alias pb="${SUDO}pkg bootstrap -fy"
+alias pc="${SUDO}pkg remove -fay"
+alias pi="${SUDO}pkg install -y"
+alias pu="${SUDO}pkg update"
+alias pU="${SUDO}pkg upgrade"
+alias puU="pu && puU"
+alias pac="${SUDO}pkg autoremove -y && ${SUDO} pkg clean -ay"
+{{ else if eq .chezmoi.osRelease.id "arch" -}}
+###############################################################################
+###############################archlinux ALIASES ##############################
 ###############################################################################
 #######################################
 #              Pacman               #
@@ -411,7 +405,7 @@ case ${SHELL##*/} in
 #          alias upgrade="yay -Syu"                # Sync with repositories before upgrading packages
 #        fi
 
-        {{ else if eq .chezmoi.osRelease.id "centos" -}}
+{{ else if eq .chezmoi.osRelease.id "centos" -}}
 ################################################################################
 #################################centos ALIASES#################################
 ################################################################################
@@ -434,7 +428,7 @@ case ${SHELL##*/} in
 #        alias ygr="${SUDO}yum groupremove"            # remove pagage group
 #        alias yrl="${SUDO}yum remove --remove-leaves" # remove package and leaves
 
-        {{ else if eq .chezmoi.osRelease.id "debian" -}}
+{{ else if eq .chezmoi.osRelease.id "debian" -}}
 ###############################################################################
 #################################debian ALIASES################################
 ###############################################################################
@@ -604,7 +598,7 @@ case ${SHELL##*/} in
 #          awk '{print $1" "$2}'
 #        }
 
-        {{ else if eq .chezmoi.osRelease.id "fedora" -}}
+{{ else if eq .chezmoi.osRelease.id "fedora" -}}
 ###############################################################################
 #################################fedora ALIASES################################
 ###############################################################################
@@ -626,7 +620,7 @@ case ${SHELL##*/} in
 #        alias dnfgi="${SUDO}dnf groupinstall"         # Install package group
 #        alias dnfgr="${SUDO}dnf groupremove"          # Remove package group
 
-        {{ else if eq .chezmoi.osRelease.id "opensuse" -}}
+{{ else if eq .chezmoi.osRelease.id "opensuse" -}}
 ##############################################################################
 ###############################opensuse ALIASES###############################
 ##############################################################################
@@ -694,7 +688,7 @@ case ${SHELL##*/} in
 #        alias zll="zypper ll"             # list currently active package locks
 #        alias zrl="$SUDOzypper rl"        # remove specified package lock
 
-        {{ else if eq .chezmoi.osRelease.id "ubuntu" -}}
+{{ else if eq .chezmoi.osRelease.id "ubuntu" -}}
 ################################################################################
 ###############################ubuntu ALIASES###################################
 ################################################################################
@@ -840,6 +834,8 @@ case ${SHELL##*/} in
 #          awk '{print $1" "$2}'
 #        }
 {{ end }}
+case ${SHELL##*/} in
+    zsh|bash)
         ;;
     sh)
         ;;
