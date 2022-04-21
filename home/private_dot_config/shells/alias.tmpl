@@ -235,13 +235,15 @@ alias lock="pmset displaysleepnow"
 alias cdp="cd /usr/local/poudriere/ports/default"
 alias portlint="portlint -abct"
 alias p="${SUDO}pkg"
+alias pac="${SUDO}pkg autoremove -y && ${SUDO} pkg clean -ay"
 alias pb="${SUDO}pkg bootstrap -fy"
 alias pc="${SUDO}pkg remove -fay"
 alias pi="${SUDO}pkg install -y"
+alias pks="pkg search"
 alias pu="${SUDO}pkg update"
 alias pU="${SUDO}pkg upgrade"
 alias puU="pu && puU"
-alias pac="${SUDO}pkg autoremove -y && ${SUDO} pkg clean -ay"
+alias pv="pkg version"
 {{ else if eq .chezmoi.osRelease.id "arch" -}}
 ###############################################################################
 ###############################archlinux ALIASES ##############################
@@ -249,165 +251,91 @@ alias pac="${SUDO}pkg autoremove -y && ${SUDO} pkg clean -ay"
 #######################################
 #              Pacman               #
 #######################################
-
-#        alias pacupg="${SUDO}pacman -Syu"                     # Sync with repositories before upgrading packages
-#        alias pacin="${SUDO}pacman -S"                        # Install packages from the repositories
-#        alias pacins="${SUDO}pacman -U"                       # Install a package from a local file
-#        alias pacre="${SUDO}pacman -R"                        # Remove packages, keeping its settings and dependencies
-#        alias pacrem="${SUDO}pacman -Rns"                     # Remove packages, including its settings and dependencies
-#        alias pacrep="pacman -Si"                             # Display information about a package in the repositories
-#        alias pacreps="pacman -Ss"                            # Search for packages in the repositories
-#        alias pacloc="pacman -Qi"                             # Display information about a package in the local database
-#        alias paclocs="pacman -Qs"                            # Search for packages in the local database
-#        alias pacinsd="${SUDO}pacman -S --asdeps"             # Install packages as dependencies of another package
-#        alias pacmir="${SUDO}pacman -Syy"                     # Force refresh of all package lists after updating mirrorlist
-#        alias paclsorphans="${SUDO}pacman -Qdt"               # List all orphaned packages
-#        alias pacrmorphans="${SUDO}pacman -Rs $(pacman -Qtdq)"# Delete all orphaned packages
-#        alias pacfileupg="${SUDO}pacman -Fy"                  # Download fresh package databases from the server
-#        alias pacfiles="pacman -F"                            # Search package file names for matching strings
-#        alias pacls="pacman -Ql"                              # List files in a package
-#        alias pacown="pacman -Qo"                             # Show which package owns a file
-#        alias pacupd="${SUDO}pacman -Sy"                      # Update and refresh local package, ABS and AUR databases
+alias p="${SUDO}pacman"                                 # Pacman
+alias pac="${SUDO}pacman -Rs $(pacman -Qtdq)"           # Delete all orphaned packages
+alias pc="${SUDO}pacman -Rns"                           # Remove packages, including its settings and dependencies
+alias pi="${SUDO}pacman -S"                             # Install packages from the repositories
+alias pks="pacman -Ss"                                  # Search for packages in the repositories
+alias pu="${SUDO}pacman -Syyu"                          # Sync with repositories before upgrading packages
+alias pU="${SUDO}pacman -Fy"                            # Download fresh package databases from the server
+alias puU="pu && puU"
+# alias pacins="${SUDO}pacman -U"                       # Install a package from a local file
+# alias pacre="${SUDO}pacman -R"                        # Remove packages, keeping its settings and dependencies
+# alias pacrep="pacman -Si"                             # Display information about a package in the repositories
+# alias pacloc="pacman -Qi"                             # Display information about a package in the local database
+# alias paclocs="pacman -Qs"                            # Search for packages in the local database
+# alias pacinsd="${SUDO}pacman -S --asdeps"             # Install packages as dependencies of another package
+# alias pacmir="${SUDO}pacman -Syy"                     # Force refresh of all package lists after updating mirrorlist
+# alias paclsorphans="${SUDO}pacman -Qdt"               # List all orphaned packages
+# alias pacfiles="pacman -F"                            # Search package file names for matching strings
+# alias pacls="pacman -Ql"                              # List files in a package
+# alias pacown="pacman -Qo"                             # Show which package owns a file
+# alias pacupd="${SUDO}pacman -Sy"                      # Update and refresh local package, ABS and AUR databases
 
 # List all explicitly installed packages with a description
-#        function paclist() {
-#          pacman -Qqe | \
-#            xargs -I "{}" \
-#              expac "${bold_color}% 20n ${fg_no_bold[white]}%d${reset_color}" "{}"
-#        }
+paclist() {
+    pacman -Qqe | \
+        xargs -I "{}" \
+        expac "${bold_color}% 20n ${fg_no_bold[white]}%d${reset_color}" "{}"
+}
 
 # List all disowned files in your system
-#        function pacdisowned() {
-#          local tmp db fs
-#          tmp=${TMPDIR-/tmp}/pacman-disowned-$UID-$$
-#          db=$tmp/db
-#          fs=$tmp/fs
-#
-#          mkdir "$tmp"
-#          trap "rm -rf "$tmp"" EXIT
-#
-#          pacman -Qlq | sort -u > "$db"
-#
-#          find /bin /etc /lib /sbin /usr ! -name lost+found \
-#            \( -type d -printf "%p/\n" -o -print \) | sort > "$fs"
-#
-#          comm -23 "$fs" "$db"
-#        }
-#
+pacdisowned() {
+    local tmp db fs
+    tmp=${TMPDIR-/tmp}/pacman-disowned-$UID-$$
+    db=$tmp/db
+    fs=$tmp/fs
+
+    mkdir "$tmp"
+    trap "rm -rf "$tmp"" EXIT
+
+    pacman -Qlq | sort -u > "$db"
+
+    find /bin /etc /lib /sbin /usr ! -name lost+found \
+       \( -type d -printf "%p/\n" -o -print \) | sort > "$fs"
+
+    comm -23 "$fs" "$db"
+}
+
 # Get all keys for developers and trusted users
-#        alias pacmanallkeys="${SUDO}pacman-key --refresh-keys"
-#
+alias pacmanallkeys="${SUDO}pacman-key --refresh-keys"
+
 # Locally trust all keys passed as parameters
-#        function pacmansignkeys() {
-#          local key
-#          for key in $@; do
-#            ${SUDO}pacman-key --recv-keys $key
-#            ${SUDO}pacman-key --lsign-key $key
-#            printf "trust\n3\n" | sudo gpg --homedir /etc/pacman.d/gnupg \
-#              --no-permission-warning --command-fd 0 --edit-key $key
-#          done
-#        }
-#
-#        if (( $+commands[xdg-open] )); then
-#          # Open the website of an ArchLinux package
-#          function pacweb() {
-#            if [[ $# = 0 || "$1" =~ "--help|-h" ]]; then
-#              local underline_color="\e[${color[underline]}m"
-#              echo "$0 - open the website of an ArchLinux package"
-#              echo
-#              echo "Usage:"
-#              echo "    $bold_color$0$reset_color ${underline_color}target${reset_color}"
-#              return 1
-#            fi
-#
-#            local pkg="$1"
-#            local infos="$(LANG=C pacman -Si "$pkg")"
-#            if [[ -z "$infos" ]]; then
-#              return
-#            fi
-#            local repo="$(grep -m 1 "^Repo" <<< "$infos" | grep -oP "[^ ]+$")"
-#            local arch="$(grep -m 1 "^Arch" <<< "$infos" | grep -oP "[^ ]+$")"
-#            xdg-open "https://www.archlinux.org/packages/$repo/$arch/$pkg/" &>/dev/null
-#          }
-#        fi
+pacmansignkeys() {
+    local key
+    for key in $@; do
+        ${SUDO}pacman-key --recv-keys $key
+        ${SUDO}pacman-key --lsign-key $key
+        printf "trust\n3\n" | sudo gpg --homedir /etc/pacman.d/gnupg \
+            --no-permission-warning --command-fd 0 --edit-key $key
+    done
+}
 
-#######################################
-#             AUR helpers             #
-#######################################
-#        if (( $+commands[aura] )); then
-#          alias auin="${SUDO}aura -S"                         # Install packages from the repositories
-#          alias aurin="${SUDO}aura -A"                        # Install packages from the repositories
-#          alias auins="${SUDO}aura -U"                        # Install a package from a local file
-#          alias auinsd="${SUDO}aura -S --asdeps"              # Install packages as dependencies of another package (repositories only)
-#          alias aurinsd="${SUDO}aura -A --asdeps"             # Install packages as dependencies of another package (AUR only)
-#          alias auloc="aura -Qi"                              # Display information about a package in the local database
-#          alias aulocs="aura -Qs"                             # Search for packages in the local database
-#          alias aulst="aura -Qe"                              # List installed packages including from AUR (tagged as "local")
-#          alias aumir="${SUDO}aura -Syy"                      # Force refresh of all package lists after updating mirrorlist
-#          alias aurph="${SUDO}aura -Oj"                       # Remove orphans using aura
-#          alias aure="${SUDO}aura -R"                         # Remove packages, keeping its settings and dependencies
-#          alias aurem="${SUDO}aura -Rns"                      # Remove packages, including its settings and unneeded dependencies
-#          alias aurep="aura -Si"                              # Display information about a package in the repositories
-#          alias aurrep="aura -Ai"                             # Display information about a package from AUR
-#          alias aureps="aura -As --both"                      # Search for packages in the repositories and AUR
-#          alias auras="aura -As --both"                       # Search for packages in the repositories and AUR
-#          alias auupd="${SUDO}aura -Sy"                       # Update and refresh local package, ABS and AUR databases
-#          alias auupg="${SUDO}sh -c "aura -Syu              && aura -Au""
-#                                                              # Sync with repositories before upgrading all packages (from AUR too)
-#          alias ausu="${SUDO} sh -c "aura -Syu --no-confirm && aura -Au --no-confirm""
-#                                                              # Same as `auupg`, but without confirmation
-#          alias upgrade="${SUDO}aura -Syu"                    # Sync with repositories before upgrading packages
-#
-#          # extra bonus specially for aura
-#          alias auown="aura -Qqo"                             # Search for packages that own the specified file(s)
-#          alias auls="aura -Qql"                              # List all files owned by a given package
-#          function auownloc() { aura -Qi  $(aura -Qqo $@); }  # Display information about a package that owns the specified file(s)
-#          function auownls () { aura -Qql $(aura -Qqo $@); }  # List all files owned by a package that owns the specified file(s)
-#        fi
+if command_exists xdg-open; then
+# Open the website of an ArchLinux package
+pacweb() {
+    if [[ $# = 0 || "$1" =~ "--help|-h" ]]; then
+        local underline_color="\e[${color[underline]}m"
+        echo "$0 - open the website of an ArchLinux package"
+        echo
+        echo "Usage:"
+        echo "    $bold_color$0$reset_color ${underline_color}target${reset_color}"
+        return 1
+    fi
 
-#        if (( $+commands[trizen] )); then
-#          alias trconf="trizen -C"                # Fix all configuration files with vimdiff
-#          alias trupg="trizen -Syua"              # Sync with repositories before upgrading all packages (from AUR too)
-#          alias trsu="trizen -Syua --noconfirm"   # Same as `trupg`, but without confirmation
-#          alias trin="trizen -S"                  # Install packages from the repositories
-#          alias trins="trizen -U"                 # Install a package from a local file
-#          alias trre="trizen -R"                  # Remove packages, keeping its settings and dependencies
-#          alias trrem="trizen -Rns"               # Remove packages, including its settings and unneeded dependencies
-#          alias trrep="trizen -Si"                # Display information about a package in the repositories
-#          alias trreps="trizen -Ss"               # Search for packages in the repositories
-#          alias trloc="trizen -Qi"                # Display information about a package in the local database
-#          alias trlocs="trizen -Qs"               # Search for packages in the local database
-#          alias trlst="trizen -Qe"                # List installed packages including from AUR (tagged as "local")
-#          alias trorph="trizen -Qtd"              # Remove orphans using yaourt
-#          alias trinsd="trizen -S --asdeps"       # Install packages as dependencies of another package
-#          alias trmir="trizen -Syy"               # Force refresh of all package lists after updating mirrorlist
-#          alias trupd="trizen -Sy"                # Update and refresh local package, ABS and AUR databases
-#          alias upgrade="trizen -Syu"             # Sync with repositories before upgrading packages
-#        fi
-
-#        if (( $+commands[yay] )); then
-#          alias yaconf="yay -Pg"                  # Print current configuration
-#          alias yaupg="yay -Syu"                  # Sync with repositories before upgrading packages
-#          alias yasu="yay -Syu --noconfirm"       # Same as `yaupg`, but without confirmation
-#          alias yain="yay -S"                     # Install packages from the repositories
-#          alias yains="yay -U"                    # Install a package from a local file
-#          alias yare="yay -R"                     # Remove packages, keeping its settings and dependencies
-#          alias yarem="yay -Rns"                  # Remove packages, including its settings and unneeded dependencies
-#          alias yarep="yay -Si"                   # Display information about a package in the repositories
-#          alias yareps="yay -Ss"                  # Search for packages in the repositories
-#          alias yaloc="yay -Qi"                   # Display information about a package in the local database
-#          alias yalocs="yay -Qs"                  # Search for packages in the local database
-#          alias yalst="yay -Qe"                   # List installed packages including from AUR (tagged as "local")
-#          alias yaorph="yay -Qtd"                 # Remove orphans using yay
-#          alias yainsd="yay -S --asdeps"          # Install packages as dependencies of another package
-#          alias yamir="yay -Syy"                  # Force refresh of all package lists after updating mirrorlist
-#          alias yaupd="yay -Sy"                   # Update and refresh local package, ABS and AUR databases
-#          alias upgrade="yay -Syu"                # Sync with repositories before upgrading packages
-#        fi
-
+    local pkg="$1"
+    local infos="$(LANG=C pacman -Si "$pkg")"
+    if [[ -z "$infos" ]]; then
+        return
+    fi
+    local repo="$(grep -m 1 "^Repo" <<< "$infos" | grep -oP "[^ ]+$")"
+    local arch="$(grep -m 1 "^Arch" <<< "$infos" | grep -oP "[^ ]+$")"
+    xdg-open "https://www.archlinux.org/packages/$repo/$arch/$pkg/" &>/dev/null
+}
+fi
 {{ else if eq .chezmoi.osRelease.id "centos" -}}
 ################################################################################
-#################################centos ALIASES#################################
+################################centos ALIASES #################################
 ################################################################################
 ################################################################################
 ########################### yum specific aliases ###############################
