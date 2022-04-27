@@ -11,8 +11,8 @@ source "${ZIT_MODULES_PATH}/zit/zit.zsh"
 # Let Zit manage Zit upgrades
 zit-in "https://github.com/thiagokokada/zit" "zit"
 
-# Install zsh-completions
-zit-in "https://github.com/zsh-users/zsh-completions" "zsh-completions" "zsh-completions.plugin.zsh"
+# Load zsh-completions
+[[ -f $ZDOTDIR/plugins/zsh-completions/zsh-completions.plugin.zsh ]] && source "$ZDOTDIR/plugins/zsh-completions/zsh-completions.plugin.zsh"
 
 {{ if eq .chezmoi.os "darwin" -}}
 # Running my gpg-agent from my own host I am sitting in front of.
