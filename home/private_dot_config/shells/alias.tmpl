@@ -1,14 +1,25 @@
 ###############################################################################
 #################################COMMON ALIASES ###############################
 ###############################################################################
+alias .="pwd"
+alias ..="cd .."
+alias ../="cd ../"
+alias ...="cd ../.."
+alias .../="cd ../../"
+alias -="cd -"
+alias /="cd /"
+alias alais="alias"
 alias bye="echo 'bye';exit"
 alias cls="clear"
+alias csl="clear"
 alias cp="cp -ivRL"
+alias del="rm -v -i"
 alias df="df -h"
 if command_exists emacs; then
     alias emacs="emacs -nw"
 fi
 alias g="egrep -i"
+if command_exists gcc; then
 alias gcc="gcc -Wall -W -Wpointer-arith -Wbad-function-cast -std=c99"
 alias gcc_debug="gcc -ggdb3"
 alias gcc_optimize="gcc -fforce-mem -fforce-addr -finline-functions \
@@ -18,27 +29,62 @@ alias gcc_wall="gcc -Wall -Wpointer-arith -Wcast-qual -Wcast-align \
     -Wmissing-prototypes -Wmissing-declarations \
     -Wredundant-decls -Winline -Wnested-externs -std=c99 \
     -march=i686 -pipe"
-alias h="fc -l"
-alias j="jobs"
+fi
+alias ff="find . -name $*"
+alias j="jobs -l"
 alias l="ls -l"
 alias la="ls -aFG"
+alias lf="ls -FAG"
 alias ll="ls -laFhHo"
+alias log_tcpdump="clear ; exec tcpdump -s 2000 -n -i eth0"
+alias log_messages="clear; exec tail -f /var/log/messages --follow=name --retry"
 alias ls="ls -FGH"
+alias sl="ls -FGH"
 alias m="$PAGER"
+alias maek="make"
+alias md="mkdir -v -p"
+alias mess="clear ; tail -f /var/log/messages"
+alias more="$PAGER"
+alias msgcheck="msgfmt -o /dev/null --statistics --strict --verbose"
 alias mute="mixer pcm 0:0"
-alias mv="mv -v"
+alias mv="mv -vi"
 alias pgr="$PAGER"
-alias rm="rm -d"
+alias rd="rmdir -v"
+alias rm="rm -v -i"
 alias rmdir="rmdir -v"
+alias today="date '+%Y-%m-%d'"
+alias x="exit"
+e() {
+    if command_exists vim; then
+        vim "$@"
+    elif command_exists vi; then
+        vi "$@"
+    fi
+}
+rfcget() {
+    if command_exists curl; then
+        curl https://www.rfc-editor.org/rfc/rfc"$1".txt | $PAGER
+    elif command_exists fetch; then
+        fetch -o - https://www.rfc-editor.org/rfc/rfc"$1".txt | $PAGER
+    fi
+}
 v() {
     if command_exists batcat; then
         batcat --theme OneHalfDark "$@"
     elif command_exists bat; then
         bat --theme OneHalfDark "$@"
+    elif command_exists view; then
+        view "$@"
     else
         cat "$@"
     fi
 }
+
+#alias vt    	'tar tvf'
+#alias xt    	'tar xvf'
+#alias ct    	'tar cvf'
+#alias zv    	'unzip -v'
+#alias zt    	'unzip -t'
 ###############################################################################
 #################################NMAP ALIASES #################################
 ###############################################################################
@@ -764,8 +810,12 @@ fi
 {{ end }}
 case ${SHELL##*/} in
     zsh|bash)
+        alias h="history 25"
+        alias reload="clear ; exec zsh"
         ;;
     sh)
+        alias h="fc -l"
+        alias reload="clear ; source ~/.shrc"
         ;;
 esac
 
