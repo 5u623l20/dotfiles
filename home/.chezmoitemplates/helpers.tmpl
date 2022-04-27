@@ -51,26 +51,24 @@ seek_confirmation() {
     fi
 }
 
-#
 # Pushover Notifications
 # Usage: pushover "Title Goes Here" "Message Goes Here"
-#
 pushover () {
-    PUSHOVERURL="https://api.pushover.net/1/messages.json"
-    API_KEY=$PUSHOVER_API_KEY
-    USER_KEY=$PUSHOVER_USER_KEY
-    DEVICE=$PUSHOVER_DEVICE
+  PUSHOVERURL="https://api.pushover.net/1/messages.json"
+  API_KEY=$PUSHOVER_API_KEY
+  USER_KEY=$PUSHOVER_USER_KEY
+  DEVICE=$PUSHOVER_DEVICE
 
-    TITLE="${1}"
-    MESSAGE="${2}"
+  TITLE="${1}"
+  MESSAGE="${2}"
 
-    curl \
-        -F "token=${API_KEY}" \
-        -F "user=${USER_KEY}" \
-        -F "device=${DEVICE}" \
-        -F "title=${TITLE}" \
-        -F "message=${MESSAGE}" \
-        "${PUSHOVERURL}" > /dev/null 2>&1
+  curl \
+    -F "token=${API_KEY}" \
+    -F "user=${USER_KEY}" \
+    -F "device=${DEVICE}" \
+    -F "title=${TITLE}" \
+    -F "message=${MESSAGE}" \
+    "${PUSHOVERURL}" > /dev/null 2>&1
 }
 
 ################################################################################
@@ -168,4 +166,4 @@ elif command_exists python2; then
 fi
 FREEBSD_PY_DEFAULT="py38-"
 
-# vi: set ft=sh
+# vim: ft=sh:
