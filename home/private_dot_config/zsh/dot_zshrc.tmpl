@@ -11,14 +11,11 @@ source "${ZIT_MODULES_PATH}/zit/zit.zsh"
 # Let Zit manage Zit upgrades
 zit-in "https://github.com/thiagokokada/zit" "zit"
 
-# Load zsh-completions
-[[ -f $ZDOTDIR/plugins/zsh-completions/zsh-completions.plugin.zsh ]] && source "$ZDOTDIR/plugins/zsh-completions/zsh-completions.plugin.zsh"
-
 {{ if eq .chezmoi.os "darwin" -}}
 # Running my gpg-agent from my own host I am sitting in front of.
 # Load ssh identities and gpg-agents plugin
 if [[ -d ~/.gnupg ]]; then
-	source $ZDOTDIR/plugins/gpg-agent.zsh
+    source $ZDOTDIR/plugins/gpg-agent.zsh
 fi
 {{- end }}
 
@@ -29,15 +26,15 @@ fi
 # Load ssh identities and ssh-agents plugin
 typeset -a IDENTS
 if [[ -d ~/.ssh ]]; then
-	for file in ~/.ssh/*.pub(N); do
-      if [[ -f ${file%.pub} ]]; then
-        IDENTS+=${file:t:r}
-      fi
-	done
-	if [[ ! -z $IDENTS ]] ; then
-		zstyle :omz:plugins:ssh-agent identities $IDENTS
+    for file in ~/.ssh/*.pub(N); do
+        if [[ -f ${file%.pub} ]]; then
+            IDENTS+=${file:t:r}
+        fi
+    done
+    if [[ ! -z $IDENTS ]] ; then
+        zstyle :omz:plugins:ssh-agent identities $IDENTS
         source $ZDOTDIR/plugins/ssh-agent.zsh
-	fi
+    fi
 fi
 {{- end }}
 
@@ -64,11 +61,9 @@ zit-il "https://github.com/joshskidmore/zsh-fzf-history-search" "zsh-fzf-history
 #Load zsh-history-substring-search
 source $ZDOTDIR/plugins/zsh-history-substring-search.zsh
 
-# Load broot 
+# Load broot
 if (( $+commands[broot] )); then
-  if [[ -f $XDG_CONFIG_HOME/broot/launcher/bash/br ]]; then
-    source $XDG_CONFIG_HOME/broot/launcher/bash/br
-  fi
+    [[ -f $XDG_CONFIG_HOME/broot/launcher/bash/br ]] && source $XDG_CONFIG_HOME/broot/launcher/bash/br
 fi
 
 # Install Load and Setup junegunn/fzf
@@ -133,7 +128,5 @@ setopt share_history
 # Load custom key-bindings
 source $ZDOTDIR/key-bindings.zsh
 
-# script to compile ZSH files and speed-up loading
-# should be called last
+# script to compile ZSH files and speed-up loading should be called last
 zit-lo "zit" "extras/compile-zsh-files.zsh"
-
