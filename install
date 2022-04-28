@@ -60,19 +60,13 @@ if [ ! "$(command -v chezmoi)" ]; then
             fi
             cd ${TMPDIR}
             tar -zxvf ${TMPDIR}/${CHEZMOI_FILE_NAME} -C ${bin_dir} chezmoi
-            ${CHEZMOI_BIN} init -a 5u623l20
+            ${CHEZMOI_BIN} init -a $GITHUB_USERNAME
             ;;
         *)
             if [ "$(command -v curl)" ]; then
-                #sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply $GITHUB_USERNAME --debug
-                sh -c "$(curl -fsLS chezmoi.io/get)"
-                echo "Installed"
-                $CHEZMOI_BIN init -a $GITHUB_USERNAME --debug || $CHEZMOI_BIN doctor
+                sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply $GITHUB_USERNAME
             elif [ "$(command -v wget)" ]; then
-                #sh -c "$(wget -qO- chezmoi.io/get)" -- init --apply $GITHUB_USERNAME --debug
-                sh -c "$(wget -qO- chezmoi.io/get)"
-                echo "Installed"
-                $CHEZMOI_BIN init -a $GITHUB_USERNAME --debug || $CHEZMOI_BIN doctor
+                sh -c "$(wget -qO- chezmoi.io/get)" -- init --apply $GITHUB_USERNAME
             else
                 echo "To install chezmoi, you must have curl or wget installed." >&2
                 exit 1
