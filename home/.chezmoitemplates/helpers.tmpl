@@ -76,7 +76,8 @@ pushover () {
 # Use colors, but only if connected to a terminal, and that terminal
 # supports them.
 if which tput >/dev/null 2>&1; then
-  ncolors=$(tput colors)
+  [ ${TERM}=="" ] && TPUTTERM='-T xterm-256color' || TPUTTERM=''
+  ncolors=$(tput colors "$TPUTTERM")
 fi
 if [ -t 1 ] && [ -n "$ncolors" ] && [ "$ncolors" -ge 8 ]; then
   bold="$(tput bold)"
