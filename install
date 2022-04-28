@@ -67,12 +67,14 @@ if [ ! "$(command -v chezmoi)" ]; then
                 #sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply $GITHUB_USERNAME --debug
                 sh -c "$(curl -fsLS chezmoi.io/get)"
                 echo "Installed"
+                $CHEZMOI_BIN init
                 $CHEZMOI_BIN doctor
                 $CHEZMOI_BIN init -a $GITHUB_USERNAME --debug
             elif [ "$(command -v wget)" ]; then
                 #sh -c "$(wget -qO- chezmoi.io/get)" -- init --apply $GITHUB_USERNAME --debug
                 sh -c "$(wget -qO- chezmoi.io/get)"
                 echo "Installed"
+                $CHEZMOI_BIN init
                 $CHEZMOI_BIN doctor
                 $CHEZMOI_BIN init -a $GITHUB_USERNAME --debug
             else
