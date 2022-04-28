@@ -1,5 +1,5 @@
 {{ if (ne .chezmoi.os "darwin") -}}
-#!/bin/sh
+#!/bin/sh -x
 
 {{ template "helpers.tmpl" . }}
 
