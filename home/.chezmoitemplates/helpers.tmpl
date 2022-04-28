@@ -150,7 +150,30 @@ check_packagemgr
 {{ end }}
 
 GIT_BIN=$(command -v git)
+GIT_PKG="git"
 ZSH_BIN=$(command -v zsh)
+ZSH_PKG="zsh"
+{{- if (eq .chezmoi.os "aix" ) }}
+{{- else if (eq .chezmoi.os "darwin") }}
+{{- else if (eq .chezmoi.os "dragonfly" ) }}
+{{- else if (eq .chezmoi.os "freebsd" ) }}
+GIT_PKG="git-lite"
+{{- else if (eq .chezmoi.os "netbsd" ) }}
+{{- else if (eq .chezmoi.os "openbsd" ) }}
+{{- else if (eq .chezmoi.os "solaris" ) }}
+{{- else if (eq .chezmoi.osRelease.id "alpine" ) }}
+{{- else if (eq .chezmoi.osRelease.id "amzn" ) }}
+{{- else if (eq .chezmoi.osRelease.id "arch" ) }}
+{{- else if (eq .chezmoi.osRelease.id "centos" ) }}
+{{- else if (eq .chezmoi.osRelease.id "debian" ) }}
+{{- else if (eq .chezmoi.osRelease.id "fedora" ) }}
+{{- else if (eq .chezmoi.osRelease.id "opensuse" ) }}
+{{- else if (eq .chezmoi.osRelease.id "rhel" ) }}
+{{- else if (eq .chezmoi.osRelease.id "slackware" ) }}
+{{- else if (eq .chezmoi.osRelease.id "sles" ) }}
+{{- else if (eq .chezmoi.osRelease.id "ubuntu" ) }}
+{{- else }}
+{{- end }}
 if command_exists python3; then
   PYTHON_BIN="python3"
 elif command_exists python3.6; then
