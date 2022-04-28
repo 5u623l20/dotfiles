@@ -1,19 +1,23 @@
 {{ if (ne .chezmoi.os "darwin") -}}
 #!/bin/sh
+set -ue
 
 {{ template "helpers.tmpl" . }}
-
 ###############################################################################
 #################################Install git  #################################
 ###############################################################################
 {{ if .gotroot }}
+if [ -z "$GIT_BIN" ]; then
 $PKG_CMD $GIT_PKG
+fi
 {{ end }}
 ###############################################################################
 #################################Install zsh  #################################
 ###############################################################################
-set -ue
-{{ if not .gotroot }}
+if [ -z "$ZSH_BIN" ]; then
+{{ if .gotroot }}
+$PKG_CMD $ZSH_PKG
+{{ else }}
 if [ ! -x "$HOME"/.local/bin/zsh ]; then
   if command_exists curl; then
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/romkatv/zsh-bin/master/install)" -q -d "${HOME}"/.local -e no
@@ -23,9 +27,6 @@ if [ ! -x "$HOME"/.local/bin/zsh ]; then
     sh -c "$(fetch -q -o - https://raw.githubusercontent.com/romkatv/zsh-bin/master/install)" -q -d "${HOME}"/.local -e no
   fi
 fi
-ZSH_BIN=${HOME}/.local/bin/zsh
-{{ else }}
-$PKG_CMD $ZSH_PKG
 {{ end }}
 {{ end }}
 # vim: ft=sh:
