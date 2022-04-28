@@ -123,6 +123,9 @@ check_packagemgr() {
   elif command_exists pkg_add; then
     PKG_BIN=$(command -v pkg_add)
     PKG_CMD="$SUDO_CMD $PKG_BIN -U -I -x"
+  elif command_exists apk; then
+    PKG_BIN=$(command -v apk)
+    PKG_CMD="$SUDO_CMD $PKG_BIN add"
   elif command_exists apt; then
     PKG_BIN=$(command -v apt)
     PKG_CMD="$SUDO_CMD $PKG_BIN -y install"
