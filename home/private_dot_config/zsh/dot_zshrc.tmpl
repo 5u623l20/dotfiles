@@ -68,9 +68,9 @@ fi
 
 # Load and Setup junegunn/fzf
 # Auto-completion
-[[ $- == *i* ]] && source $ZDOTDIR/plugins/fzf/shell/completion.zsh 2> /dev/null
+[[ $- == *i* ]] && [[ -f $ZDOTDIR/plugins/fzf/shell/completion.zsh ]] && source $ZDOTDIR/plugins/fzf/shell/completion.zsh 2> /dev/null
 # Key bindings
-source $ZDOTDIR/plugins/fzf/shell/key-bindings.zsh
+[[ -f $ZDOTDIR/plugins/fzf/shell/key-bindings.zsh ]] && source $ZDOTDIR/plugins/fzf/shell/key-bindings.zsh
 
 # Install and Load zsh-z
 zit-il "https://github.com/agkozak/zsh-z.git" "zsh-z" "zsh-z.plugin.zsh"
