@@ -41,6 +41,12 @@
     exact = true
     stripComponents = 1
     refreshPeriod = "168h"
+[".config/zsh/plugins/zsh-nvm"]
+    type = "archive"
+    url = "https://github.com/lukechilds/zsh-nvm/archive/refs/heads/master.zip"
+    exact = true
+    stripComponents = 1
+    refreshPeriod = "168h"
 [".config/zsh/plugins/zsh-syntax-highlighting"]
     type = "archive"
     url = "https://github.com/zsh-users/zsh-syntax-highlighting/archive/refs/heads/master.zip"
@@ -53,7 +59,6 @@
     exact = true
     stripComponents = 1
     refreshPeriod = "168h"
-#zit-il "https://github.com/lukechilds/zsh-nvm" "zsh-nvm" "zsh-nvm.plugin.zsh"
 {{- end }}
 {{- if and (not .ephemeral) (not .headless) (.personal) (ne .chezmoi.os "darwin")}}
 {{-   $fontDir := "" }}
