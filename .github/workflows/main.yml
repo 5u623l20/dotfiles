@@ -34,6 +34,10 @@ jobs:
 #          - name: RockyLinux8
 #            distro: rockylinux/8
     steps:
+      - name: Check string replacement
+        run: |
+          echo ${matrix.name////_}
+          echo ${{matrix.name////_}}
       - name: Cache Vagrant boxes
         uses: actions/cache@v2
         with:
