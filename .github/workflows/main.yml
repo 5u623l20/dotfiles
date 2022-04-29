@@ -34,20 +34,6 @@ jobs:
 #          - name: RockyLinux8
 #            distro: rockylinux/8
     steps:
-      #      - name: Check string replacement
-      #  env:
-      #    FULLDISTRO: ${{ matrix.distro }}
-      #  run: |
-      #    echo $FULLDISTRO
-      #    echo ${FULLDISTRO////_}
-      #    echo "FULLDISTRO=${FULLDISTRO////_}" >> $GITHUB_ENV
-      #- name: Cache Vagrant boxes
-      #  uses: actions/cache@v2
-      #  with:
-      #    path: ~/.vagrant.d/boxes
-      #    key: ${{ runner.os }}-vagrant-${{ env.FULLDISTRO }}
-      #    restore-keys: |
-      #      ${{ runner.os }}-vagrant-${{ env.FULLDISTRO }}
       - name: Install | Test | ${{ matrix.name }}
         uses: 5u623l20/github-actions-vagrantup@main
         with:
