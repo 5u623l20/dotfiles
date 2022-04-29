@@ -52,8 +52,8 @@ fi
 # Load zsh-autosuggestions
 [[ -f $ZDOTDIR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source f $ZDOTDIR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-# Install and Load zsh-syntax-highlighting
-zit-il "https://github.com/zsh-users/zsh-syntax-highlighting" "zsh-syntax-highlighting" "zsh-syntax-highlighting.zsh"
+# Load zsh-syntax-highlighting
+[[ -f $ZDOTDIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source $ZDOTDIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Install and Load zsh-fzf-history-search
 zit-il "https://github.com/joshskidmore/zsh-fzf-history-search" "zsh-fzf-history-search" "zsh-fzf-history-search.zsh"
