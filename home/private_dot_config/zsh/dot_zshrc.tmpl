@@ -55,8 +55,8 @@ fi
 # Load zsh-syntax-highlighting
 [[ -f $ZDOTDIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source $ZDOTDIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# Install and Load zsh-fzf-history-search
-zit-il "https://github.com/joshskidmore/zsh-fzf-history-search" "zsh-fzf-history-search" "zsh-fzf-history-search.zsh"
+# Load zsh-fzf-history-search
+[[ -f $ZDOTDIR/plugins/zsh-fzf-history-search/zsh-fzf-history-search.zsh ]] && source $ZDOTDIR/plugins/zsh-fzf-history-search/zsh-fzf-history-search.zsh
 
 # Load zsh-history-substring-search
 source $ZDOTDIR/plugins/zsh-history-substring-search.zsh
