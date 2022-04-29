@@ -1,6 +1,5 @@
----
-name: CI
-'on':
+name: Main
+on:
   pull_request:
   push:
     branches:
@@ -11,70 +10,44 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  install-execute:
+  deploy:
+    name: Install Chezmoi from Github repo | ${{ matrix.name }}
+    runs-on: macos-10.15
     strategy:
       fail-fast: false
       matrix:
         include:
-          - name: Ubuntu-20.04
-            platform: ubuntu-20.04
-            vagrant: no
-            fetchbin: "curl -fsLS "
-          - name: Alpine-3.15.4
-            platform: ubuntu-20.04
-            vagrant: no
-            container: alpine:3.15.4
-            pkgbin: "apk add tree"
-            fetchbin: "wget -qO- "
-          - name: ArchLinux
-            platform: ubuntu-20.04
-            vagrant: no
-            container: archlinux
-            pkgbin: "pacman -Sy --noconfirm tree"
-            fetchbin: "curl -fsLS "
-          - name: CentOS7
-            platform: ubuntu-20.04
-            vagrant: no
-            container: centos:7
-            pkgbin: "yum install -y tree"
-            fetchbin: "curl -fsLS "
-          - name: Debian11
-            platform: ubuntu-20.04
-            vagrant: no
-            container: debian:11
-            pkgbin: "apt-get update && apt-get install -y curl tree"
-            fetchbin: "curl -fsLS "
-          - name: Fedora34
-            platform: ubuntu-20.04
-            vagrant: no
-            container: fedora:34
-            pkgbin: "dnf install -y tree"
-            fetchbin: "curl -fsLS "
-          - name: RockyLinux8
-            platform: ubuntu-20.04
-            vagrant: no
-            container: rockylinux:8
-            pkgbin: "yum install -y tar tree"
-            fetchbin: "curl -fsLS "
-
-    continue-on-error: true
-    name: ${{ matrix.name }}
-    runs-on: ${{ matrix.platform }}
-    container: ${{ matrix.container }}
+          - name: FreeBSD
+            distro: freebsd/FreeBSD-12.3-STABLE
+          - name: Alpine
+            distro: roboxes/alpine315
+#          - name: Ubuntu
+#            distro: ubuntu/focal64
+#          - name: ArchLinux
+#            distro: archlinux/archlinux
+#          - name: CentOS7
+#            distro: centos/7
+#          - name: Debian11
+#            distro: debian/bullseye64
+#          - name: Fedora35
+#            distro: fedora/35-cloud-base
+#          - name: RockyLinux8
+#            distro: rockylinux/8
     steps:
-      - name: Update $PATH
-        run: echo "$HOME/bin" >> $GITHUB_PATH
-      - name: Install additional packages
-        if: matrix.pkgbin != ''
-        run: ${{ matrix.pkgbin }}
-      - name: Install and initialize chezmoi
-        if: matrix.vagrant == 'no'
-        run: |
-          cd
-          sh -c "$(${{ matrix.fetchbin }}https://raw.githubusercontent.com/5u623l20/dotfiles/main/install)"
-      - name: Execute chezmoi data
-        if: matrix.vagrant == 'no'
-        run: chezmoi data
-      - name: Print directory tree
-        if: matrix.vagrant == 'no'
-        run: tree ~/ -a -I '.Azure|.Trash|.aliyun|.android|.azcopy|.azure-devops|.bash_sessions|.cabal|.cargo|.conda|.dotnet|.fastlane|.ghcup|.gradle|.npm|.nvm|.rustup|.sbt|.ssh|.subversion|.vcpkg|.yarn|Desktop|Documents|Downloads|Library|Movies|Music|Pictures|bootstrap|hostedtoolcache|project|runners|target|work|.composer|*ActionsService|.docker|.dotnet|.ghcup|.nvm|.rustup|factory|perflog|warmup'
+      - name: Cache Vagrant boxes
+        uses: actions/cache@v2
+        with:
+          path: ~/.vagrant.d/boxes
+          key: ${{ runner.os }}-vagrant-${{ matrix.distro }}
+          restore-keys: |
+            ${{ runner.os }}-vagrant-${{ matrix.distro }}
+      - name: Install | Test | ${{ matrix.name }}
+        uses: 5u623l20/github-actions-vagrantup@main
+        with:
+          mem: 4096
+          box: ${{ matrix.distro }}
+          run: |
+            cd
+            { command -v curl > /dev/null && sh -c "$(curl -fsLS https://raw.githubusercontent.com/5u623l20/dotfiles/main/install)"; } || { command -v wget > /dev/null && sh -c "$(wget -qO- https://raw.githubusercontent.com/5u623l20/dotfiles/main/install)"; } || { command -v fetch > /dev/null && sh -c "$(fetch -q -o - https://raw.githubusercontent.com/5u623l20/dotfiles/main/install)"; }
+            chezmoi data
+            tree ~/ -a -I '.Azure|.Trash|.aliyun|.android|.azcopy|.azure-devops|.bash_sessions|.cabal|.cargo|.conda|.dotnet|.fastlane|.ghcup|.gradle|.npm|.nvm|.rustup|.sbt|.ssh|.subversion|.vcpkg|.yarn|Desktop|Documents|Downloads|Library|Movies|Music|Pictures|bootstrap|hostedtoolcache|project|runners|target|work|.composer|*ActionsService|.docker|.dotnet|.ghcup|.nvm|.rustup|factory|perflog|warmup'
