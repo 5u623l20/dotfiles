@@ -17,7 +17,18 @@
     exact = true
     stripComponents = 1
     refreshPeriod = "168h"
-#zit-il "https://github.com/romkatv/powerlevel10k" "powerlevel10k" "powerlevel10k.zsh-theme"
+[".config/zsh/plugins/powerlevel10k"]
+    type = "archive"
+    url = "https://github.com/romkatv/powerlevel10k/archive/refs/heads/master.zip"
+    exact = true
+    stripComponents = 1
+    refreshPeriod = "168h"
+#zit-il "https://github.com/zsh-users/zsh-autosuggestions" "zsh-autosuggestions" "zsh-autosuggestions.zsh"
+#zit-il "https://github.com/zsh-users/zsh-syntax-highlighting" "zsh-syntax-highlighting" "zsh-syntax-highlighting.zsh"
+#zit-il "https://github.com/joshskidmore/zsh-fzf-history-search" "zsh-fzf-history-search" "zsh-fzf-history-search.zsh"
+#zit-in "https://github.com/junegunn/fzf" "fzf"
+#zit-il "https://github.com/agkozak/zsh-z.git" "zsh-z" "zsh-z.plugin.zsh"
+#zit-il "https://github.com/lukechilds/zsh-nvm" "zsh-nvm" "zsh-nvm.plugin.zsh"
 {{- end }}
 {{- if and (not .ephemeral) (not .headless) (.personal) (ne .chezmoi.os "darwin")}}
 {{-   $fontDir := "" }}
@@ -49,10 +60,3 @@
     url = "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Retina/complete/Fira%20Code%20Retina%20Nerd%20Font%20Complete%20Mono.ttf"
     refreshPeriod = "168h"
 {{- end }}
-#zit-il "https://github.com/zsh-users/zsh-autosuggestions" "zsh-autosuggestions" "zsh-autosuggestions.zsh"
-#zit-il "https://github.com/zsh-users/zsh-syntax-highlighting" "zsh-syntax-highlighting" "zsh-syntax-highlighting.zsh"
-#zit-il "https://github.com/joshskidmore/zsh-fzf-history-search" "zsh-fzf-history-search" "zsh-fzf-history-search.zsh"
-#zit-in "https://github.com/junegunn/fzf" "fzf"
-#zit-il "https://github.com/agkozak/zsh-z.git" "zsh-z" "zsh-z.plugin.zsh"
-#zit-il "https://github.com/lukechilds/zsh-nvm" "zsh-nvm" "zsh-nvm.plugin.zsh"
-#zit-lo "zit" "extras/compile-zsh-files.zsh"

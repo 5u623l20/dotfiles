@@ -46,8 +46,8 @@ if [[ $terminfo[colors] -ge 256 ]]; then
 else
   [[ -f $ZDOTDIR/p10k-8colors.zsh ]] && source $ZDOTDIR/p10k-8colors.zsh
 fi
-# Install and load powerlevel10k theme
-zit-il "https://github.com/romkatv/powerlevel10k" "powerlevel10k" "powerlevel10k.zsh-theme"
+# Load powerlevel10k theme
+[[ -f $ZDOTDIR/plugins/powerlevel10k/powerlevel10k.zsh-theme ]] && source $ZDOTDIR/plugins/powerlevel10k/powerlevel10k.zsh-theme
 
 # Install and Load zsh-autosuggestions
 zit-il "https://github.com/zsh-users/zsh-autosuggestions" "zsh-autosuggestions" "zsh-autosuggestions.zsh"
