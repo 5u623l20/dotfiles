@@ -5,6 +5,12 @@
     stripComponents = 1
     refreshPeriod = "84h"
 {{ if (.gotroot) }}
+[".config/zsh/plugins/fzf"]
+    type = "archive"
+    url = "https://github.com/junegunn/fzf/archive/refs/heads/master.zip"
+    exact = true
+    stripComponents = 1
+    refreshPeriod = "168h"
 [".config/zsh/plugins/powerlevel10k"]
     type = "archive"
     url = "https://github.com/romkatv/powerlevel10k/archive/refs/heads/master.zip"
@@ -41,7 +47,6 @@
     exact = true
     stripComponents = 1
     refreshPeriod = "168h"
-#zit-in "https://github.com/junegunn/fzf" "fzf"
 #zit-il "https://github.com/agkozak/zsh-z.git" "zsh-z" "zsh-z.plugin.zsh"
 #zit-il "https://github.com/lukechilds/zsh-nvm" "zsh-nvm" "zsh-nvm.plugin.zsh"
 {{- end }}

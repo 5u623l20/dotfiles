@@ -66,8 +66,7 @@ if (( $+commands[broot] )); then
     [[ -f $XDG_CONFIG_HOME/broot/launcher/bash/br ]] && source $XDG_CONFIG_HOME/broot/launcher/bash/br
 fi
 
-# Install Load and Setup junegunn/fzf
-zit-in "https://github.com/junegunn/fzf" "fzf"
+# Load and Setup junegunn/fzf
 # Auto-completion
 [[ $- == *i* ]] && source $ZDOTDIR/plugins/fzf/shell/completion.zsh 2> /dev/null
 # Key bindings
