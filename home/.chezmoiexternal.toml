@@ -12,9 +12,11 @@
     stripComponents = 1
     refreshPeriod = "168h"
 [".config/zsh/plugins/zsh-completions"]
-    type = "git-repo"
-    url = "https://github.com/zsh-users/zsh-completions"
-    refreshPeriod = "84h"
+    type = "archive"
+    url = "https://github.com/zsh-users/zsh-completions/archive/refs/heads/master.zip"
+    exact = true
+    stripComponents = 1
+    refreshPeriod = "168h"
 #zit-il "https://github.com/romkatv/powerlevel10k" "powerlevel10k" "powerlevel10k.zsh-theme"
 {{- end }}
 {{- if and (not .ephemeral) (not .headless) (.personal) (ne .chezmoi.os "darwin")}}
