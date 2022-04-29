@@ -45,9 +45,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.vagrant.d/boxes
-          key: ${{ runner.os }}-vagrant-$FULLDISTRO
+          key: ${{ runner.os }}-vagrant-${{ env.FULLDISTRO }}
           restore-keys: |
-            ${{ runner.os }}-vagrant-$FULLDISTRO
+            ${{ runner.os }}-vagrant-${{ env.FULLDISTRO }}
       - name: Install | Test | ${{ matrix.name }}
         uses: 5u623l20/github-actions-vagrantup@main
         with:
