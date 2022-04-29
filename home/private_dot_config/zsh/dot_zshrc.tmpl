@@ -6,11 +6,6 @@ if [[ -r "${XDG_CACHE_HOME}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# Source Zit file
-source "${ZIT_MODULES_PATH}/zit/zit.zsh"
-# Let Zit manage Zit upgrades
-zit-in "https://github.com/thiagokokada/zit" "zit"
-
 {{ if eq .chezmoi.os "darwin" -}}
 # Running my gpg-agent from my own host I am sitting in front of.
 # Load ssh identities and gpg-agents plugin

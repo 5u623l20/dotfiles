@@ -17,12 +17,6 @@
     exact = true
     stripComponents = 1
     refreshPeriod = "168h"
-[".config/zsh/plugins/zit"]
-    type = "archive"
-    url = "https://github.com/thiagokokada/zit/archive/master.tar.gz"
-    exact = true
-    stripComponents = 1
-    refreshPeriod = "168h"
 [".config/zsh/plugins/zsh-autosuggestions"]
     type = "archive"
     url = "https://github.com/zsh-users/zsh-autosuggestions/archive/refs/heads/master.zip"
