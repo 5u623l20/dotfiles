@@ -1,3 +1,5 @@
+#   command_exists: checks for existence of a command (0 = true, 1 = false)
+#   -------------------------------------------------------------------
 command_exists() {
   command -v "$@" >/dev/null 2>&1
 }
@@ -5,39 +7,39 @@ command_exists() {
 #lowercase() {
 #  echo "$1" | sed "y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/"
 #}
-#
+
 #e_header() {
 #  printf "\n${bold}${purple}==========  %s  ==========${reset}\n" "$@"
 #}
-#
+
 #e_arrow() {
 #  printf "➜ %s\n" "$@"
 #}
-#
+
 #e_success() {
 #  printf "${green}✔ %s${reset}\n" "$@"
 #}
-#
+
 #e_error() {
 #  printf "${red}✖ %s${reset}\n" "$@"
 #}
-#
+
 #e_warning() {
 #  printf "${tan}➜ %s${reset}\n" "$@"
 #}
-#
+
 #e_underline() {
 #  printf "${underline}${bold}%s${reset}\n" "$@"
 #}
-#
+
 #e_bold() {
 #  printf "${bold}%s${reset}\n" "$@"
 #}
-#
+
 #e_note() {
 #  printf "${underline}${bold}${blue}Note:${reset}  ${yellow}%s${reset}\n" "$@"
 #}
-#
+
 #seek_confirmation() {
 #    printf "\\n${bold}%s${reset}" "$@"
 #    old_stty_cfg=$(stty -g)
@@ -48,11 +50,11 @@ command_exists() {
 #        exit 1
 #    fi
 #}
+
 #
-##
-## Pushover Notifications
-## Usage: pushover "Title Goes Here" "Message Goes Here"
-##
+# Pushover Notifications
+# Usage: pushover "Title Goes Here" "Message Goes Here"
+#
 #pushover () {
 #    PUSHOVERURL="https://api.pushover.net/1/messages.json"
 #    API_KEY=$PUSHOVER_API_KEY
@@ -70,7 +72,7 @@ command_exists() {
 #        -F "message=${MESSAGE}" \
 #        "${PUSHOVERURL}" > /dev/null 2>&1
 #}
-#
+
 #set_sudo() {
 #  if command_exists sudo; then
 #    if sudo -vn 2>&1 | grep 'password' > /dev/null; then
@@ -80,9 +82,9 @@ command_exists() {
 #    fi
 #  fi
 #}
-#
+
 #set_sudo
-#
+
 #{{ if (ne .chezmoi.os "darwin") -}}
 #check_packagemgr() {
 #  if command_exists yum; then
@@ -100,7 +102,7 @@ command_exists() {
 #  fi
 #}
 #{{ end }}
-#
+
 #set_download() {
 #  if command_exists curl; then
 #    DOWNLOAD_BIN=$(command -v curl)
@@ -112,12 +114,12 @@ command_exists() {
 #    DOWNLOAD_BIN=$(command -v curlie)
 #  fi
 #}
-#
+
 #set_download
 #{{ if (ne .chezmoi.os "darwin") -}}
 #check_packagemgr
 #{{ end }}
-#
+
 #GIT_BIN=$(command -v git)
 #ZSH_BIN=$(command -v zsh)
 #if command_exists python3; then
@@ -134,5 +136,5 @@ command_exists() {
 #  PYTHON_BIN="python2"
 #fi
 #FREEBSD_PY_DEFAULT="py38-"
-#
-## vi: set ft=sh
+
+# vi: set ft=sh
