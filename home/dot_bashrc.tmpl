@@ -11,6 +11,7 @@ source ~/.config/env
 # { env
 export BASHDOTDIR=$XDG_CONFIG_HOME/bash
 export LSCOLORS='Gxfxcxdxdxegedabagacad'
+source $XDG_CONFIG_HOME/shells/functions
 source $BASHDOTDIR/libs/base.sh
 # Check if UID is not zero and sudo exists.
 if ( command_exists sudo ) && [ $UID -ne 0 ] && ( sudo -vn 2>&1 | grep 'password' > /dev/null ); then
@@ -49,7 +50,6 @@ CDPATH="."
 PROMPT_COMMAND='history -a'
 # env }
 
-source $XDG_CONFIG_HOME/shells/functions
 source $BASHDOTDIR/libs/shopt.sh
 source $BASHDOTDIR/libs/utils.sh
 source $BASHDOTDIR/libs/functions.sh
