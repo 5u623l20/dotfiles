@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -82,14 +83,10 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# Path to your oh-my-bash installation.
 export OSH=$XDG_CONFIG_HOME/bash
 
 THEME="random"
 
-# Which completions would you like to load? (completions can be found in ~/.oh-my-bash/completions/*)
-# Example format: completions=(ssh git bundler gem pip pip3)
-# Add wisely, as too many completions slow down shell startup.
 completions=(
   git
   composer
@@ -137,5 +134,4 @@ fi
 if [[ $PROMPT ]]; then
     export PS1="\["$PROMPT"\]"
 fi
-
 # vi: ft=sh
