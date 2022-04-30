@@ -157,6 +157,8 @@ check_packagemgr
 
 GIT_BIN=$(command -v git)
 GIT_PKG="git"
+VIM_BIN=$(command -v vim)
+VIM_PKG="vim"
 ZSH_BIN=$(command -v zsh)
 ZSH_PKG="zsh"
 {{- if (eq .chezmoi.os "aix" ) }}
@@ -172,6 +174,7 @@ GIT_PKG="git-lite"
 {{- else if (eq .chezmoi.osRelease.id "arch" ) }}
 {{- else if (eq .chezmoi.osRelease.id "centos" ) }}
 {{- else if (eq .chezmoi.osRelease.id "debian" ) }}
+VIM_PKG="vim-nox"
 {{- else if (eq .chezmoi.osRelease.id "fedora" ) }}
 {{- else if (eq .chezmoi.osRelease.id "opensuse" ) }}
 {{- else if (eq .chezmoi.osRelease.id "rhel" ) }}
