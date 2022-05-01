@@ -67,9 +67,13 @@ if ($?USER == 0 || $?prompt == 0) exit
 if ($?prompt) then
     # Change only root's prompt
     if (`id -g` == 0) then
+{{- if .isBounce}}
+        set prompt="%B%n@%U%m%u%b %~ %# "
+{{ end }}
         set prompt="\
 ${green}%B%n${yellow}@${blue}%U%m%u%b ${yellow}%~\
 ${cyan}%#${end} "
+{{ end }}
     else
         set prompt="\
 ${red}%B%n${yellow}@${blue}%U%m%u%b ${yellow}%~\
