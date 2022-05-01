@@ -67,7 +67,7 @@ if ($?USER == 0 || $?prompt == 0) exit
 if ($?prompt) then
     # Change only root's prompt
     if (`id -g` == 0) then
-{{- if (.gotroot) }}
+{{- if .isbounce }}
         set prompt="%B%n@%U%m%u%b %~ %# "
 {{ else }}
         set prompt="\
