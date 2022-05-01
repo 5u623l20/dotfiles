@@ -69,7 +69,7 @@ if ($?prompt) then
     if (`id -g` == 0) then
 {{- if .isBounce}}
         set prompt="%B%n@%U%m%u%b %~ %# "
-{{ end }}
+{{ else }}
         set prompt="\
 ${green}%B%n${yellow}@${blue}%U%m%u%b ${yellow}%~\
 ${cyan}%#${end} "
