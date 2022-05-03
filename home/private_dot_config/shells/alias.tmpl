@@ -49,6 +49,8 @@ alias msgcheck="msgfmt -o /dev/null --statistics --strict --verbose"
 alias mute="mixer pcm 0:0"
 alias mv="mv -vi"
 alias pgr="$PAGER"
+alias publicip4="curl https://icanhazip.com"
+alias publicip6="curl https://ipv6.icanhazip.com"
 alias rd="rmdir -v"
 alias rm="rm -v -i"
 alias rmdir="rmdir -v"
@@ -152,7 +154,7 @@ fi
 ###############################################################################
 #################################ANSIBLE ALIASES ##############################
 ###############################################################################
-    if command_exists ansible; then
+if command_exists ansible; then
     # Functions
     ansible-version() {
         ansible --version
@@ -279,6 +281,8 @@ alias lock="pmset displaysleepnow"
 ################################freebsd ALIASES ###############################
 ###############################################################################
 alias cdp="cd /usr/local/poudriere/ports/default"
+alias publicip4='drill -4 myip.opendns.com @resolver1.opendns.com A | grep -Ev "^;;|^$"'
+alias publicip6='drill -6 myip.opendns.com @resolver1.opendns.com AAAA | grep -Ev "^;;|^$"'
 alias portlint="portlint -abct"
 alias p="${SUDO}pkg"
 alias pac="${SUDO}pkg autoremove -y && ${SUDO} pkg clean -ay"
