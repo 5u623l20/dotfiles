@@ -82,27 +82,25 @@ pushover () {
 #fi
 if [ -t 1 ]; then
 #  && [ -n "$ncolors" ] && [ "$ncolors" -ge 8 ]; then
-    echo "Interactive"
-  bold="$(tput bold)"
-  underline=$(tput sgr 0 1)
-  reset="$(tput sgr0)"
-  red="$(tput setaf 1)"
-  green="$(tput setaf 2)"
-  yellow="$(tput setaf 3)"
-  blue="$(tput setaf 4)"
-  purple=$(tput setaf 171)
-  tan=$(tput setaf 3)
+    bold="$(tput bold)"
+    underline=$(tput sgr 0 1)
+    reset="$(tput sgr0)"
+    red="$(tput setaf 1)"
+    green="$(tput setaf 2)"
+    yellow="$(tput setaf 3)"
+    blue="$(tput setaf 4)"
+    purple=$(tput setaf 171)
+    tan=$(tput setaf 3)
 else
-    echo "Non-Interactive"
-  bold=""
-  underline=""
-  reset=""
-  red=""
-  green=""
-  yellow=""
-  blue=""
-  purple=""
-  tan=""
+    bold=""
+    underline=""
+    reset=""
+    red=""
+    green=""
+    yellow=""
+    blue=""
+    purple=""
+    tan=""
 fi
 
 set_sudo() {
