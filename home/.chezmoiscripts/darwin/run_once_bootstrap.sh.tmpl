@@ -1,8 +1,12 @@
 {{ if (eq .chezmoi.os "darwin") -}}
 #!/bin/bash
 
+{{ template "helpers.tmpl" . }}
+
 # Install HomeBrew
+if ! command_exists brew; then
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
 
 # Install some applications applicable to all hosts
 brew bundle --no-lock --file=/dev/stdin <<EOF
