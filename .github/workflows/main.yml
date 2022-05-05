@@ -1,3 +1,4 @@
+---
 name: Main
 on:
   pull_request:
@@ -21,7 +22,8 @@ jobs:
             distro: freebsd/FreeBSD-12.3-STABLE
           - name: Alpine
             distro: roboxes/alpine315
-#          - name: Ubuntu
+          - name: MacOS
+#         - name: Ubuntu
 #            distro: ubuntu/focal64
 #          - name: ArchLinux
 #            distro: archlinux/archlinux
@@ -35,6 +37,7 @@ jobs:
 #            distro: rockylinux/8
     steps:
       - name: Install | Test | ${{ matrix.name }}
+        if: matrix.name != 'MacOS'
         uses: 5u623l20/github-actions-vagrantup@main
         with:
           mem: 4096
@@ -44,3 +47,10 @@ jobs:
             { command -v curl > /dev/null && sh -c "$(curl -fsLS https://raw.githubusercontent.com/5u623l20/dotfiles/main/install)"; } || { command -v wget > /dev/null && sh -c "$(wget -qO- https://raw.githubusercontent.com/5u623l20/dotfiles/main/install)"; } || { command -v fetch > /dev/null && sh -c "$(fetch -q -o - https://raw.githubusercontent.com/5u623l20/dotfiles/main/install)"; }
             ./bin/chezmoi data
             find ~/ -type f | grep -E -v '.*ActionsService|.Azure|.Trash|.aliyun|.android|.azcopy|.azure-devops|.bash_sessions|.cabal|.cargo|.composer|.conda|.docker|.dotnet|.factory|.fastlane|.ghcup|.gradle|.npm|.nvm|.rustup|.sbt|.ssh|.subversion|.vcpkg|.yarn|Desktop|Documents|Downloads|Library|Movies|Music|Pictures|bootstrap|hostedtoolcache|perflog|project|runners|target|warmup|work'
+      - name: Install | Test | ${{ matrix.name }}
+        if: matrix.name == 'MacOS'
+        run: |
+          cd
+          { command -v curl > /dev/null && sh -c "$(curl -fsLS https://raw.githubusercontent.com/5u623l20/dotfiles/main/install)"; } || { command -v wget > /dev/null && sh -c "$(wget -qO- https://raw.githubusercontent.com/5u623l20/dotfiles/main/install)"; } || { command -v fetch > /dev/null && sh -c "$(fetch -q -o - https://raw.githubusercontent.com/5u623l20/dotfiles/main/install)"; }
+          ./bin/chezmoi data
+          find ~/ -type f | grep -E -v '.*ActionsService|.Azure|.Trash|.aliyun|.android|.azcopy|.azure-devops|.bash_sessions|.cabal|.cargo|.composer|.conda|.docker|.dotnet|.factory|.fastlane|.ghcup|.gradle|.npm|.nvm|.rustup|.sbt|.ssh|.subversion|.vcpkg|.yarn|Desktop|Documents|Downloads|Library|Movies|Music|Pictures|bootstrap|hostedtoolcache|perflog|project|runners|target|warmup|work'
