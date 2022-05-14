@@ -9,12 +9,10 @@
 {{ if not .personal }}
 .config/kitty
 .config/neomutt
-.config/nvim
 .doom.d
 .mbsyncrc
 {{ end }}
 {{- if not .gotroot }}
-.config/nvim
 .zsh
 .zshenv
 .zshrc
