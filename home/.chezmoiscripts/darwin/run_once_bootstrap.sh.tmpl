@@ -10,6 +10,9 @@ fi
 
 # Install some applications applicable to all hosts
 brew bundle --no-lock --file=/dev/stdin <<EOF
+## where to install homebrew-cask applications
+cask_args appdir: '/Applications'
+
 tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/cask-drivers"
@@ -20,6 +23,7 @@ tap "homebrew/services"
 brew "bat"
 brew "fortune"
 brew "fzf"
+brew "mas"
 brew "openssh"
 brew "tree"
 cask "1password"
@@ -41,12 +45,12 @@ brew "broot"
 brew "caddy"
 brew "glib"
 brew "coreutils"
-brew "emacs", link: false
+brew "emacs", link: true
 brew "cask"
 brew "cdrtools"
 brew "choose"
 brew "cmake"
-brew "cookiecutter"
+brew "cookiecutter", link:false
 brew "curl"
 brew "davmail"
 brew "dnscrypt-proxy"
@@ -61,7 +65,7 @@ brew "getdns"
 brew "gh"
 brew "git-delta"
 brew "glances"
-brew "gnupg", link: false
+brew "gnupg", link: true
 brew "gnu-sed"
 brew "gopass"
 brew "grex"
@@ -72,7 +76,7 @@ brew "httpd"
 brew "httpie"
 brew "hugo"
 brew "imapsync"
-brew "inetutils"
+brew "inetutils", link: false
 brew "irssi"
 brew "isync", restart_service: true
 brew "jq"
