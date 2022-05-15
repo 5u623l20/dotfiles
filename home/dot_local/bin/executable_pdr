@@ -39,7 +39,7 @@ POUDRIERE_BIN=/usr/local/bin/poudriere
 
 # Notify message on error, but do not exit
 error_notify() {
-    echo -e "${COLOR_RED}$*${COLOR_RESET}" 1>&2
+    echo "${COLOR_RED}$*${COLOR_RESET}" 1>&2
 }
 
 # Notify message on error and exit
@@ -49,11 +49,11 @@ error_exit() {
 }
 
 info() {
-    echo -e "${COLOR_GREEN}$*${COLOR_RESET}"
+    echo "${COLOR_GREEN}$*${COLOR_RESET}"
 }
 
 warn() {
-    echo -e "${COLOR_YELLOW}$*${COLOR_RESET}"
+    echo "${COLOR_YELLOW}$*${COLOR_RESET}"
 }
 
 usage() {
@@ -75,61 +75,61 @@ EOF
 }
 
 update_tree() {
-	cd ${PORTSDIR}
-	${GIT_BIN} checkout working && ${GIT_BIN} stash
-	${GIT_BIN} checkout main && ${GIT_BIN} pull --ff-only && ${GIT_BIN} rebase main working
+    cd ${PORTSDIR}
+    ${GIT_BIN} checkout working && ${GIT_BIN} stash
+    ${GIT_BIN} checkout main && ${GIT_BIN} pull --ff-only && ${GIT_BIN} rebase main working
 	${GIT_BIN} stash apply
 }
 
 build_ports() {
-	for i in 123i386 123 130 MAIN
-	do
-		${POUDRIERE_BIN} pkgclean -j $i -p default -y -f /usr/local/etc/poudriere.d/lists/bofh.ports
+    for i in 123i386 123 130 MAIN
+    do
+        ${POUDRIERE_BIN} pkgclean -j $i -p default -y -f /usr/local/etc/poudriere.d/lists/bofh.ports
 		${POUDRIERE_BIN} logclean -j $i -y 30
-		${POUDRIERE_BIN} bulk -j $i -t -f /usr/local/etc/poudriere.d/lists/bofh.ports
-	done
+        ${POUDRIERE_BIN} bulk -j $i -t -f /usr/local/etc/poudriere.d/lists/bofh.ports
+    done
 }
 
 build_infrastructure() {
-	for i in 130 MAIN
-	do
-		${POUDRIERE_BIN} pkgclean -j $i -p default -z infrastructure -y -f /usr/local/etc/poudriere.d/lists/infrastructure
+	for i in 130 131 MAIN
+    do
+        ${POUDRIERE_BIN} pkgclean -j $i -p default -z infrastructure -y -f /usr/local/etc/poudriere.d/lists/infrastructure
 		${POUDRIERE_BIN} logclean -j $i -p default -z infrastructure -y 10
-		${POUDRIERE_BIN} bulk -j $i -z infrastructure -f /usr/local/etc/poudriere.d/lists/infrastructure
-	done
+        ${POUDRIERE_BIN} bulk -j $i -z infrastructure -f /usr/local/etc/poudriere.d/lists/infrastructure
+    done
 }
 
 test_ports() {
-	for i in 123i386 123 130 MAIN
+    for i in 123i386 123 130 MAIN
 	do
-		${POUDRIERE_BIN} bulk -j $i -t $@
-	done
+        ${POUDRIERE_BIN} bulk -j $i -t $@
+    done
 }
 
 main() {
-	[ $# -lt 1 ] && usage
+    [ $# -lt 1 ] && usage
 
-	CMD=$1
-	shift
+    CMD=$1
+    shift
 
 	# Handle special-case commands first.
-	case "${CMD}" in
+    case "${CMD}" in
 	help|-h|--help)
-		usage
-		;;
+        usage
+        ;;
 	-p)
 		# Build ports that belongs to bofh@FreeBSD.org
-		update_tree
-		build_ports
+        update_tree
+        build_ports
 		;;
 	-i)
-		# Build ports that are required by infrastructure
+        # Build ports that are required by infrastructure
 		update_tree
-		build_infrastructure
-		;;
+        build_infrastructure
+        ;;
 	-a)
-		# Build all
-		update_tree
+        # Build all
+        update_tree
 		build_infrastructure
 		build_ports
 		;;
