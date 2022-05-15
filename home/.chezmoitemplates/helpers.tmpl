@@ -153,6 +153,14 @@ set_download
 check_packagemgr
 {{ end }}
 
+if command_exists batcat; then
+    BAT_BIN=$(command -v batcat)
+elif command_exists bat; then
+    BAT_BIN=$(command -v bat)
+fi
+BAT_PKG="bat"
+FZF_BIN=$(command -v fzf)
+FZF_PKG="fzf"
 GIT_BIN=$(command -v git)
 GIT_PKG="git"
 HTOP_BIN=$(command -v htop)
@@ -163,9 +171,7 @@ VIM_BIN=$(command -v vim)
 VIM_PKG="vim"
 ZSH_BIN=$(command -v zsh)
 ZSH_PKG="zsh"
-#bat
 #fortune
-#fzf
 #openssh
 #tree
 #asciinema
