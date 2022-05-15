@@ -155,10 +155,70 @@ check_packagemgr
 
 GIT_BIN=$(command -v git)
 GIT_PKG="git"
+HTOP_BIN=$(command -v htop)
+HTOP_PKG="htop"
+TMUX_BIN=$(command -v tmux)
+TMUX_PKG="tmux"
 VIM_BIN=$(command -v vim)
 VIM_PKG="vim"
 ZSH_BIN=$(command -v zsh)
 ZSH_PKG="zsh"
+#bat
+#fortune
+#fzf
+#openssh
+#tree
+#asciinema
+#awscli
+#bottom
+#bpytop
+#broot
+#caddy
+#emacs
+#choose
+#cookiecutter
+#curl
+#dstask
+#duf
+#dust
+#exa
+#fd
+#getdns
+#gh
+#git-delta
+#glances
+#gnupg
+#gopass
+#grex
+#hey
+#hping
+#httpd
+#httpie
+#jq
+#kubernetes-cli
+#ldns
+#lftp
+#lynx
+#mtr
+#neofetch
+#nmap
+#opensc
+#pwgen
+#qemu
+#ranger
+#ripgrep
+#rsync
+#sd
+#shellcheck
+#tealdeer
+#the_silver_searcher
+#thefuck
+#vegeta
+#w3m
+#wget
+#wireguard-tools
+#wrk
+#wtfutil
 {{- if (eq .chezmoi.os "aix" ) }}
 {{- else if (eq .chezmoi.os "darwin") }}
 {{- else if (eq .chezmoi.os "dragonfly" ) }}

@@ -3,7 +3,7 @@
 #set -ue
 
 {{ template "helpers.tmpl" . }}
-{{ if (eq .chezmoi.osRelease.id "ubuntu" ) }}
+{{ if or (eq .chezmoi.osRelease.id "ubuntu") (eq .chezmoi.osRelease.id "debian") }}
 ###############################################################################
 ###############################Install terminfo ###############################
 ###############################################################################
