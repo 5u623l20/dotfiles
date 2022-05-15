@@ -106,9 +106,9 @@ fi
 set_sudo() {
   if command_exists sudo; then
     if sudo -vn 2>&1 | grep 'password' > /dev/null; then
-      SUDO_BIN=$(command -v sudo)
+      SUDO_CMD=$(command -v sudo)
     else
-      SUDO_BIN=""
+      SUDO_CMD=""
     fi
   fi
 }
