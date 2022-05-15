@@ -179,6 +179,7 @@ VIM_PKG="vim-nox"
 {{- else if (eq .chezmoi.osRelease.id "slackware" ) }}
 {{- else if (eq .chezmoi.osRelease.id "sles" ) }}
 {{- else if (eq .chezmoi.osRelease.id "ubuntu" ) }}
+VIM_PKG="vim-nox"
 {{- else }}
 {{- end }}
 if command_exists python3; then
