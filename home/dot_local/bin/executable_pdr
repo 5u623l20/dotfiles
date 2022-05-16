@@ -91,7 +91,7 @@ build_ports() {
 }
 
 build_infrastructure() {
-	for i in 130 131 MAIN
+	for i in 131 MAIN
     do
         ${POUDRIERE_BIN} pkgclean -j $i -p default -z infrastructure -y -f /usr/local/etc/poudriere.d/lists/infrastructure
 		${POUDRIERE_BIN} logclean -j $i -p default -z infrastructure -y 10
