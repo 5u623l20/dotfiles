@@ -1,4 +1,5 @@
 {{- if ne .chezmoi.os "freebsd" }}
+.config/tcsh
 .cshrc
 .exrc
 .local/bin/pdr
