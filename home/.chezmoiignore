@@ -2,10 +2,13 @@
 .cshrc
 .exrc
 .local/bin/pdr
+.profile
+.shrc
 {{- end }}
-{{- if (or (ne .chezmoi.os "darwin") (ne .chezmoi.os "freebsd")) -}}
+{{- if ne .chezmoi.os "linux" -}}
 .bashrc
 .config/bash
+.profile
 {{- end }}
 {{ if not .personal }}
 .config/kitty
