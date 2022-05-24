@@ -1,8 +1,9 @@
 {{- if ne .chezmoi.os "freebsd" }}
+.cshrc
 .exrc
 .local/bin/pdr
 {{- end }}
-{{- if (or (eq .chezmoi.os "darwin") (eq .chezmoi.os "freebsd")) -}}
+{{- if (or (ne .chezmoi.os "darwin") (ne .chezmoi.os "freebsd")) -}}
 .bashrc
 .config/bash
 {{- end }}
