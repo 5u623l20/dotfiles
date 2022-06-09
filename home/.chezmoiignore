@@ -18,10 +18,6 @@
 .mbsyncrc
 {{ end }}
 {{- if not .gotroot }}
-.zsh
-.zshenv
-.zshrc
-.zlogout
 {{- end }}
 *.zwc
 **/*.zwc
