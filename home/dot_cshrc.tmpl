@@ -1,6 +1,9 @@
-# Set some Colors!
 #set echo
 #set verbose
+# If the exit value is non-zero, print it.
+# Very handy when you do scripting.
+unset printexitvalue
+# Set some Colors!
 set     red="%{\033[1;31m%}"
 set   green="%{\033[0;32m%}"
 set  yellow="%{\033[1;33m%}"
@@ -144,10 +147,6 @@ ${cyan}%#${end} "
 
     # After a 'Ctrl-Z', it lists all the jobs.
     set listjobs
-
-    # If the exit value is non-zero, print it.
-    # Very handy when you do scripting.
-    set printexitvalue
 
     # Files that are to be ignored from completion.
     # These are the .o files that GCC produces. Usually you do not touch them.
