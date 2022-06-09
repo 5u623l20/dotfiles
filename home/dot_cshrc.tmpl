@@ -57,6 +57,7 @@ setenv TMUX_CONFIG $XDG_CONFIG_HOME/tmux/tmux.conf
 setenv SHORT_HOST `echo $HOST | cut -f 1 -d.`
 # Color on many system utilities
 setenv CLICOLOR 1
+set path = (/sbin /bin /usr/sbin /usr/bin /usr/local/sbin /usr/local/bin $HOME/bin $HOME/.local/bin)
 
 ########################################################################
 #         skip remaining setup if not an interactive shell           #
