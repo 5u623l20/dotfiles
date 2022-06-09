@@ -14,24 +14,24 @@ set   white="%{\033[0;37m%}"
 set     end="%{\033[0m%}" # This is needed at the end... :(
 
 # Set some environment variables
-if ( -e `where vim`) then
+if (`where vim` != "") then
     setenv EDITOR vim
     setenv VISUAL vim
     alias e vim
-    if ( -e `where view`) then
+    if (`where view` != "") then
         alias v view
-    else if ( -e `where bat`) then
+    else if (`where bat` != "") then
         alias v bat
     else
         alias v cat
     endif
-else if ( -e `where vi`) then
+else if (`where vi` != "") then
     setenv EDITOR vi
     setenv VISUAL vi
     alias e vim
-    if ( -e `where view`) then
+    if (`where view` != "") then
         alias v view
-    else if ( -e `where bat`) then
+    else if (`where bat` != "") then
         alias v bat
     else
         alias v cat
@@ -39,7 +39,7 @@ else if ( -e `where vi`) then
 endif
 if ( -e `where less`) then
     setenv PAGER less
-    setenv LESS '-FiJqX'
+    setenv LESS '-eFiJqRX'
     alias more less
 else
     setenv PAGER more
