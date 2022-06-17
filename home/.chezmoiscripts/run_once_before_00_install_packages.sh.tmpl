@@ -28,11 +28,11 @@ $PKG_CMD $FZF_PKG
 {{ else }}
 if [ ! -x "$HOME"/.local/bin/fzf ]; then
   if command_exists curl; then
-    cd "$HOME"/.local/bin && curl -fsSL https://raw.githubusercontent.com/junegunn/fzf/master/install | sh -s -- --bin && cd -
+    cd "$HOME"/.local && curl -fsSL https://raw.githubusercontent.com/junegunn/fzf/master/install | sh -s -- --bin && cd -
   elif command_exists wget; then
-    cd "$HOME"/.local/bin && wget -O- https://raw.githubusercontent.com/junegunn/fzf/master/install | sh -s -- --bin && cd -
+    cd "$HOME"/.local && wget -O- https://raw.githubusercontent.com/junegunn/fzf/master/install | sh -s -- --bin && cd -
   elif command_exists fetch; then
-    cd "$HOME"/.local/bin && fetch -q -o - https://raw.githubusercontent.com/junegunn/fzf/master/install | sh -s -- --bin && cd -
+    cd "$HOME"/.local && fetch -q -o - https://raw.githubusercontent.com/junegunn/fzf/master/install | sh -s -- --bin && cd -
   fi
 fi
 {{ end }}
