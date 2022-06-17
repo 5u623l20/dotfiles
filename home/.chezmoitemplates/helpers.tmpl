@@ -142,7 +142,7 @@ set_download() {
     DOWNLOAD_CMD="$DOWNLOAD_BIN" -fsSL
   elif command_exists wget; then
     DOWNLOAD_BIN=$(command -v wget)
-    DOWNLOAD_CMD="$DOWNLOAD_BIN" -O-
+    DOWNLOAD_CMD="$DOWNLOAD_BIN" -q -O-
   elif command_exists fetch; then
     DOWNLOAD_BIN=$(command -v fetch)
     DOWNLOAD_CMD="$DOWNLOAD_BIN" -q -o -
