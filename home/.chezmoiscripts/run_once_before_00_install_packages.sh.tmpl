@@ -27,7 +27,7 @@ if [ -z "$FZF_BIN" ]; then
 $PKG_CMD $FZF_PKG
 {{ else }}
 if [ ! -x "$HOME"/.local/bin/fzf ]; then
-  cd "$HOME"/.local && "$DOWNLOAD_CMD" https://raw.githubusercontent.com/junegunn/fzf/master/install | sh -s -- --bin && cd -
+  "$DOWNLOAD_CMD" https://github.com/junegunn/fzf/releases/download/"$FZF_VERSION"/fzf-"$FZF_VERSION"-"$CHEZMOI_OS"_"$CHEZMOI_ARCH".tar.gz | tar -xzf - -C $HOME/.local/bin
 fi
 {{ end }}
 fi

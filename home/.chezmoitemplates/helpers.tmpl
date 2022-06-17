@@ -157,6 +157,9 @@ set_download
 check_packagemgr
 {{ end }}
 
+CHEZMOI_OS={{ .chezmoi.os }}
+CHEZMOI_ARCH={{ .chezmoi.arch }}
+
 if command_exists batcat; then
     BAT_BIN=$(command -v batcat)
 elif command_exists bat; then
@@ -165,6 +168,7 @@ fi
 BAT_PKG="bat"
 FZF_BIN=$(command -v fzf)
 FZF_PKG="fzf"
+FZF_VERSION="0.30.0"
 GIT_BIN=$(command -v git)
 GIT_PKG="git"
 HTOP_BIN=$(command -v htop)
