@@ -139,16 +139,16 @@ check_packagemgr() {
 set_download() {
   if command_exists curl; then
     DOWNLOAD_BIN=$(command -v curl)
-    DOWNLOAD_CMD="$DOWNLOAD_BIN" -fsSL
+    DOWNLOAD_CMD="$DOWNLOAD_BIN -fsSL"
   elif command_exists wget; then
     DOWNLOAD_BIN=$(command -v wget)
-    DOWNLOAD_CMD="$DOWNLOAD_BIN" -q -O-
+    DOWNLOAD_CMD="$DOWNLOAD_BIN -q -O-"
   elif command_exists fetch; then
     DOWNLOAD_BIN=$(command -v fetch)
-    DOWNLOAD_CMD="$DOWNLOAD_BIN" -q -o -
+    DOWNLOAD_CMD="$DOWNLOAD_BIN -q -o -"
   elif command_exists curlie; then
     DOWNLOAD_BIN=$(command -v curlie)
-    DOWNLOAD_CMD="$DOWNLOAD_BIN" -fsSL
+    DOWNLOAD_CMD="$DOWNLOAD_BIN -fsSL"
   fi
 }
 
