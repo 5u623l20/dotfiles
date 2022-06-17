@@ -27,7 +27,7 @@ if [ -z "$FZF_BIN" ]; then
 $PKG_CMD $FZF_PKG
 {{ else }}
 if [ ! -x "$HOME"/.local/bin/fzf ]; then
-  "$DOWNLOAD_CMD" https://github.com/junegunn/fzf/releases/download/"$FZF_VERSION"/fzf-"$FZF_VERSION"-"$CHEZMOI_OS"_"$CHEZMOI_ARCH".tar.gz | tar -xzf - -C $HOME/.local/bin
+  $DOWNLOAD_CMD https://github.com/junegunn/fzf/releases/download/"$FZF_VERSION"/fzf-"$FZF_VERSION"-"$CHEZMOI_OS"_"$CHEZMOI_ARCH".tar.gz | tar -xzf - -C $HOME/.local/bin
 fi
 {{ end }}
 fi
@@ -71,7 +71,7 @@ if [ -z "$ZSH_BIN" ]; then
 $PKG_CMD $ZSH_PKG
 {{ else }}
 if [ ! -x "$HOME"/.local/bin/zsh ]; then
-  "$DOWNLOAD_CMD" https://raw.githubusercontent.com/romkatv/zsh-bin/master/install | sh -s -- -q -d "${HOME}"/.local -e no
+  $DOWNLOAD_CMD https://raw.githubusercontent.com/romkatv/zsh-bin/master/install | sh -s -- -q -d "${HOME}"/.local -e no
 fi
 {{ end }}
 fi
