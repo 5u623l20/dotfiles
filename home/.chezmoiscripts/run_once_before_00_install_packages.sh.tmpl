@@ -7,7 +7,7 @@
 ###############################################################################
 ##############################Install terminfo ################################
 ###############################################################################
-curl -fsSl https://raw.githubusercontent.com/kovidgoyal/kitty/master/terminfo/kitty.terminfo -o ~/kitty.terminfo
+$DOWNLOAD_CMD https://raw.githubusercontent.com/kovidgoyal/kitty/master/terminfo/kitty.terminfo > ~/kitty.terminfo
 tic -x -o ~/.terminfo ~/kitty.terminfo
 rm ~/kitty.terminfo
 {{ end }}
@@ -27,13 +27,7 @@ if [ -z "$FZF_BIN" ]; then
 $PKG_CMD $FZF_PKG
 {{ else }}
 if [ ! -x "$HOME"/.local/bin/fzf ]; then
-  if command_exists curl; then
-    cd "$HOME"/.local && curl -fsSL https://raw.githubusercontent.com/junegunn/fzf/master/install | sh -s -- --bin && cd -
-  elif command_exists wget; then
-    cd "$HOME"/.local && wget -O- https://raw.githubusercontent.com/junegunn/fzf/master/install | sh -s -- --bin && cd -
-  elif command_exists fetch; then
-    cd "$HOME"/.local && fetch -q -o - https://raw.githubusercontent.com/junegunn/fzf/master/install | sh -s -- --bin && cd -
-  fi
+  cd "$HOME"/.local && "$DOWNLOAD_CMD" https://raw.githubusercontent.com/junegunn/fzf/master/install | sh -s -- --bin && cd -
 fi
 {{ end }}
 fi
@@ -77,13 +71,7 @@ if [ -z "$ZSH_BIN" ]; then
 $PKG_CMD $ZSH_PKG
 {{ else }}
 if [ ! -x "$HOME"/.local/bin/zsh ]; then
-  if command_exists curl; then
-    curl -fsSL https://raw.githubusercontent.com/romkatv/zsh-bin/master/install | sh -s -- -q -d "${HOME}"/.local -e no
-  elif command_exists wget; then
-    wget -O- https://raw.githubusercontent.com/romkatv/zsh-bin/master/install | sh -s -- -q -d "${HOME}"/.local -e no
-  elif command_exists fetch; then
-    fetch -q -o - https://raw.githubusercontent.com/romkatv/zsh-bin/master/install | sh -s -- -q -d "${HOME}"/.local -e no
-  fi
+  "$DOWNLOAD_CMD" https://raw.githubusercontent.com/romkatv/zsh-bin/master/install | sh -s -- -q -d "${HOME}"/.local -e no
 fi
 {{ end }}
 fi
