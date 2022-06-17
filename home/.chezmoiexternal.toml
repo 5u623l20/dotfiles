@@ -4,7 +4,6 @@
     exact = true
     stripComponents = 1
     refreshPeriod = "84h"
-{{ if (.gotroot) }}
 [".config/zsh/plugins/fzf"]
     type = "archive"
     url = "https://github.com/junegunn/fzf/archive/refs/heads/master.zip"
@@ -53,7 +52,6 @@
     exact = true
     stripComponents = 1
     refreshPeriod = "168h"
-{{- end }}
 {{- if and (not .ephemeral) (not .headless) (.personal) (ne .chezmoi.os "darwin")}}
 {{-   $fontDir := "" }}
 {{-   if eq .chezmoi.os "linux" }}
