@@ -34,7 +34,7 @@ esac
 readonly OS
 
 if [ ! "$(command -v chezmoi)" ]; then
-    bin_dir="$HOME/bin"
+    bin_dir="$HOME/.local/bin"
     CHEZMOI_BIN="$bin_dir/chezmoi"
     case "${OS}" in
         "FreeBSD")
