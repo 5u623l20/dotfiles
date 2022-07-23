@@ -1,0 +1,65 @@
+#+AUTHOR: BOFH
+#+TITLE: BOFH's GNU Emacs Config
+#+DESCRIPTION: BOFH's personal Emacs config.
+#+STARTUP: showeverything
+#+EXPORT_FILE_NAME: ~/Documents/Org/html/config.html
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+#+OPTIONS: num:nil ^:{}
+
+* TABLE OF CONTENTS                                                     :TOC:
+
+* IMPORTANT! PUT THIS IN init.el
+This configuration file is a literate config written in org mode so that I have
+the comments properly documented and the init.el file is clean from
+garbages. The following code block in init.el tells to use the source code
+blocks from this file (config.org).
+
+#+begin_example
+(org-babel-load-file
+ (expand-file-name
+  "config.org"
+  user-emacs-directory))
+#+end_example
+
+* A FEW PROGRAMS TO LOAD FIRST
+The order in which the various Emacs modules load is very important. So the
+very first code block is going to contain essential modules that many other
+modules will depend on later in this config.
+
+** Setup Package.el To Work With MELPA
+#+begin_src emacs-lisp
+(require 'package)
+(setq package-archives
+      '(("gnu" . "https://elpa.gnu.org/packages/")
+        ("melpa" . "https://melpa.org/packages/"))
+      package-archive-priorities
+      '(("melpa" . 5)
+        ("gnu" . 0)))
+(unless package-archive-contents
+  (package-refresh-contents))
+(package-initialize)
+#+end_src
+
+** Use-Package
+Install use-package and enable ':ensure t' globally. The ':ensure' keyword
+causes the package(s) within use-package statements to be installed
+automatically if not already present on system. To avoid having to add ':ensure
+t' to every use-package statement in this config set
+'use-package-always-ensure'.
+
+#+begin_src emacs-lisp
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+(require 'use-package)
+(setq use-package-always-ensure t)
+(setq use-package-verbose t)
+#+end_src
+
+** Fortune Cookies
+Set bofh excuse fortunes
+
+#+begin_src emacs-lisp
+  (require 'fortune)
+  (setq fortune-dir "~/.local/share/fortunes")
+  (setq fortune-file "~/.local/share/fortunes/bofh")
+#+end_src
