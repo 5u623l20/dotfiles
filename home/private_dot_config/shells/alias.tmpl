@@ -9,6 +9,9 @@ alias .../="cd ../../"
 alias /-="cd -"
 alias /="cd /"
 alias alais="alias"
+if command_exists fortune; then
+    alias bofh="fortune $XDG_DATA_HOME/fortunes/bofh"
+fi
 alias bye="echo 'bye';exit"
 alias cls="clear"
 alias csl="clear"
