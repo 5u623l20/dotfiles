@@ -69,16 +69,29 @@ Set bofh excuse fortunes
 
 ** Garbage collection
 Makes startup faster by reducing the frequency of garbage collection
+
+*** Using garbage magic hack.
 #+begin_src emacs-lisp
-;; Using garbage magic hack.
  (use-package gcmh
    :config
    (gcmh-mode 1))
-;; Setting garbage collection threshold
-(setq gc-cons-threshold 402653184
-      gc-cons-percentage 0.6)
+#+end_src
 
-;; Profile emacs startup
+*** Disable GC during startup
+A common optimization is to temporarily disable garbage collection during
+initialization. Here, we set the ~gc-cons-threshold~ to a ridiculously large
+number, and restore the default value after initialization.
+
+#+begin_src emacs-lisp
+(let ((old-gc-treshold gc-cons-threshold))
+     (setq gc-cons-threshold most-positive-fixnum)
+     (add-hook 'after-init-hook
+               (lambda () (setq gc-cons-threshold old-gc-treshold))))
+#+end_src
+
+** Profile emacs startup
+
+#+begin_src emacs-lisp
 (add-hook 'emacs-startup-hook
           (lambda ()
             (message "*** Emacs loaded in %s with %d garbage collections."
@@ -100,14 +113,6 @@ Makes startup faster by reducing the frequency of garbage collection
 ;; prevent the use of stale byte-code. Otherwise, it saves us a little IO time
 ;; to skip the mtime checks on every *.elc file.
 (setq load-prefer-newer noninteractive)
-#+end_src
-
-** RUNTIME PERFORMANCE
-Dial the GC threshold back down so that garbage collection happens more
-frequently but in less time.
-#+begin_src emacs-lisp
-;; Make gc pauses faster by decreasing the threshold.
-(setq gc-cons-threshold (* 2 1000 1000))
 #+end_src
 
 * Sane Defaults
@@ -165,8 +170,8 @@ Turn of the audible bell
 #+end_src
 
 ** Answer question with characters
-Answering yes and no to each question from Emacs can be tedious, a single y or
-n will suffice.
+Answering /yes/ and /no/ to each question from Emacs can be tedious, a single
+/y/ or /n/ will suffice.
 
 #+begin_src emacs-lisp
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -227,7 +232,7 @@ along with external processes a lot simpler.
 
 #+begin_src emacs-lisp
 (when (memq window-system '(mac ns))
-  (use-package exec-path-from-shell))
+  (use-package reveal-in-osx-finder packages))
 #+end_src
 
 * Keep EMACS Config directory clean
