@@ -28,7 +28,7 @@ call dein#add('dense-analysis/ale')
 call dein#add('Yggdroot/indentLine')
 "call dein#add('editor-bootstrap/vim-bootstrap-updater')
 "call dein#add('tpope/vim-rhubarb') " required by fugitive to :Gbrowse
-call dein#add('joshdick/onedark.vim')
+call dein#add('arcticicestudio/nord-vim')
 
 "if isdirectory('/usr/local/opt/fzf')
 "  Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
@@ -234,8 +234,8 @@ if !empty($TMUX) || $COLORTERM == 'truecolor' || $TERM =~ '^\(tmux\|xterm\|iterm
         set termguicolors
     endif
     set background=dark
-    if !exists('g:colors_name') || g:colors_name != 'onedark'
-        colorscheme onedark
+    if !exists('g:colors_name') || g:colors_name != 'nord'
+        colorscheme nord
     endif
 endif
 
