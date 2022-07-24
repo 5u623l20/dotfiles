@@ -249,36 +249,6 @@ Changes certain keywords to symbols, such as lamda!
 (setq global-prettify-symbols-mode t)
 #+end_src
 
-*** Zooming In and Out
-You can use the bindings CTRL plus =/- for zooming in/out. These functions
-provide something close to text-scale-mode, but for every buffer, including
-the minibuffer and mode line.
-
-#+begin_src emacs-lisp
-(let* ((default (face-attribute 'default :height))
-       (size default))
-
-  (defun global-scale-default ()
-    (interactive)
-    (global-scale-internal (setq size default)))
-
-  (defun global-scale-up ()
-    (interactive)
-    (global-scale-internal (setq size (+ size 20))))
-
-  (defun global-scale-down ()
-    (interactive)
-    (global-scale-internal (setq size (- size 20))))
-
-  (defun global-scale-internal (arg)
-    (set-face-attribute 'default (selected-frame) :height arg)
-    (set-temporary-overlay-map
-     (let ((map (make-sparse-keymap)))
-       (define-key map (kbd "C-=") 'global-scale-up)
-       (define-key map (kbd "C--") 'global-scale-down)
-       (define-key map (kbd "C-0") 'global-scale-default) map))))
-#+end_src
-
 * MacOS Specific Configurations
 
 ** ADD PATH to Emacs
