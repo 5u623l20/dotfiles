@@ -83,10 +83,10 @@ initialization. Here, we set the ~gc-cons-threshold~ to a ridiculously large
 number, and restore the default value after initialization.
 
 #+begin_src emacs-lisp
-(let ((old-gc-treshold gc-cons-threshold))
-     (setq gc-cons-threshold most-positive-fixnum)
-     (add-hook 'after-init-hook
-               (lambda () (setq gc-cons-threshold old-gc-treshold))))
+(setq gc-cons-threshold-original gc-cons-threshold)
+(setq gc-cons-threshold most-positive-fixnum)
+(add-hook 'after-init-hook
+               (lambda () (setq gc-cons-threshold gc-cons-threshold-original)))
 #+end_src
 
 ** Profile emacs startup
@@ -193,6 +193,56 @@ Automaticly revert =doc-view-buffers= when the file changes on disk.
 (add-hook 'doc-view-mode-hook 'auto-revert-mode)
 #+end_src
 
+* Visual
+
+** Fonts
+Using FiraCode Nerd Patched Font as it has ligatures
+
+#+begin_src emacs-lisp
+(cond ((member "FiraCode Nerd Font Mono" (font-family-list))
+        (set-face-attribute 'default nil
+          :font "FiraCode Nerd Font Mono"
+          :height 120
+          :weight 'medium)
+      ))
+#+end_src
+
+*** Slant Fonts
+Makes commented text and keywords italics. This is working in emacsclient but
+not emacs. Your font must have an italic face available.
+
+#+begin_src emacs-lisp
+(cond ((member "mononoki Nerd Font" (font-family-list))
+        (set-face-attribute 'variable-pitch nil
+            :font "mononoki Nerd Font"
+            :height 120
+            :weight 'medium)
+        (set-face-attribute 'font-lock-comment-face nil :slant 'italic)
+        (set-face-attribute 'font-lock-keyword-face nil :slant 'italic)
+    ))
+#+end_src
+
+*** Adjusting Line Spacing
+
+#+begin_src emacs-lisp
+(setq-default line-spacing 0.12)
+#+end_src
+
+*** Fixing fontsize in emacsclient
+Needed if using emacsclient. Otherwise, your fonts will be smaller than
+expected.
+
+#+begin_src emacs-lisp
+(add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font Mono-12"))
+#+end_src
+
+*** Converting keywords to symbols
+Changes certain keywords to symbols, such as lamda!
+
+#+begin_src emacs-lisp
+(setq global-prettify-symbols-mode t)
+#+end_src
+
 * MacOS Specific Configurations
 
 ** ADD PATH to Emacs
@@ -232,7 +282,7 @@ along with external processes a lot simpler.
 
 #+begin_src emacs-lisp
 (when (memq window-system '(mac ns))
-  (use-package reveal-in-osx-finder packages))
+  (use-package reveal-in-osx-finder))
 #+end_src
 
 * Keep EMACS Config directory clean
