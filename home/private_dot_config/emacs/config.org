@@ -21,7 +21,7 @@ blocks from this file (config.org).
   user-emacs-directory))
 #+end_example
 
-* A FEW PROGRAMS TO LOAD FIRST
+* PROGRAMS TO LOAD FIRST
 The order in which the various Emacs modules load is very important. So the
 very first code block is going to contain essential modules that many other
 modules will depend on later in this config.
@@ -100,4 +100,143 @@ Makes startup faster by reducing the frequency of garbage collection
 ;; prevent the use of stale byte-code. Otherwise, it saves us a little IO time
 ;; to skip the mtime checks on every *.elc file.
 (setq load-prefer-newer noninteractive)
+#+end_src
+
+** RUNTIME PERFORMANCE
+Dial the GC threshold back down so that garbage collection happens more
+frequently but in less time.
+#+begin_src emacs-lisp
+;; Make gc pauses faster by decreasing the threshold.
+(setq gc-cons-threshold (* 2 1000 1000))
+#+end_src
+
+* Sane Defaults
+Some of my saner defaults for Emacs.
+
+#+begin_src emacs-lisp
+(setq auto-revert-interval 1            ; Refresh buffers fast
+      default-input-method "TeX"        ; Use TeX when toggling input method
+      echo-keystrokes 0.1               ; Show keystrokes asap
+      inhibit-startup-screen t          ; No splash screen please
+      initial-scratch-message nil       ; Clean scratch buffer
+      recentf-max-saved-items 100       ; Show more recent files
+      scroll-margin 1                   ; Space between cursor and top/bottom
+      sentence-end-double-space nil     ; No double space
+      make-backup-files nil             ; stop creating those backup~ files
+      auto-save-default nil             ; stop creating those #autosave# files
+      )
+;; Some mac-bindings interfere with Emacs bindings.
+(when (boundp 'mac-pass-command-to-system)
+  (setq mac-pass-command-to-system nil))
+#+end_src
+
+** Set default language ENV to UTF-8
+Set =utf-8= as preferred coding system.
+
+#+begin_src emacs-lisp
+(set-language-environment "UTF-8")
+#+end_src
+
+** Defaults for line-wrapping and TAB handling
+Some variables are buffer-local, so changing them using setq will only change
+them in a single buffer. Using setq-default we change the buffer-local
+variable’s default value.
+
+#+begin_src emacs-lisp
+(setq-default tab-width 4                       ; Smaller tabs
+              fill-column 79                    ; Maximum line width
+              truncate-lines t                  ; Don't fold lines
+              indent-tabs-mode nil              ; Use spaces instead of tabs
+              split-width-threshold 160         ; Split verticly by default
+              split-height-threshold nil        ; Split verticly by default
+              frame-resize-pixelwise t          ; Fine-grained frame resize
+              auto-fill-function 'do-auto-fill) ; Auto-fill-mode everywhere
+#+end_src
+
+** Turn of Audible Bell
+Turn of the audible bell
+
+#+begin_src emacs-lisp
+(setq visible-bell nil
+      ring-bell-function 'flash-mode-line)
+(defun flash-mode-line ()
+  (invert-face 'mode-line)
+  (run-with-timer 0.1 nil #'invert-face 'mode-line))
+#+end_src
+
+** Answer question with characters
+Answering yes and no to each question from Emacs can be tedious, a single y or
+n will suffice.
+
+#+begin_src emacs-lisp
+(fset 'yes-or-no-p 'y-or-n-p)
+#+end_src
+
+** Enable =narrow-to-region=
+By default the narrow-to-region command is disabled and issues a warning,
+because it might confuse new users. I find it useful sometimes, and don’t want
+to be warned.
+
+#+begin_src emacs-lisp
+(put 'narrow-to-region 'disabled nil)
+#+end_src
+
+** Revert =doc-view= buffers
+Automaticly revert =doc-view-buffers= when the file changes on disk.
+
+#+begin_src emacs-lisp
+(add-hook 'doc-view-mode-hook 'auto-revert-mode)
+#+end_src
+
+* MacOS Specific Configurations
+
+** ADD PATH to Emacs
+Set up Emacs' `exec-path' and PATH environment variable to match that
+used by the user's shell. This is particularly useful under Mac OS X
+and macOS, where GUI apps are not started from a shell." This is to
+include environment-variables from the shell. It makes using Emacs
+along with external processes a lot simpler.
+
+#+begin_src emacs-lisp
+(when (memq window-system '(mac ns x))
+  (use-package exec-path-from-shell)
+  (exec-path-from-shell-initialize))
+;; (defun set-exec-path-from-shell-PATH ()
+;;   (interactive)
+;;   (let ((path-from-shell (replace-regexp-in-string
+;; 			  "[ \t\n]*$" "" (shell-command-to-string
+;; 					  "$SHELL --login -c 'echo $PATH'"
+;; 						    ))))
+;;     (setenv "PATH" path-from-shell)
+;;     (setq exec-path (split-string path-from-shell path-separator))))
+;; (set-exec-path-from-shell-PATH)
+#+end_src
+
+** Some more sane defaults in MacOS
+
+#+begin_src emacs-lisp
+(when (memq window-system '(mac ns))
+  (setq ns-pop-up-frames nil
+        mac-option-modifier nil
+        x-select-enable-clipboard t)
+  (when (fboundp 'mac-auto-operator-composition-mode)
+    (mac-auto-operator-composition-mode 1)))
+#+end_src
+
+** Open files in MacOS finder
+
+#+begin_src emacs-lisp
+(when (memq window-system '(mac ns))
+  (use-package exec-path-from-shell))
+#+end_src
+
+* Keep EMACS Config directory clean
+
+** Keep customization settings in a temporary file
+#+begin_src emacs-lisp
+(setq custom-file
+      (if (boundp 'server-socket-dir)
+          (expand-file-name "custom.el" server-socket-dir)
+        (expand-file-name (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory)))
+(load custom-file t)
 #+end_src
