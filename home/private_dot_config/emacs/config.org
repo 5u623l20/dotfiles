@@ -164,8 +164,7 @@ variable’s default value.
               auto-fill-function 'do-auto-fill) ; Auto-fill-mode everywhere
 #+end_src
 
-** Turn of Audible Bell
-Turn of the audible bell
+** Turn off Audible Bell
 
 #+begin_src emacs-lisp
 (setq visible-bell nil
@@ -219,7 +218,7 @@ Disable Menubar, Toolbars and Scrollbars
            column-number-mode           ; Show column number in mode line
            delete-selection-mode        ; Replace selected text
            dirtrack-mode                ; directory tracking in *shell*
-           global-company-mode          ; Auto-completion everywhere
+           ;;global-company-mode          ; Auto-completion everywhere
            global-diff-hl-mode          ; Highlight uncommitted changes
            global-so-long-mode          ; Mitigate performance for long lines
            counsel-projectile-mode      ; Manage and navigate projects
@@ -237,7 +236,7 @@ Disable Menubar, Toolbars and Scrollbars
 (setq display-line-numbers-type 'relative)
 #+end_src
 
-* Visual
+* VISUAL
 
 ** Theme
 Adding [[https://www.nordtheme.com/][Nord]] Colortheme.
@@ -297,7 +296,7 @@ Changes certain keywords to symbols, such as lamda!
 (setq global-prettify-symbols-mode t)
 #+end_src
 
-* Emojis
+** Emojis
 Emojify is an Emacs extension to display emojis. It can display github
 style emojis like 😄 or plain ascii ones like :).
 
@@ -306,7 +305,7 @@ style emojis like 😄 or plain ascii ones like :).
   :hook (after-init . global-emojify-mode))
 #+end_src
 
-* All the Icons
+** All the Icons
 This is an icon set that can be used with dashboard, dired, ibuffer and
 other Emacs programs.
 
@@ -314,7 +313,7 @@ other Emacs programs.
 (use-package all-the-icons)
 #+end_src
 
-* Modeline
+** Modeline
 Change Modeline To Doom’s Modeline
 
 #+begin_src emacs-lisp
@@ -492,31 +491,7 @@ Change Modeline To Doom’s Modeline
 ;;(setq doom-modeline-after-update-env-hook nil)
 #+end_src
 
-* MacOS Specific Configurations
-
-** ADD PATH to Emacs
-Set up Emacs' `exec-path' and PATH environment variable to match that
-used by the user's shell. This is particularly useful under Mac OS X
-and macOS, where GUI apps are not started from a shell." This is to
-include environment-variables from the shell. It makes using Emacs
-along with external processes a lot simpler.
-
-#+begin_src emacs-lisp
-(when (memq window-system '(mac ns x))
-  (use-package exec-path-from-shell)
-  (exec-path-from-shell-initialize))
-;; (defun set-exec-path-from-shell-PATH ()
-;;   (interactive)
-;;   (let ((path-from-shell (replace-regexp-in-string
-;; 			  "[ \t\n]*$" "" (shell-command-to-string
-;; 					  "$SHELL --login -c 'echo $PATH'"
-;; 						    ))))
-;;     (setenv "PATH" path-from-shell)
-;;     (setq exec-path (split-string path-from-shell path-separator))))
-;; (set-exec-path-from-shell-PATH)
-#+end_src
-
-* Dashboard
+** Dashboard
 Emacs Dashboard is an extensible startup screen showing you recent
 files, bookmarks, agenda items and an Emacs banner.
 
@@ -543,12 +518,36 @@ files, bookmarks, agenda items and an Emacs banner.
   (setq dashboard-footer-messages (list (fortune-message)))
 #+end_src
 
-** Dashboard in Emacsclient
+*** Dashboard in Emacsclient
 This setting ensures that emacsclient always opens on dashboard rather
 than scratch.
 
 #+begin_src emacs-lisp
 (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+#+end_src
+
+* MacOS Specific Configurations
+
+** ADD PATH to Emacs
+Set up Emacs' `exec-path' and PATH environment variable to match that
+used by the user's shell. This is particularly useful under Mac OS X
+and macOS, where GUI apps are not started from a shell." This is to
+include environment-variables from the shell. It makes using Emacs
+along with external processes a lot simpler.
+
+#+begin_src emacs-lisp
+(when (memq window-system '(mac ns x))
+  (use-package exec-path-from-shell)
+  (exec-path-from-shell-initialize))
+;; (defun set-exec-path-from-shell-PATH ()
+;;   (interactive)
+;;   (let ((path-from-shell (replace-regexp-in-string
+;; 			  "[ \t\n]*$" "" (shell-command-to-string
+;; 					  "$SHELL --login -c 'echo $PATH'"
+;; 						    ))))
+;;     (setenv "PATH" path-from-shell)
+;;     (setq exec-path (split-string path-from-shell path-separator))))
+;; (set-exec-path-from-shell-PATH)
 #+end_src
 
 ** Some more sane defaults in MacOS
@@ -578,4 +577,20 @@ than scratch.
           (expand-file-name "custom.el" server-socket-dir)
         (expand-file-name (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory)))
 (load custom-file t)
+#+end_src
+
+** Keep .emacs.d Clean
+Change the user-emacs-directory to keep unwanted things out of ~/.config/emacs
+
+#+begin_src emacs-lisp
+(setq user-emacs-directory (expand-file-name "~/.cache/emacs/")
+      url-history-file (expand-file-name "url/history" user-emacs-directory))
+#+end_src
+
+** No Littering
+Use no-littering to automatically set common paths to the new
+user-emacs-directory
+
+#+begin_src emacs-lisp
+(use-package no-littering)
 #+end_src
