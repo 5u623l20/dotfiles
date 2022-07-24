@@ -201,6 +201,16 @@ Automaticly revert =doc-view-buffers= when the file changes on disk.
 
 * Visual
 
+** Theme
+Adding [[https://www.nordtheme.com/][Nord]] Colortheme.
+
+#+begin_src emacs-lisp
+(use-package nord-theme)
+(setq nord-uniform-mode-lines t)
+(setq nord-region-highlight "frost") ; Use `nord8` from Nord's "Frost" palette as background color.
+(load-theme 'nord t)
+#+end_src
+
 ** Fonts
 Using FiraCode Nerd Patched Font as it has ligatures
 
