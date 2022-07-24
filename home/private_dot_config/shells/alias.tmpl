@@ -75,9 +75,9 @@ rfcget() {
 }
 v() {
     if command_exists batcat; then
-        batcat --theme OneHalfDark "$@"
+        batcat --theme Nord "$@"
     elif command_exists bat; then
-        bat --theme OneHalfDark "$@"
+        bat --theme Nord "$@"
     elif command_exists view; then
         view "$@"
     else
