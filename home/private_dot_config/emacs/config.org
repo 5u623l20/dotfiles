@@ -7,6 +7,56 @@
 #+OPTIONS: num:nil ^:{}
 
 * TABLE OF CONTENTS                                                     :TOC:
+- [[#important-put-this-in-initel][IMPORTANT! PUT THIS IN init.el]]
+- [[#programs-to-load-first][PROGRAMS TO LOAD FIRST]]
+  - [[#setup-packageel-to-work-with-melpa][Setup Package.el To Work With MELPA]]
+  - [[#use-package][Use-Package]]
+  - [[#fortune-cookies][Fortune Cookies]]
+- [[#startup-performance][STARTUP PERFORMANCE]]
+  - [[#garbage-collection][Garbage collection]]
+  - [[#profile-emacs-startup][Profile emacs startup]]
+  - [[#native-compile][Native Compile]]
+- [[#sane-defaults][Sane Defaults]]
+  - [[#set-default-language-env-to-utf-8][Set default language ENV to UTF-8]]
+  - [[#defaults-for-line-wrapping-and-tab-handling][Defaults for line-wrapping and TAB handling]]
+  - [[#turn-off-audible-bell][Turn off Audible Bell]]
+  - [[#answer-question-with-characters][Answer question with characters]]
+  - [[#enable-narrow-to-region][Enable =narrow-to-region=]]
+  - [[#revert-doc-view-buffers][Revert =doc-view= buffers]]
+  - [[#disable-some-default-modes][Disable some default modes]]
+  - [[#enable-some-default-modes][Enable some default modes]]
+  - [[#display-line-numbers-and-truncated-lines][Display Line Numbers and Truncated Lines]]
+- [[#visual][VISUAL]]
+  - [[#theme][Theme]]
+  - [[#fonts][Fonts]]
+  - [[#emojis][Emojis]]
+  - [[#all-the-icons][All the Icons]]
+  - [[#modeline][Modeline]]
+  - [[#dashboard][Dashboard]]
+- [[#development-environment][Development Environment]]
+  - [[#workspaces-with-perspective][Workspaces with Perspective]]
+  - [[#projects-with-projectile][Projects with Projectile]]
+  - [[#completion][Completion]]
+- [[#notesjournalsagendaswriting][Notes/Journals/Agendas/Writing]]
+  - [[#distraction-free-writing-with-writeroom][Distraction free writing with WriteRoom]]
+  - [[#org-mode][ORG mode]]
+- [[#utilities][Utilities]]
+  - [[#shell-with-vterm][Shell with Vterm]]
+  - [[#git-client-with-magit][Git client with magit]]
+- [[#macos-specific-configurations][MacOS Specific Configurations]]
+  - [[#add-path-to-emacs][ADD PATH to Emacs]]
+  - [[#some-more-sane-defaults-in-macos][Some more sane defaults in MacOS]]
+  - [[#open-files-in-macos-finder][Open files in MacOS finder]]
+  - [[#window-behavior][Window Behavior]]
+- [[#keyboard-specific-configurations][Keyboard Specific Configurations]]
+  - [[#evil-mode][Evil Mode]]
+  - [[#general-keybindings][General Keybindings]]
+  - [[#which-key][Which Key]]
+  - [[#custom-keybindings][Custom keybindings]]
+- [[#keep-emacs-config-directory-clean][Keep EMACS Config directory clean]]
+  - [[#keep-customization-settings-in-a-temporary-file][Keep customization settings in a temporary file]]
+  - [[#keep-emacsd-clean][Keep .emacs.d Clean]]
+  - [[#no-littering][No Littering]]
 
 * IMPORTANT! PUT THIS IN init.el
 This configuration file is a literate config written in org mode so that I have
@@ -773,7 +823,7 @@ default, the shell is set to ‘fish’ but could change it to ‘bash’ or ‘
 you prefer. Use only in Macos for now.
 
 #+begin_src emacs-lisp
-(when (memq window-system '(mac ns x))
+(when (equal system-type 'darwin)
   (use-package vterm)
   (setq shell-file-name "/bin/zsh"
       vterm-max-scrollback 5000))
@@ -796,7 +846,7 @@ include environment-variables from the shell. It makes using Emacs
 along with external processes a lot simpler.
 
 #+begin_src emacs-lisp
-(when (memq window-system '(mac ns x))
+(when (equal system-type 'darwin)
   (use-package exec-path-from-shell)
   (exec-path-from-shell-initialize))
 ;; (defun set-exec-path-from-shell-PATH ()
@@ -813,9 +863,8 @@ along with external processes a lot simpler.
 ** Some more sane defaults in MacOS
 
 #+begin_src emacs-lisp
-(when (memq window-system '(mac ns))
+(when (equal system-type 'darwin)
   (setq ns-pop-up-frames nil
-        mac-option-modifier nil
         x-select-enable-clipboard t)
   (when (fboundp 'mac-auto-operator-composition-mode)
     (mac-auto-operator-composition-mode 1)))
@@ -824,10 +873,17 @@ along with external processes a lot simpler.
 ** Open files in MacOS finder
 
 #+begin_src emacs-lisp
-(when (memq window-system '(mac ns))
+(when (equal system-type 'darwin)
   (use-package reveal-in-osx-finder))
 #+end_src
 
+** Window Behavior
+
+#+begin_src emacs-lisp
+(when (equal system-type 'darwin)
+  (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+  (add-to-list 'default-frame-alist '(ns-appearance . dark)))
+#+end_src
 * Keyboard Specific Configurations
 
 ** Evil Mode
