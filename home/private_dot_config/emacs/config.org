@@ -313,9 +313,9 @@ Makes commented text and keywords italics. This is working in emacsclient but
 not emacs. Your font must have an italic face available.
 
 #+begin_src emacs-lisp
-(cond ((member "mononoki Nerd Font" (font-family-list))
+(cond ((member "VictorMono Nerd Font Mono" (font-family-list))
         (set-face-attribute 'variable-pitch nil
-            :font "mononoki Nerd Font"
+            :font "VictorMono Nerd Font Mono"
             :height 120
             :weight 'medium)
         (set-face-attribute 'font-lock-comment-face nil :slant 'italic)
