@@ -305,6 +305,14 @@ Using FiraCode Nerd Patched Font as it has ligatures
           :font "FiraCode Nerd Font Mono"
           :height 120
           :weight 'medium)
+        (set-face-attribute 'fixed-pitch nil
+          :font "FiraCode Nerd Font Mono"
+          :height 120
+          :weight 'normal)
+        (set-face-attribute 'fixed-pitch-serif nil
+          :font "FiraCode Nerd Font Mono"
+          :height 120
+          :weight 'normal)
       ))
 #+end_src
 
