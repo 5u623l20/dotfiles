@@ -592,8 +592,7 @@ allows us to add descriptions alongside the commands in M-x.
     :after counsel
     :config (counsel-projectile-mode))
     :bind
-    (("C-c i"  . swiper-isearch)
-    ("M-x"     . counsel-M-x)
+    (("M-x"     . counsel-M-x)
     ("C-x C-f" . counsel-find-file)
     ("M-y"     . counsel-yank-pop))
   (use-package swiper
@@ -657,6 +656,7 @@ A minor mode for Emacs that implements a distraction-free writing mode similar t
 (use-package writeroom-mode)
 #+end_src
 
+** ORG mode
 * Utilities
 
 ** Shell with Vterm
@@ -776,6 +776,24 @@ your currently entered incomplete command (a prefix) in a popup.
         which-key-allow-imprecise-window-fit t
         which-key-separator " → " ))
 (which-key-mode)
+#+end_src
+
+** Custom keybindings
+*** Buffers and Bookmark related bindings
+#+begin_src emacs-lisp
+(nvmap :prefix "SPC"
+       "b b"   '(ibuffer :which-key "Ibuffer")
+       "b c"   '(clone-indirect-buffer-other-window :which-key "Clone indirect buffer other window")
+       "b k"   '(kill-current-buffer :which-key "Kill current buffer")
+       "b n"   '(next-buffer :which-key "Next buffer")
+       "b p"   '(previous-buffer :which-key "Previous buffer")
+       "b B"   '(ibuffer-list-buffers :which-key "Ibuffer list buffers")
+       "b K"   '(kill-buffer :which-key "Kill buffer"))
+#+end_src
+
+*** swiper-isearch
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-s") 'swiper-isearch)
 #+end_src
 
 * Keep EMACS Config directory clean
