@@ -214,17 +214,16 @@ Disable Menubar, Toolbars and Scrollbars
 
 #+begin_src emacs-lisp
 (dolist (mode
-         '(abbrev-mode                  ; E.g. sopl -> System.out.println
-           column-number-mode           ; Show column number in mode line
-           delete-selection-mode        ; Replace selected text
-           dirtrack-mode                ; directory tracking in *shell*
-           ;;global-company-mode          ; Auto-completion everywhere
-           global-diff-hl-mode          ; Highlight uncommitted changes
-           global-so-long-mode          ; Mitigate performance for long lines
-           counsel-projectile-mode      ; Manage and navigate projects
-           recentf-mode                 ; Recently opened files
-           show-paren-mode              ; Highlight matching parentheses
-           which-key-mode))             ; Available keybindings in popup
+         '(abbrev-mode                 ; E.g. sopl -> System.out.println
+           column-number-mode          ; Show column number in mode line
+           delete-selection-mode       ; Replace selected text
+           dirtrack-mode               ; directory tracking in *shell*
+           ;;global-company-mode         ; Auto-completion everywhere
+           ;;global-diff-hl-mode         ; Highlight uncommitted changes
+           global-so-long-mode         ; Mitigate performance for long lines
+           ;;counsel-projectile-mode     ; Manage and navigate projects
+           recentf-mode                ; Recently opened files
+           show-paren-mode))           ; Highlight matching parentheses
   (funcall mode 1))
 #+end_src
 
@@ -524,6 +523,65 @@ than scratch.
 
 #+begin_src emacs-lisp
 (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+#+end_src
+
+* Development Environment
+
+* Keyboard Specific Configurations
+
+** Evil Mode
+Evil is an extensible ‘vi’ layer for Emacs. It emulates the main features of
+Vim, and provides facilities for writing custom extensions. Evil Collection is
+also installed since it adds ‘evil’ bindings to parts of Emacs that the
+standard Evil package does not cover, such as: calenda, help-mode and ibuffer.
+
+#+begin_src emacs-lisp
+(use-package evil
+  :init (setq evil-want-C-i-jump nil)  ;; Install Evil and disable C-i to jump forward to restore TAB functionality in Org mode.
+  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+  (setq evil-want-keybinding nil)
+  (setq evil-vsplit-window-right t)
+  (setq evil-split-window-below t)
+  (evil-mode))
+(use-package evil-collection
+  :after evil
+  :config
+  (setq evil-collection-mode-list '(dashboard dired ibuffer))
+  (evil-collection-init))
+(use-package evil-tutor)
+#+end_src
+
+** General Keybindings
+General.el allows us to set keybindings. Using SPC as the prefix key. General
+makes setting keybindings (especially with SPC) much easier. All of the
+keybindings we set later in the config depend on general being loaded.
+
+#+begin_src emacs-lisp
+(use-package general
+  :config
+  (general-evil-setup t))
+#+end_src
+
+** Which Key
+Which-key is a minor mode for Emacs that displays the key bindings following
+your currently entered incomplete command (a prefix) in a popup.
+
+#+begin_src emacs-lisp
+(use-package which-key
+  :init
+  (setq which-key-side-window-location 'bottom
+        which-key-sort-order #'which-key-key-order-alpha
+        which-key-sort-uppercase-first nil
+        which-key-add-column-padding 1
+        which-key-max-display-columns nil
+        which-key-min-display-lines 6
+        which-key-side-window-slot -10
+        which-key-side-window-max-height 0.25
+        which-key-idle-delay 0.8
+        which-key-max-description-length 25
+        which-key-allow-imprecise-window-fit t
+        which-key-separator " → " ))
+(which-key-mode)
 #+end_src
 
 * MacOS Specific Configurations
