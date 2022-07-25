@@ -527,6 +527,96 @@ than scratch.
 
 * Development Environment
 
+** Workspaces with Perspective
+The Perspective package provides multiple named workspaces (or “perspectives”)
+in Emacs, similar to multiple desktops in window managers like. Each perspective
+has its own buffer list and its own window layout. This makes it easy to work on
+many separate projects without getting lost in all the buffers. Switching to a
+perspective activates its window configuration, and when in a perspective, only
+its buffers are available.
+
+#+begin_src emacs-lisp
+(use-package perspective
+  :bind
+  ("C-x C-b" . persp-list-buffers)   ; or use a nicer switcher, see below
+  :config
+  (persp-mode))
+#+end_src
+
+** Projects with Projectile
+Manage projects with Projectile which nicely integrates with Ivy and Counsel
+
+#+begin_src emacs-lisp
+(use-package projectile
+  :config
+  (projectile-global-mode 1))
+#+end_src
+
+* Notes/Journals/Agendas/Writing
+** Distraction free writing with WriteRoom
+A minor mode for Emacs that implements a distraction-free writing mode similar to the famous Writeroom editor for OS X.
+
+#+begin_src emacs-lisp
+(use-package writeroom-mode)
+#+end_src
+
+* Utilities
+
+** Shell with Vterm
+Vterm is a terminal emulator within Emacs. The ‘shell-file-name’ setting sets
+the shell to be used in M-x shell, M-x term, M-x ansi-term and M-x vterm. By
+default, the shell is set to ‘fish’ but could change it to ‘bash’ or ‘zsh’ if
+you prefer. Use only in Macos for now.
+
+#+begin_src emacs-lisp
+(when (memq window-system '(mac ns x))
+  (use-package vterm)
+  (setq shell-file-name "/usr/local/bin/zsh"
+      vterm-max-scrollback 5000))
+#+end_src
+
+* MacOS Specific Configurations
+
+** ADD PATH to Emacs
+Set up Emacs' `exec-path' and PATH environment variable to match that
+used by the user's shell. This is particularly useful under Mac OS X
+and macOS, where GUI apps are not started from a shell." This is to
+include environment-variables from the shell. It makes using Emacs
+along with external processes a lot simpler.
+
+#+begin_src emacs-lisp
+(when (memq window-system '(mac ns x))
+  (use-package exec-path-from-shell)
+  (exec-path-from-shell-initialize))
+;; (defun set-exec-path-from-shell-PATH ()
+;;   (interactive)
+;;   (let ((path-from-shell (replace-regexp-in-string
+;; 			  "[ \t\n]*$" "" (shell-command-to-string
+;; 					  "$SHELL --login -c 'echo $PATH'"
+;; 						    ))))
+;;     (setenv "PATH" path-from-shell)
+;;     (setq exec-path (split-string path-from-shell path-separator))))
+;; (set-exec-path-from-shell-PATH)
+#+end_src
+
+** Some more sane defaults in MacOS
+
+#+begin_src emacs-lisp
+(when (memq window-system '(mac ns))
+  (setq ns-pop-up-frames nil
+        mac-option-modifier nil
+        x-select-enable-clipboard t)
+  (when (fboundp 'mac-auto-operator-composition-mode)
+    (mac-auto-operator-composition-mode 1)))
+#+end_src
+
+** Open files in MacOS finder
+
+#+begin_src emacs-lisp
+(when (memq window-system '(mac ns))
+  (use-package reveal-in-osx-finder))
+#+end_src
+
 * Keyboard Specific Configurations
 
 ** Evil Mode
@@ -582,48 +672,6 @@ your currently entered incomplete command (a prefix) in a popup.
         which-key-allow-imprecise-window-fit t
         which-key-separator " → " ))
 (which-key-mode)
-#+end_src
-
-* MacOS Specific Configurations
-
-** ADD PATH to Emacs
-Set up Emacs' `exec-path' and PATH environment variable to match that
-used by the user's shell. This is particularly useful under Mac OS X
-and macOS, where GUI apps are not started from a shell." This is to
-include environment-variables from the shell. It makes using Emacs
-along with external processes a lot simpler.
-
-#+begin_src emacs-lisp
-(when (memq window-system '(mac ns x))
-  (use-package exec-path-from-shell)
-  (exec-path-from-shell-initialize))
-;; (defun set-exec-path-from-shell-PATH ()
-;;   (interactive)
-;;   (let ((path-from-shell (replace-regexp-in-string
-;; 			  "[ \t\n]*$" "" (shell-command-to-string
-;; 					  "$SHELL --login -c 'echo $PATH'"
-;; 						    ))))
-;;     (setenv "PATH" path-from-shell)
-;;     (setq exec-path (split-string path-from-shell path-separator))))
-;; (set-exec-path-from-shell-PATH)
-#+end_src
-
-** Some more sane defaults in MacOS
-
-#+begin_src emacs-lisp
-(when (memq window-system '(mac ns))
-  (setq ns-pop-up-frames nil
-        mac-option-modifier nil
-        x-select-enable-clipboard t)
-  (when (fboundp 'mac-auto-operator-composition-mode)
-    (mac-auto-operator-composition-mode 1)))
-#+end_src
-
-** Open files in MacOS finder
-
-#+begin_src emacs-lisp
-(when (memq window-system '(mac ns))
-  (use-package reveal-in-osx-finder))
 #+end_src
 
 * Keep EMACS Config directory clean
