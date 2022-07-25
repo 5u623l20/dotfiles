@@ -221,7 +221,6 @@ Disable Menubar, Toolbars and Scrollbars
            ;;global-company-mode         ; Auto-completion everywhere
            ;;global-diff-hl-mode         ; Highlight uncommitted changes
            global-so-long-mode         ; Mitigate performance for long lines
-           ;;counsel-projectile-mode     ; Manage and navigate projects
            recentf-mode                ; Recently opened files
            show-paren-mode))           ; Highlight matching parentheses
   (funcall mode 1))
@@ -548,10 +547,108 @@ Manage projects with Projectile which nicely integrates with Ivy and Counsel
 
 #+begin_src emacs-lisp
 (use-package projectile
+  :bind
+  (("C-c p" . projectile-command-map))
   :config
   (projectile-global-mode 1))
 #+end_src
 
+** Completion
+*** minibuffer with ivy/counsel/swiper
+Ivy, counsel and swiper are a generic completion mechanism for Emacs. Ivy-rich
+allows us to add descriptions alongside the commands in M-x.
+
+#+begin_src emacs-lisp
+  (use-package ivy
+    :defer 0.1
+    :diminish
+    :bind
+    (("C-c C-r" . ivy-resume)
+    ("C-x B" . ivy-switch-buffer-other-window)
+    ("C-x b" . ivy-switch-buffer))
+    :custom
+    (setq ivy-count-format "(%d/%d) ")
+    (setq ivy-use-virtual-buffers t)
+    (setq enable-recursive-minibuffers t)
+    (setq ivy-wrap t)
+    (setq ivy-height 25)
+    (setq ivy-on-del-error-function 'ignore)
+    :config
+    (ivy-mode))
+  (use-package ivy-rich
+    :after ivy
+    :custom
+    (ivy-virtual-abbreviate 'full
+    ivy-rich-switch-buffer-align-virtual-buffer t
+    ivy-rich-path-style 'abbrev)
+    :config
+    (ivy-set-display-transformer 'ivy-switch-buffer
+                                 'ivy-rich-switch-buffer-transformer)
+    (ivy-rich-mode 1)) ;; this gets us descriptions in M-x.
+  (use-package counsel
+    :after ivy
+    :config (counsel-mode))
+  (use-package counsel-projectile
+    :after counsel
+    :config (counsel-projectile-mode))
+    :bind
+    (("C-c i"  . swiper-isearch)
+    ("M-x"     . counsel-M-x)
+    ("C-x C-f" . counsel-find-file)
+    ("M-y"     . counsel-yank-pop))
+  (use-package swiper
+    :after ivy
+    :bind (("C-s" . swiper)
+           ("C-r" . swiper)))
+#+end_src
+
+*** ivy-posframe
+Ivy-posframe is an ivy extension, which lets ivy use posframe to show its
+candidate menu.  Some of the settings below involve:
++ ivy-posframe-display-functions-alist -- sets the display position for
+  specific programs
++ ivy-posframe-height-alist -- sets the height of the list displayed for
+  specific programs
+
+Available functions (positions) for 'ivy-posframe-display-functions-alist'
++ ivy-posframe-display-at-frame-center
++ ivy-posframe-display-at-window-center
++ ivy-posframe-display-at-frame-bottom-left
++ ivy-posframe-display-at-window-bottom-left
++ ivy-posframe-display-at-frame-bottom-window-center
++ ivy-posframe-display-at-point
++ ivy-posframe-display-at-frame-top-center
+
+=NOTE:= If the setting for 'ivy-posframe-display' is set to 'nil' (false),
+anything that is set to 'ivy-display-function-fallback' will just default to
+their normal position in Doom Emacs (usually a bottom split).  However, if this
+is set to 't' (true), then the fallback position will be centered in the
+window.
+
+#+begin_src emacs-lisp
+(use-package ivy-posframe
+  :init
+  (setq ivy-posframe-display-functions-alist
+    '((swiper                     . ivy-posframe-display-at-point)
+      (complete-symbol            . ivy-posframe-display-at-point)
+      (counsel-M-x                . ivy-display-function-fallback)
+      (counsel-esh-history        . ivy-posframe-display-at-window-center)
+      (counsel-describe-function  . ivy-display-function-fallback)
+      (counsel-describe-variable  . ivy-display-function-fallback)
+      (counsel-find-file          . ivy-display-function-fallback)
+      (counsel-recentf            . ivy-display-function-fallback)
+      (counsel-register           . ivy-posframe-display-at-frame-bottom-window-center)
+      (dmenu                      . ivy-posframe-display-at-frame-top-center)
+      (nil                        . ivy-posframe-display))
+    ivy-posframe-height-alist
+    '((swiper . 20)
+      (dmenu . 20)
+      (t . 10)))
+  :config
+  (ivy-posframe-mode 1)) ; 1 enables posframe-mode, 0 disables it.
+#+end_src
+
+*** in-buffer
 * Notes/Journals/Agendas/Writing
 ** Distraction free writing with WriteRoom
 A minor mode for Emacs that implements a distraction-free writing mode similar to the famous Writeroom editor for OS X.
@@ -571,9 +668,16 @@ you prefer. Use only in Macos for now.
 #+begin_src emacs-lisp
 (when (memq window-system '(mac ns x))
   (use-package vterm)
-  (setq shell-file-name "/usr/local/bin/zsh"
+  (setq shell-file-name "/bin/zsh"
       vterm-max-scrollback 5000))
 #+end_src
+
+** Git client with magit
+A git client for Emacs.  Often cited as a killer feature for Emacs.
+
+#+begin_src emacs-lisp
+(use-package magit)
+ #+end_src
 
 * MacOS Specific Configurations
 
