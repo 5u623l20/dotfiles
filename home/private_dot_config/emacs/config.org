@@ -826,7 +826,8 @@ you prefer. Use only in Macos for now.
 (when (equal system-type 'darwin)
   (use-package vterm)
   (setq shell-file-name "/bin/zsh"
-      vterm-max-scrollback 5000))
+      vterm-max-scrollback 5000)
+  (add-hook 'vterm-mode-hook (lambda () (setq evil-default-state 'emacs))))
 #+end_src
 
 ** Git client with magit
