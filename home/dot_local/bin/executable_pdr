@@ -82,7 +82,7 @@ update_tree() {
 }
 
 build_ports() {
-    for i in 123i386 123 130 MAIN
+    for i in 123i386 123 131 MAIN
     do
         ${POUDRIERE_BIN} pkgclean -j $i -p default -y -f /usr/local/etc/poudriere.d/lists/bofh.ports
 		${POUDRIERE_BIN} logclean -j $i -y 30
@@ -100,7 +100,7 @@ build_infrastructure() {
 }
 
 test_ports() {
-    for i in 123i386 123 130 MAIN
+    for i in 123i386 123 131 MAIN
 	do
         ${POUDRIERE_BIN} bulk -j $i -t $@
     done
