@@ -284,6 +284,14 @@ Disable Menubar, Toolbars and Scrollbars
 (setq display-line-numbers-type 'relative)
 #+end_src
 
+* Automatic trailing space/line cleanup
+
+Automatically clean trailing spaces/lines
+
+#+begin_src emacs-lisp
+(add-hook 'before-save-hook 'whitespace-cleanup)
+#+end_src
+
 * VISUAL
 
 ** Theme
