@@ -3,14 +3,14 @@
 set -e # -e: exit on error
 
 OS=$(uname)
-ARCH=`uname -p`
-CHEZMOI_VERSION="2.27.1"
+ARCH=$(uname -p)
+CHEZMOI_VERSION="2.19.0"
 GITHUB_USERNAME="5u623l20"
 
 case "${OS}" in
   "SunOS")
         OS=Solaris
-        OSSTR="${OS} ${REV}(${ARCH} `uname -v`)"
+        OSSTR="${OS} ${REV}(${ARCH} $(uname -v))"
         ;;
   "AIX")
         OS=AIX
@@ -58,8 +58,8 @@ if [ ! "$(command -v chezmoi)" ]; then
                 echo "Checksum for ${CHEZMOI_FILE_NAME} did not verify ${HASH_WANT} vs ${HASH_GOT}"
                 return 1
             fi
-            cd ${TMPDIR}
-            tar -zxvf ${TMPDIR}/${CHEZMOI_FILE_NAME} -C ${bin_dir} chezmoi
+            cd "${TMPDIR}"
+            tar -zxvf "${TMPDIR}"/"${CHEZMOI_FILE_NAME}" -C "${bin_dir}" chezmoi
             ${CHEZMOI_BIN} init -a $GITHUB_USERNAME
             ;;
         *)
