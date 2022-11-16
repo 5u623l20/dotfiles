@@ -2,9 +2,9 @@
 
 set -e # -e: exit on error
 
-OS=`uname`
+OS=$(uname)
 ARCH=`uname -p`
-CHEZMOI_VERSION="2.15.2"
+CHEZMOI_VERSION="2.27.1"
 GITHUB_USERNAME="5u623l20"
 
 case "${OS}" in
