@@ -244,7 +244,9 @@ GIT_PKG="git-lite"
 {{- else if (eq .chezmoi.os "netbsd" ) }}
 {{- else if (eq .chezmoi.os "openbsd" ) }}
 {{- else if (eq .chezmoi.os "solaris" ) }}
-{{- else if (eq .chezmoi.osRelease.id "alpine" ) }}
+{{- else if (eq .chezmoi.os "linux" ) }}
+{{- if hasKey .chezmoi.osRelease "id" }}
+{{- if (eq .chezmoi.osRelease.id "alpine" ) }}
 {{- else if (eq .chezmoi.osRelease.id "amzn" ) }}
 {{- else if (eq .chezmoi.osRelease.id "arch" ) }}
 {{- else if (eq .chezmoi.osRelease.id "centos" ) }}
@@ -259,7 +261,8 @@ VIM_PKG="vim-nox"
 {{- else if (eq .chezmoi.osRelease.id "ubuntu" ) }}
 AG_PKG="silversearcher-ag"
 VIM_PKG="vim-nox"
-{{- else }}
+{{- end }}
+{{- end }}
 {{- end }}
 if command_exists python3; then
   PYTHON_BIN="python3"

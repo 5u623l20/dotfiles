@@ -303,7 +303,9 @@ alias pu="${SUDO}pkg update"
 alias pU="${SUDO}pkg upgrade"
 alias puU="pu && puU"
 alias pv="pkg version"
-{{ else if eq .chezmoi.osRelease.id "arch" -}}
+{{ else if eq .chezmoi.os "linux" -}}
+{{ if hasKey .chezmoi.osRelease "id" }}
+{{ if eq .chezmoi.osRelease.id "arch" -}}
 ###############################################################################
 ###############################archlinux ALIASES ##############################
 ###############################################################################
@@ -820,6 +822,8 @@ fi
 #          sort -n | \
 #          awk '{print $1" "$2}'
 #        }
+{{ end }}
+{{ end }}
 {{ end }}
 case ${SHELL##*/} in
     zsh|bash)
