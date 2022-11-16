@@ -3,7 +3,6 @@
 {{- $ephemeral := false -}}{{/* true if this machine is ephemeral, e.g. a cloud or VM instance */}}
 {{- $personal := false -}}{{/* true if this machine should have personal secrets from 1PassWord */}}
 {{- $gotroot := false -}}{{/* true if this machine has root or sudo access */}}
-{{- $isBounce := false -}}{{/* true if this machine is for Bounce Experts */}}
 {{- "" -}}
 
 {{/* detect GitHub codespaces, VSCode remote containers, Docker containers, and Vagrant boxes */}}
@@ -48,11 +47,6 @@
 {{-     else -}}
 {{-       $gotroot = promptBool "gotroot" -}}
 {{-     end -}}
-{{-     if hasKey . "isBounce" -}}
-{{-       $isBounce = .isBounce -}}
-{{-     else -}}
-{{-       $isBounce = promptBool "isBounce" -}}
-{{-     end -}}
 {{-   else -}}
 {{-     $headless = true -}}
 {{-     $ephemeral = true -}}
@@ -65,5 +59,3 @@
   ephemeral = {{ $ephemeral }}
   personal = {{ $personal }}
   gotroot = {{ $gotroot }}
-  isBounce = {{ $isBounce }}
-
