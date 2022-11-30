@@ -1,6 +1,6 @@
 #!/bin/sh
 
-COLOR_RESET="\033[0;0m"
+_COLOR_RESET="\033[0;0m"
 COLOR_BOLD="\033[1m"
 COLOR_UNDER="\033[4m"
 COLOR_BLINK="\033[5m"
@@ -33,13 +33,24 @@ COLOR_BG_MAGENTA="\033[45m"
 COLOR_BG_CYAN="\033[46m"
 COLOR_BG_LIGHT_GRAY="\033[47m"
 
-PORTSDIR=/usr/local/poudriere/ports/default
-GIT_BIN=/usr/local/bin/git
-POUDRIERE_BIN=/usr/local/bin/poudriere
+_GIT_BIN=/usr/local/bin/git
+_PORTGREP_BIN=/usr/local/bin/portgrep
+_PORTSDIR=/usr/local/poudriere/ports/default
+_PORTSLIST=/usr/local/etc/poudriere.d/ports-list/bofh.ports
+_POUDRIERE_BIN=/usr/local/bin/poudriere
+_SORT_BIN="/usr/bin/sort -u"
+_TEMPPDR=$(basename $0)
+_TMPFILE=$(mktemp -q /tmp/${_TEMPPDR}.XXXXXX)
+
+if [ $(hostname) = "pdr.bofh.network" ]; then
+    _JAILINFRA="MAIN"
+elif [ $(hostname) = "dev.bofh.network" ]; then
+    _JAILINFRA="131"
+fi
 
 # Notify message on error, but do not exit
 error_notify() {
-    echo "${COLOR_RED}$*${COLOR_RESET}" 1>&2
+    echo "${COLOR_RED}$*${_COLOR_RESET}" 1>&2
 }
 
 # Notify message on error and exit
@@ -49,11 +60,11 @@ error_exit() {
 }
 
 info() {
-    echo "${COLOR_GREEN}$*${COLOR_RESET}"
+    echo "${COLOR_GREEN}$*${_COLOR_RESET}"
 }
 
 warn() {
-    echo "${COLOR_YELLOW}$*${COLOR_RESET}"
+    echo "${COLOR_YELLOW}$*${_COLOR_RESET}"
 }
 
 usage() {
@@ -74,35 +85,38 @@ EOF
     exit 1
 }
 
+generate_ports_list() {
+    ${_PORTGREP_BIN} -R /usr/local/poudriere/ports/default -o -m bofh@FreeBSD.org -O tz@FreeBSD.org > "$_TMPFILE"
+    find $_PORTSDIR -type d -d 2 \( -iname "*php74*" -o -iname "*php80*" -o -iname "*php81*" -o -iname "*php82*" \) | sed -e "s|$_PORTSDIR||g" >> "$_TMPFILE"
+    ${_SORT_BIN} "$_TMPFILE" > "$_PORTSLIST"
+}
+
 update_tree() {
-    cd ${PORTSDIR}
-    ${GIT_BIN} checkout working && ${GIT_BIN} stash
-    ${GIT_BIN} checkout main && ${GIT_BIN} pull --ff-only && ${GIT_BIN} rebase main working
-	${GIT_BIN} stash apply
+    cd ${_PORTSDIR}
+    ${_GIT_BIN} checkout working && ${_GIT_BIN} stash
+    ${_GIT_BIN} checkout main && ${_GIT_BIN} pull --ff-only && ${_GIT_BIN} rebase main working
+    ${_GIT_BIN} stash apply
 }
 
 build_ports() {
     for i in 123i386 123 131 MAIN
     do
-        ${POUDRIERE_BIN} pkgclean -j $i -p default -y -f /usr/local/etc/poudriere.d/lists/bofh.ports
-		${POUDRIERE_BIN} logclean -j $i -y 30
-        ${POUDRIERE_BIN} bulk -j $i -t -f /usr/local/etc/poudriere.d/lists/bofh.ports
+        ${_POUDRIERE_BIN} pkgclean -j $i -p default -y -f ${_PORTSLIST}
+        ${_POUDRIERE_BIN} logclean -j $i -y 30
+        ${_POUDRIERE_BIN} bulk -j $i -t -f ${_PORTSLIST}
     done
 }
 
 build_infrastructure() {
-	for i in 131 MAIN
-    do
-        ${POUDRIERE_BIN} pkgclean -j $i -p default -z infrastructure -y -f /usr/local/etc/poudriere.d/lists/infrastructure
-		${POUDRIERE_BIN} logclean -j $i -p default -z infrastructure -y 10
-        ${POUDRIERE_BIN} bulk -j $i -z infrastructure -f /usr/local/etc/poudriere.d/lists/infrastructure
-    done
+    ${_POUDRIERE_BIN} pkgclean -j $_JAILINFRA -p default -z infrastructure -y -f /usr/local/etc/poudriere.d/ports-list/infrastructure
+    ${_POUDRIERE_BIN} logclean -j $_JAILINFRA -p default -z infrastructure -y 10
+    ${_POUDRIERE_BIN} bulk -j $_JAILINFRA -z infrastructure -f /usr/local/etc/poudriere.d/ports-list/infrastructure
 }
 
 test_ports() {
     for i in 123i386 123 131 MAIN
-	do
-        ${POUDRIERE_BIN} bulk -j $i -t $@
+    do
+        ${_POUDRIERE_BIN} bulk -j $i -t $@
     done
 }
 
@@ -112,27 +126,29 @@ main() {
     CMD=$1
     shift
 
-	# Handle special-case commands first.
+    # Handle special-case commands first.
     case "${CMD}" in
-	help|-h|--help)
+    help|-h|--help)
         usage
         ;;
-	-p)
-		# Build ports that belongs to bofh@FreeBSD.org
+    -p)
+        # Build ports that belongs to bofh@FreeBSD.org
         update_tree
+        generate_ports_list
         build_ports
-		;;
-	-i)
+        ;;
+    -i)
         # Build ports that are required by infrastructure
-		update_tree
+        update_tree
         build_infrastructure
         ;;
-	-a)
+    -a)
         # Build all
+        generate_ports_list
         update_tree
-		build_infrastructure
-		build_ports
-		;;
+        build_infrastructure
+        build_ports
+        ;;
     -t)
         # Parse the target and ensure it exists.
         if [ $# -eq 0 ]; then # No target was given, so show the command's help.
@@ -141,7 +157,7 @@ main() {
             TARGET="${1}"
             shift
             # Ensure the target exists. -- cwells
-            if [ ! -d "${PORTSDIR}/${TARGET%@*}" ]; then
+            if [ ! -d "${_PORTSDIR}/${TARGET%@*}" ]; then
                 error_exit "[${TARGET}]: Not found."
             else
                 test_ports ${TARGET}
