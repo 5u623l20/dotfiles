@@ -67,7 +67,7 @@ update_tree() {
     cd ${_PORTSDIR} || exit
     ${_GIT_BIN} checkout working && ${_GIT_BIN} stash
     ${_GIT_BIN} checkout main && ${_GIT_BIN} pull --ff-only && ${_GIT_BIN} rebase main working
-    ${_GIT_BIN} stash apply
+    ${_GIT_BIN} stash pop
 }
 
 build_ports() {
