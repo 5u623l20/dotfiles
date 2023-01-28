@@ -16,7 +16,9 @@ fi
 # Autocompletion for helm [Helm](https://helm.sh/), the Kubernetes package manager.
 #
 if [ $commands[helm] ]; then
-  source <(helm completion zsh)
+  helm completion zsh > $ZDOTDIR/functions/common/_helm
+else
+  rm -f $ZDOTDIR/functions/common/_helm
 fi
 #
 # Autocompletion for chezmoi [Chemzoi](https://www.chezmoi.io/).
