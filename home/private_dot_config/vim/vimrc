@@ -27,7 +27,7 @@ call dein#add('Yggdroot/indentLine')
 "call dein#add('tpope/vim-rhubarb') " required by fugitive to :Gbrowse
 call dein#add('arcticicestudio/nord-vim')
 
-"if isdirectory('/usr/local/opt/fzf')
+"if isdirectory('~/.config/zsh/plugins/fzf')
 "  Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 "else
 "  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
