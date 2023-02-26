@@ -24,7 +24,6 @@ call dein#add('vim-airline/vim-airline')
 "call dein#add('majutsushi/tagbar')
 call dein#add('dense-analysis/ale')
 call dein#add('Yggdroot/indentLine')
-"call dein#add('editor-bootstrap/vim-bootstrap-updater')
 "call dein#add('tpope/vim-rhubarb') " required by fugitive to :Gbrowse
 call dein#add('arcticicestudio/nord-vim')
 
