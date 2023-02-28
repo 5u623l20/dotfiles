@@ -9,7 +9,6 @@
 {{- if ne .chezmoi.os "linux" }}
 .bashrc
 .config/bash
-.profile
 {{- end }}
 {{ if not .personal }}
 .config/kitty
