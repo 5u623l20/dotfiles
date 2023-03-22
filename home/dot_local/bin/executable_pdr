@@ -16,7 +16,7 @@ _TMPFILE=$(mktemp -q /tmp/${_TEMPPDR}.XXXXXX)
 
 if [ $(hostname) = "pdr.bofh.network" ]; then
     _JAILINFRA="MAIN"
-elif [ $(hostname) = "dev.bofh.network" ]; then
+elif [ $(hostname) = "dev.bofh.network" ] || [ $(hostname) = "pkg.bofh.network" ]; then
     _JAILINFRA="131"
 fi
 
