@@ -17,7 +17,7 @@ _TMPFILE=$(mktemp -q /tmp/${_TEMPPDR}.XXXXXX)
 if [ $(hostname) = "pdr.bofh.network" ]; then
     _JAILINFRA="MAIN"
 elif [ $(hostname) = "dev.bofh.network" ] || [ $(hostname) = "pkg.bofh.network" ]; then
-    _JAILINFRA="131"
+    _JAILINFRA="132"
 fi
 
 # Notify message on error, but do not exit
@@ -71,7 +71,7 @@ update_tree() {
 }
 
 build_ports() {
-    for i in 124i386 124 131 MAIN
+    for i in 124i386 124 132 MAIN
     do
         ${_POUDRIERE_BIN} pkgclean -j $i -p default -y -f ${_PORTSLIST}
         ${_POUDRIERE_BIN} logclean -j $i -y 30
@@ -86,7 +86,7 @@ build_infrastructure() {
 }
 
 test_ports() {
-    for i in 124i386 124 131 MAIN
+    for i in 124i386 124 132 MAIN
     do
         ${_POUDRIERE_BIN} bulk -j $i -t "$@"
     done
