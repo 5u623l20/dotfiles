@@ -1,0 +1,270 @@
+#VerifyHostKeyDNS yes
+Host apnic-training
+  HostName 202.125.97.43
+  User apnic
+  KbdInteractiveAuthentication=yes
+  PreferredAuthentications password
+  PubkeyAuthentication no
+Host vpn10
+  HostName 185.92.222.208
+  User root
+Host apnic-training-internal
+  HostName 192.168.30.15
+  User apnic
+  KbdInteractiveAuthentication=yes
+  PreferredAuthentications password
+  PubkeyAuthentication no
+  ProxyJump apnic-training
+Host vu-appsec
+  HostName appsec.vusec.net
+  User bofh
+  IdentityFile ~/.ssh/vu_ed25519.pub
+Host vu-data
+  HostName ssh.data.vu.nl
+  User mrn429
+  KbdInteractiveAuthentication=yes
+  PreferredAuthentications password
+  PubkeyAuthentication no
+  HostKeyAlgorithms=+ssh-dss
+Host vu-das
+  Hostname fs0.das5.cs.vu.nl
+  User dsys2123
+  IdentityFile ~/.ssh/id_mbp_ecdsa_521
+  ProxyJump vu-data
+Host vu-stosys
+  Hostname localhost
+  User user
+  Port 7777
+  ForwardAgent yes
+Host vu-acn
+  Hostname localhost
+  User acn22
+  Port 4242
+  ForwardAgent yes
+  ForwardX11 yes
+Host vultr
+  HostName 136.244.97.99
+  IdentityFile ~/.ssh/id_mbp_ecdsa_521
+  User root
+  #IdentityFile ~/.ssh/id_mbp_ed25519_256.pub
+Host resolver1
+  HostName 95.179.185.192
+  HostName 2001:19f0:5001:395e:5400:03ff:feee:4d36
+  #AddressFamily inet6
+  ForwardAgent yes
+Host pdr
+  HostName pdr.bofh.network
+  User toor
+  AddressFamily inet
+  ForwardAgent yes
+Host pdr1
+  HostName 162.247.131.56
+  User toor
+  AddressFamily inet
+  ForwardAgent yes
+Host pdr2
+  HostName pdr2.bofh.network
+  User toor
+  AddressFamily inet
+Host dev
+  HostName dev.bofh.network
+  User toor
+  ForwardAgent yes
+  AddressFamily inet
+Host devbox
+  HostName devbox.bofh.network
+Host freshports
+  HostName a.freshports.org
+  User bofh
+  Port 19587
+  IdentityFile ~/.ssh/id_mbp_ecdsa_521
+  ForwardAgent yes
+Host git
+  HostName git.bofh.network
+  User git
+Host python
+  HostName 95.179.151.242
+  User root
+  IdentityFile ~/.ssh/id_mbp_ed25519_256.pub
+Host nepustil-zmon
+  HostName mon.z10a.nepustil.net
+  User bofh
+  Port 47182
+  IdentityFile ~/.ssh/id_nepustil_ed25519_256
+  ForwardAgent yes
+Host nepustil-rr1
+  HostName 85.236.200.2
+  User root
+  Port 2701
+  IdentityFile ~/.ssh/id_nepustil_ed25519_256
+Host bc-1login
+  HostName 1login.bounce-commerce.de
+  User toor
+Host bc-backup
+  HostName 135.181.212.53
+  #HostName 2a01:4f9:3a:2a19::2
+  User toor
+Host bc-commerce
+  HostName 168.119.71.51
+  User toor
+  ForwardAgent yes
+Host bc-db          # Bounce-Expert db
+  HostName 162.55.243.215
+  User toor
+  ForwardAgent yes
+Host bc-devops
+  HostName 195.201.199.252
+  User toor
+  ForwardAgent yes
+Host bc-mail
+  Hostname 176.9.89.59
+  User toor
+  ForwardAgent yes
+Host bc-monitoring
+  HostName 195.201.240.189
+  User toor
+  IdentityFile ~/.ssh/id_bounce-experts_ed25519_256
+  IdentitiesOnly yes
+Host bc-page
+  #HostName 2a01:4f8:271:3c58::2
+  HostName 162.55.234.231
+  ForwardAgent yes
+  User toor
+Host bc-*
+  User root
+  IdentityFile ~/.ssh/id_bounce-experts_ed25519_256
+Host be-githost
+  HostName 148.251.41.102
+  # HostName 2a01:4f8:231:461c::2
+  User root
+  ForwardAgent yes
+Host be-gitlab
+  HostName gitlab.bounce-experts.com
+  User git
+  IdentityFile ~/.ssh/id_bounce-experts_ed25519_256
+  #KbdInteractiveAuthentication=yes
+  #PreferredAuthentications=password
+  #PubkeyAuthentication=no
+Host be-nachtwache
+  HostName 148.251.41.85
+  User toor
+  ForwardAgent yes
+Host be-pkg
+  HostName pkg.bounce-experts.com
+  User toor
+  #RequestTTY yes
+  ForwardAgent yes
+  #RemoteCommand zsh
+Host be-regio
+  HostName 116.202.242.100
+  User bofh
+Host be-*
+  User root
+  IdentityFile ~/.ssh/id_bounce-experts_ed25519_256
+Host ubnt
+  HostName 192.168.30.1
+  User bofh
+  PreferredAuthentications password
+  PubkeyAuthentication no
+Host rsync
+  ProxyJump dev
+  HostName zh1086b.rsync.net
+  User root
+Host gce-cirrus1
+  HostName 34.134.219.155
+  User bofh
+  IdentityFile ~/.ssh/id_mbp_ecdsa_521
+  ForwardAgent yes
+Host rpi4a
+  #HostName rpi4a.bofh.network
+  HostName 81.109.185.83
+  User subzero
+  #ForwardAgent yes
+Host ios
+  HostName 192.168.30.232
+  User apnic
+  PubkeyAuthentication no
+  KexAlgorithms +diffie-hellman-group1-sha1,diffie-hellman-group14-sha1
+  Ciphers +aes128-ctr,aes192-ctr,aes256-ctr,aes128-cbc,3des-cbc
+  MACs hmac-md5,hmac-sha1,umac-64@openssh.com
+  HostKeyAlgorithms=+ssh-dss,ssh-rsa
+Host TechnologiaIncofnita
+  HostName base.board.techinc.nl
+  User bofh
+Host jailtest
+  HostName 209.250.241.21
+  User toor
+#Host cloud
+#  HostName 78.141.214.215
+#  User bofh
+#  KbdInteractiveAuthentication=yes
+#  PreferredAuthentications password
+#  PubkeyAuthentication no
+Host fbsd-admin.nyi.freebsd.org
+  HostName admin.nyi.freebsd.org
+  User bofh
+  IdentityFile ~/.ssh/id_freebsd_ed25519_256.pub
+Host fbsd-freefall
+  HostName freefall.freebsd.org
+  User bofh
+Host fbsd-filly4
+  HostName filly4.nyi.freebsd.org
+  User bofh
+Host fbsd-phabric
+  Hostname reviews.nyi.freebsd.org
+  User bofh
+  ProxyJump fbsd-freefall
+Host fbsd-phabric-dev
+  Hostname reviews-dev.nyi.freebsd.org
+  User bofh
+  ProxyJump fbsd-freefall
+  ForwardAgent yes
+Host powerdns-master-dedicated
+  HostName 136.244.98.233
+  User root
+  ForwardAgent yes
+Host powerdns-slave
+  HostName 209.250.246.120
+  User toor
+  ForwardAgent yes
+Host *.freebsd.org
+  User bofh
+Host *
+  User root
+  #KbdInteractiveAuthentication yes
+  #PreferredAuthentications password
+  #PubkeyAuthentication no
+  ForwardAgent no
+  IdentityFile ~/.ssh/id_mbp_ed25519_256.pub
+  SendEnv LANG LC_*
+  IdentitiesOnly yes
+  #ControlMaster auto
+  #ControlPath ~/.ssh/control-master-%r@%h:%p
+  #ControlPersist 3600
+
+# Host *
+#   ForwardX11 no
+#   PasswordAuthentication yes
+#   HostbasedAuthentication no
+#   GSSAPIAuthentication no
+#   GSSAPIDelegateCredentials no
+#   BatchMode no
+#   CheckHostIP yes
+#   AddressFamily any
+#   ConnectTimeout 0
+#   StrictHostKeyChecking ask
+#   IdentityFile ~/.ssh/id_rsa
+#   IdentityFile ~/.ssh/id_dsa
+#   IdentityFile ~/.ssh/id_ecdsa
+#   IdentityFile ~/.ssh/id_ed25519
+#   Port 22
+#   Ciphers aes128-ctr,aes192-ctr,aes256-ctr,aes128-cbc,3des-cbc
+#   MACs hmac-md5,hmac-sha1,umac-64@openssh.com
+#   EscapeChar ~
+#   Tunnel no
+#   TunnelDevice any:any
+#   PermitLocalCommand no
+#   VisualHostKey no
+#   ProxyCommand ssh -q -W %h:%p gateway.example.com
+#   RekeyLimit 1G 1h
+#   UserKnownHostsFile ~/.ssh/known_hosts.d/%k
