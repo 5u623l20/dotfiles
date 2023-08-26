@@ -160,22 +160,23 @@ check_packagemgr
 CHEZMOI_OS={{ .chezmoi.os }}
 CHEZMOI_ARCH={{ .chezmoi.arch }}
 
-AG_BIN="ag"
+AG_BIN=$(command -v ag)
 AG_PKG="the_silver_searcher"
-if command_exists batcat; then
-    BAT_BIN=$(command -v batcat)
-elif command_exists bat; then
-    BAT_BIN=$(command -v bat)
-fi
+BAT_BIN=$(command -v bat)
 BAT_PKG="bat"
+FD_BIN=$(command -v fd)
+FD_PKG="fd-find"
 FORTUNE_BIN=$(command -v fortune)
 FZF_BIN=$(command -v fzf)
 FZF_PKG="fzf"
-FZF_VERSION="0.30.0"
+FZF_VERSION="0.42.0"
 GIT_BIN=$(command -v git)
 GIT_PKG="git"
 HTOP_BIN=$(command -v htop)
 HTOP_PKG="htop"
+RG_BIN=$(command -v rg)
+RG_PKG="ripgrep"
+SED_BIN=$(command -v sed)
 STRFILE_BIN=$(command -v strfile)
 TMUX_BIN=$(command -v tmux)
 TMUX_PKG="tmux"
@@ -183,7 +184,6 @@ VIM_BIN=$(command -v vim)
 VIM_PKG="vim"
 ZSH_BIN=$(command -v zsh)
 ZSH_PKG="zsh"
-#fortune
 #openssh
 #tree
 #asciinema
@@ -200,7 +200,6 @@ ZSH_PKG="zsh"
 #duf
 #dust
 #exa
-#fd
 #getdns
 #gh
 #git-delta
@@ -224,7 +223,6 @@ ZSH_PKG="zsh"
 #pwgen
 #qemu
 #ranger
-#ripgrep
 #rsync
 #sd
 #shellcheck
@@ -252,6 +250,7 @@ GIT_PKG="git-lite"
 {{- else if (eq .chezmoi.osRelease.id "centos" ) }}
 {{- else if (eq .chezmoi.osRelease.id "debian" ) }}
 AG_PKG="silversearcher-ag"
+BAT_BIN=$(command -v batcat)
 VIM_PKG="vim-nox"
 {{- else if (eq .chezmoi.osRelease.id "fedora" ) }}
 {{- else if (eq .chezmoi.osRelease.id "opensuse" ) }}
@@ -260,23 +259,27 @@ VIM_PKG="vim-nox"
 {{- else if (eq .chezmoi.osRelease.id "sles" ) }}
 {{- else if (eq .chezmoi.osRelease.id "ubuntu" ) }}
 AG_PKG="silversearcher-ag"
+BAT_BIN=$(command -v batcat)
 VIM_PKG="vim-nox"
 {{- end }}
 {{- end }}
 {{- end }}
 if command_exists python3; then
   PYTHON_BIN="python3"
-elif command_exists python3.6; then
-  PYTHON_BIN="python3.6"
-elif command_exists python3.7; then
-  PYTHON_BIN="python3.7"
 elif command_exists python3.8; then
   PYTHON_BIN="python3.8"
+elif command_exists python3.9; then
+  PYTHON_BIN="python3.9"
+elif command_exists python3.10; then
+  PYTHON_BIN="python3.10"
+elif command_exists python3.11; then
+  PYTHON_BIN="python3.11"
 elif command_exists python; then
   PYTHON_BIN="python"
 elif command_exists python2; then
   PYTHON_BIN="python2"
 fi
-FREEBSD_PY_DEFAULT="py38-"
+FREEBSD_PY_DEFAULT="py39-"
 
+HOSTNAME={{- .chezmoi.hostname }}
 # vim: ft=sh:

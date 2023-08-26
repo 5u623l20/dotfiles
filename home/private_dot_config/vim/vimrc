@@ -14,6 +14,7 @@ call dein#add('~/.local/share/dein/repos/github.com/Shougo/dein.vim')
 "" dein install packages
 "*****************************************************************************
 call dein#add('preservim/nerdtree', {'on_cmd': 'NERDTreeToggle'})
+call dein#add('alker0/chezmoi.vim')
 "call dein#add('tpope/vim-commentary')
 call dein#add('tpope/vim-fugitive')
 call dein#add('vim-airline/vim-airline')

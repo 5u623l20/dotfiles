@@ -13,6 +13,29 @@ tic -x -o ~/.terminfo ~/kitty.terminfo
 rm ~/kitty.terminfo
 {{ end }}
 {{ end }}
+
+###############################################################################
+########################Bootstrap pkg ########################################
+###############################################################################
+{{ if eq .chezmoi.os "freebsd" -}}
+{{ if .gotroot }}
+$MKDIR /usr/local/etc/pkg/repos
+{{ if or (eq .hostname "dev") (eq .hostname "pdr") }}
+$SED -e 's/quarterly/latest/g; s/yes/no/g' /etc/pkg/FreeBSD.conf > /usr/local/etc/pkg/repos/FreeBSD.conf
+$CAT <<EOF > /usr/local/etc/pkg/repos/infrastructure.conf
+infrastructure: {
+	url: "http://${HOSTNAME}.bofh.network/\${ABI}/infrastructure",
+	enabled: yes,
+	priority: 10
+}
+EOF
+{{ else }}
+$SED -e 's/quarterly/latest/g' /etc/pkg/FreeBSD.conf > /usr/local/etc/pkg/repos/FreeBSD.conf
+{{ end }}
+env ASSUME_ALWAYS_YES=yes pkg bootstrap -f
+pkg update -f
+{{ end }}
+{{ end }}
 ###############################################################################
 ##############################Install bat #####################################
 ###############################################################################
@@ -21,6 +44,14 @@ if [ -z "$BAT_BIN" ]; then
 $PKG_CMD $BAT_PKG
 fi
 {{ end }}
+###############################################################################
+##############################Install fd  #####################################
+###############################################################################
+if [ -z "$FD_BIN" ]; then
+{{ if .gotroot }}
+$PKG_CMD $FD_PKG
+{{ end }}
+fi
 ###############################################################################
 ##############################Install fzf #####################################
 ###############################################################################
@@ -47,6 +78,14 @@ fi
 {{ if .gotroot }}
 if [ -z "$HTOP_BIN" ]; then
 $PKG_CMD $HTOP_PKG
+fi
+{{ end }}
+###############################################################################
+###############################Install ripgrep ################################
+###############################################################################
+{{ if .gotroot }}
+if [ -z "$RG_BIN" ]; then
+$PKG_CMD $RG_PKG
 fi
 {{ end }}
 ###############################################################################
