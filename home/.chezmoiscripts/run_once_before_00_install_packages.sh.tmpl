@@ -24,7 +24,7 @@ $MKDIR /usr/local/etc/pkg/repos
 $SED -e 's/quarterly/latest/g; s/yes/no/g' /etc/pkg/FreeBSD.conf > /usr/local/etc/pkg/repos/FreeBSD.conf
 $CAT <<EOF > /usr/local/etc/pkg/repos/infrastructure.conf
 infrastructure: {
-	url: "http://${HOSTNAME}.bofh.network/\${ABI}/infrastructure",
+	url: "http://{{- .chezmoi.hostname }}.bofh.network/\${ABI}/infrastructure",
 	enabled: yes,
 	priority: 10
 }
