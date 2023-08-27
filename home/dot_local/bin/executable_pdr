@@ -1,42 +1,47 @@
 #!/bin/sh
 
+_COLOR_GREEN="\033[0;32m"
+_COLOR_RED="\033[0;31m"
 _COLOR_RESET="\033[0;0m"
-COLOR_RED="\033[0;31m"
-COLOR_GREEN="\033[0;32m"
-COLOR_YELLOW="\033[1;33m"
+_COLOR_YELLOW="\033[1;33m"
 
 _GIT_BIN=/usr/local/bin/git
+_INFRASTRUCTURE_LIST="/usr/local/etc/poudriere.d/ports-list/infrastructure"
+_INFRASTRUCTURE_PORTS="head"
+_INFRASTRUCTURE_SET="infrastructure"
+_JAIL_LIST="124i386 124 132 140 MAIN"
 _PORTGREP_BIN=/usr/local/bin/portgrep
-_PORTSDIR=/usr/local/poudriere/ports/default
 _PORTSLIST=/usr/local/etc/poudriere.d/ports-list/bofh.ports
+_PORTSTREE=default
+_PORTSDIR=/usr/local/poudriere/ports/${_PORTSTREE}
 _POUDRIERE_BIN=/usr/local/bin/poudriere
 _SORT_BIN="/usr/bin/sort -u"
 _TEMPPDR=$(basename "$0")
 _TMPFILE=$(mktemp -q /tmp/${_TEMPPDR}.XXXXXX)
 
 if [ $(hostname) = "pdr.bofh.network" ]; then
-    _JAILINFRA="MAIN"
+    _INFRASTRUCTURE_JAIL="MAIN"
 elif [ $(hostname) = "dev.bofh.network" ] || [ $(hostname) = "pkg.bofh.network" ]; then
-    _JAILINFRA="132"
+    _INFRASTRUCTURE_JAIL="132"
 fi
 
 # Notify message on error, but do not exit
-error_notify() {
-    echo "${COLOR_RED}$*${_COLOR_RESET}" 1>&2
+e_notify() {
+    printf "${_COLOR_RED}✖ %s${_COLOR_RESET}\n" "$@"
 }
 
 # Notify message on error and exit
-error_exit() {
-    error_notify "$@"
+e_exit() {
+    e_notify "$@"
     exit 1
 }
 
-info() {
-    echo "${COLOR_GREEN}$*${_COLOR_RESET}"
+e_info() {
+    printf "${_COLOR_UNDERLINE}${_COLOR_BOLD}${_COLOR_BLUE}Info:${_COLOR_RESET}  ${_COLOR_YELLOW}%s${_COLOR_RESET}\n" "$@"
 }
 
-warn() {
-    echo "${COLOR_YELLOW}$*${_COLOR_RESET}"
+e_warning() {
+    printf "${_COLOR_YELLOW}➜ %s${_COLOR_RESET}\n" "$@"
 }
 
 usage() {
@@ -57,38 +62,42 @@ EOF
     exit 1
 }
 
-generate_ports_list() {
-    ${_PORTGREP_BIN} -R /usr/local/poudriere/ports/default -o -m bofh@FreeBSD.org -O tz@FreeBSD.org > "$_TMPFILE"
-    find $_PORTSDIR -type d -d 2 \( -iname "*php74*" -o -iname "*php80*" -o -iname "*php81*" -o -iname "*php82*" \) | sed -e "s|$_PORTSDIR/||g" >> "$_TMPFILE"
-    ${_SORT_BIN} "$_TMPFILE" > "$_PORTSLIST"
-}
-
 update_tree() {
+    e_warning "UPDATE default portstree"
     cd ${_PORTSDIR} || exit
     ${_GIT_BIN} checkout working && ${_GIT_BIN} stash
     ${_GIT_BIN} checkout main && ${_GIT_BIN} pull --ff-only && ${_GIT_BIN} rebase main working
     ${_GIT_BIN} stash pop
 }
 
+generate_ports_list() {
+    ${_PORTGREP_BIN} -R /usr/local/poudriere/ports/${_PORTSTREE} -o -m bofh@FreeBSD.org -O tz@FreeBSD.org > "$_TMPFILE"
+    find $_PORTSDIR -type d -d 2 \( -iname "*php80*" -o -iname "*php81*" -o -iname "*php82*" -o -iname "*php83*"  \) | sed -e "s|$_PORTSDIR/||g" >> "$_TMPFILE"
+    ${_SORT_BIN} "$_TMPFILE" > "$_PORTSLIST"
+}
+
 build_ports() {
-    for i in 124i386 124 132 MAIN
+    for _JAILS in $_JAIL_LIST
     do
-        ${_POUDRIERE_BIN} pkgclean -j $i -p default -y -f ${_PORTSLIST}
-        ${_POUDRIERE_BIN} logclean -j $i -y 30
-        ${_POUDRIERE_BIN} bulk -j $i -t -f ${_PORTSLIST}
+        ${_POUDRIERE_BIN} pkgclean -j $_JAILS -p default -y -f ${_PORTSLIST}
+        ${_POUDRIERE_BIN} logclean -j $_JAILS -y 60
+        ${_POUDRIERE_BIN} bulk -t -j $_JAILS -f ${_PORTSLIST}
     done
 }
 
 build_infrastructure() {
-    ${_POUDRIERE_BIN} pkgclean -j $_JAILINFRA -p default -z infrastructure -y -f /usr/local/etc/poudriere.d/ports-list/infrastructure
-    ${_POUDRIERE_BIN} logclean -j $_JAILINFRA -p default -z infrastructure -y 10
-    ${_POUDRIERE_BIN} bulk -j $_JAILINFRA -z infrastructure -f /usr/local/etc/poudriere.d/ports-list/infrastructure
+    for _JAILS in $_INFRASTRUCTURE_JAIL
+    do
+        ${_POUDRIERE_BIN} pkgclean -j $_JAILS -p $_PORTSTREE -z $_INFRASTRUCTURE_SET -y -f $_INFRASTRUCTURE_LIST
+        ${_POUDRIERE_BIN} logclean -j $_JAILS -p $_PORTSTREE -z $_INFRASTRUCTURE_SET -y 30
+        ${_POUDRIERE_BIN} bulk -j $_JAILS -p $_PORTSTREE -z $_INFRASTRUCTURE_SET -f $_INFRASTRUCTURE_LIST
+    done
 }
 
 test_ports() {
-    for i in 124i386 124 132 MAIN
+    for _JAILS in $_JAIL_LIST
     do
-        ${_POUDRIERE_BIN} bulk -j $i -t "$@"
+        ${_POUDRIERE_BIN} bulk -t -j $_JAILS -p $_PORTSTREE "$@"
     done
 }
 
@@ -124,13 +133,13 @@ main() {
     -t)
         # Parse the target and ensure it exists.
         if [ $# -eq 0 ]; then # No target was given, so show the command's help.
-            error_exit "port name not provided."
+            e_exit "port name not provided."
         elif [ $# -eq 1 ]; then
             TARGET="${1}"
             shift
             # Ensure the target exists. -- cwells
             if [ ! -d "${_PORTSDIR}/${TARGET%@*}" ]; then
-                error_exit "[${TARGET}]: Not found."
+                e_exit "[${TARGET}]: Not found."
             else
                 test_ports "${TARGET}"
             fi
@@ -139,7 +148,7 @@ main() {
         fi
         ;;
     *) # Filter out all non-commands
-        error_notify "Illegal option ${CMD}"
+        e_notify "Illegal option ${CMD}"
         usage
         ;;
     esac
