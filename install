@@ -4,7 +4,7 @@ set -e # -e: exit on error
 
 OS=$(uname)
 ARCH=$(uname -p)
-CHEZMOI_VERSION="2.15.3"
+CHEZMOI_VERSION="2.15.4"
 GITHUB_USERNAME="5u623l20"
 
 case "${OS}" in
@@ -34,7 +34,7 @@ esac
 readonly OS
 
 if [ ! "$(command -v chezmoi)" ]; then
-    bin_dir="$HOME/.local/bin"
+    bin_dir="$HOME/bin"
     CHEZMOI_BIN="$bin_dir/chezmoi"
     case "${OS}" in
         "FreeBSD")
