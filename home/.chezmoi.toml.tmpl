@@ -56,13 +56,15 @@
 {{-   end -}}
 {{- end -}}
 
-{{- if (and (eq .chezmoi.os "freebsd") (ne .hostname "freefall.freebsd.org") (hasSuffix ".freebsd.org" .chezmoi.hostname)) -}}
+{{- $fqdnHostname := .chezmoi.fqdnHostname -}}
+{{- if (and (eq .chezmoi.os "freebsd") (ne .fqdnHostname "freefall.freebsd.org") (hasSuffix ".freebsd.org" .chezmoi.fqdnHostname)) -}}
 {{-   $fcluster = true -}}
 {{- end -}}
 
 [data]
   headless = {{ $headless }}
   hostname = {{ $hostname | quote }}
+  fqdnHostname = {{ $fqdnHostname | quote }}
   ephemeral = {{ $ephemeral }}
   personal = {{ $personal }}
   gotroot = {{ $gotroot }}
