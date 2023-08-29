@@ -18,6 +18,7 @@
 {{- if not .gotroot }}
 {{- end }}
 {{- if .fcluster }}
+.vale.ini
 .zshenv
 {{- end }}
 *.zwc
