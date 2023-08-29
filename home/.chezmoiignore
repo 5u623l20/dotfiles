@@ -13,10 +13,12 @@
 {{ if not .personal }}
 .config/kitty
 .config/neomutt
-.doom.d
 .mbsyncrc
 {{ end }}
 {{- if not .gotroot }}
+{{- end }}
+{{- if not .fcluster }}
+.zshenv
 {{- end }}
 *.zwc
 **/*.zwc
