@@ -1,9 +1,11 @@
+{{- if not .fcluster }}
 [".local/share/dein/repos/github.com/Shougo/dein.vim"]
     type = "archive"
     url = "https://github.com/Shougo/dein.vim/archive/master.tar.gz"
     exact = true
     stripComponents = 1
     refreshPeriod = "84h"
+{{-   end }}
 [".config/zsh/plugins/fzf"]
     type = "archive"
     url = "https://github.com/junegunn/fzf/archive/refs/heads/master.zip"
