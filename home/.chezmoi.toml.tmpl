@@ -3,6 +3,7 @@
 {{- $ephemeral := false -}}{{/* true if this machine is ephemeral, e.g. a cloud or VM instance */}}
 {{- $personal := false -}}{{/* true if this machine should have personal secrets from 1PassWord */}}
 {{- $gotroot := false -}}{{/* true if this machine has root or sudo access */}}
+{{- $fcluster:= false -}}{{/* true if this machine is one from FreeBSD cluster */}}
 {{- "" -}}
 
 {{/* detect GitHub codespaces, VSCode remote containers, Docker containers, and Vagrant boxes */}}
@@ -55,9 +56,14 @@
 {{-   end -}}
 {{- end -}}
 
+{{- if (and (eq .chezmoi.os "freebsd") (ne .hostname "freefall.freebsd.org") (hasSuffix ".freebsd.org" .chezmoi.hostname)) -}}
+{{-   $fcluster = true -}}
+{{- end -}}
+
 [data]
   headless = {{ $headless }}
   hostname = {{ $hostname | quote }}
   ephemeral = {{ $ephemeral }}
   personal = {{ $personal }}
   gotroot = {{ $gotroot }}
+  fcluster = {{ $fcluster }}
