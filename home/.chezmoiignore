@@ -18,6 +18,8 @@
 {{- if not .gotroot }}
 {{- end }}
 {{- if .fcluster }}
+.config/vale
+.config/zsh
 .vale.ini
 .zshenv
 {{- end }}
