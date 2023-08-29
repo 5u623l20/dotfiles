@@ -18,7 +18,10 @@
 {{- if not .gotroot }}
 {{- end }}
 {{- if .fcluster }}
+.config/emacs
+.config/env
 .config/vale
+.config/vim
 .config/zsh
 .vale.ini
 .zshenv
