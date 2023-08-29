@@ -57,7 +57,7 @@
 {{- end -}}
 
 {{- $fqdnHostname := .chezmoi.fqdnHostname -}}
-{{- if (and (eq .chezmoi.os "freebsd") (ne .fqdnHostname "freefall.freebsd.org") (hasSuffix ".freebsd.org" .chezmoi.fqdnHostname)) -}}
+{{- if (and (eq .chezmoi.os "freebsd") (ne .chezmoi.fqdnHostname "freefall.freebsd.org") (hasSuffix ".freebsd.org" .chezmoi.fqdnHostname)) -}}
 {{-   $fcluster = true -}}
 {{- end -}}
 
