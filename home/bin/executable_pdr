@@ -21,7 +21,7 @@ _TMPFILE=$(mktemp -q /tmp/${_TEMPPDR}.XXXXXX)
 
 if [ $(hostname) = "pdr.bofh.network" ]; then
     _INFRASTRUCTURE_JAIL="MAIN"
-elif [ $(hostname) = "dev.bofh.network" ] || [ $(hostname) = "pkg.bofh.network" ]; then
+elif [ $(hostname) = "dev.bofh.network" ] || [ $(hostname) = "pkg.bofh.network" ] || [ $(hostname) = "rpi4a.bofh.network" ]; then
     _INFRASTRUCTURE_JAIL="132"
 fi
 
