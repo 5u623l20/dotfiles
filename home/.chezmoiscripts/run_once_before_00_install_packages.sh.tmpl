@@ -20,7 +20,7 @@ rm ~/kitty.terminfo
 {{ if eq .chezmoi.os "freebsd" -}}
 {{ if .gotroot }}
 $MKDIR /usr/local/etc/pkg/repos
-{{ if or (eq .hostname "dev") (eq .hostname "pdr") }}
+{{ if or (eq .hostname "dev") (eq .hostname "pdr") (eq .hostname "rpi4a") }}
 $SED -e 's/quarterly/latest/g; s/yes/no/g' /etc/pkg/FreeBSD.conf > /usr/local/etc/pkg/repos/FreeBSD.conf
 $CAT <<EOF > /usr/local/etc/pkg/repos/infrastructure.conf
 infrastructure: {
