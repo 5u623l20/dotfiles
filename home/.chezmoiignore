@@ -16,7 +16,7 @@ bin/rmport
 .config/neomutt
 .mbsyncrc
 {{ end }}
-{{ if not .headless }}
+{{ if .headless }}
 .config/kitty
 {{ end }}
 {{- if not .gotroot }}
