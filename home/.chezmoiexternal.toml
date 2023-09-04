@@ -54,33 +54,33 @@
     stripComponents = 1
     refreshPeriod = "168h"
 {{-   end }}
-{{- if and (not .ephemeral) (not .headless) (.personal) (ne .chezmoi.os "darwin")}}
+{{- if and (not .ephemeral) (not .headless) (ne .chezmoi.os "darwin")}}
 {{-   $fontDir := "" }}
 {{-   if eq .chezmoi.os "linux" }}
 {{-     $fontDir = ".local/share/fonts" }}
 {{-   end }}
-["{{ $fontDir }}/Fira Code SemiBold Nerd Font Complete Mono.ttf"]
+["{{ $fontDir }}/Fira Code SemiBold Nerd Font Mono.ttf"]
     type = "file"
-    url = "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/SemiBold/complete/Fira%20Code%20SemiBold%20Nerd%20Font%20Complete%20Mono.ttf"
+    url = "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/SemiBold/FiraCodeNerdFontMono-SemiBold.ttf"
     refreshPeriod = "168h"
-["{{ $fontDir }}/Fira Code Regular Nerd Font Complete Mono.ttf"]
+["{{ $fontDir }}/Fira Code Regular Nerd Font Mono.ttf"]
     type = "file"
-    url = "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Regular/complete/Fira%20Code%20Regular%20Nerd%20Font%20Complete%20Mono.ttf"
+    url = "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Regular/FiraCodeNerdFontMono-Regular.ttf"
     refreshPeriod = "168h"
-["{{ $fontDir }}/Fira Code Bold Nerd Font Complete Mono.ttf"]
+["{{ $fontDir }}/Fira Code Bold Nerd Font Mono.ttf"]
     type = "file"
-    url = "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Bold/complete/Fira%20Code%20Bold%20Nerd%20Font%20Complete%20Mono.ttf"
+    url = "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Bold/FiraCodeNerdFontMono-Bold.ttf"
     refreshPeriod = "168h"
-["{{ $fontDir }}/Fira Code Light Nerd Font Complete Mono.ttf"]
+["{{ $fontDir }}/Fira Code Light Nerd Font Mono.ttf"]
     type = "file"
-    url = "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Light/complete/Fira%20Code%20Light%20Nerd%20Font%20Complete%20Mono.ttf"
+    url = "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Light/FiraCodeNerdFontMono-Light.ttf"
     refreshPeriod = "168h"
-["{{ $fontDir }}/Fira Code Medium Nerd Font Complete Mono.ttf"]
+["{{ $fontDir }}/Fira Code Medium Nerd Font Mono.ttf"]
     type = "file"
-    url = "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Medium/complete/Fira%20Code%20Medium%20Nerd%20Font%20Complete%20Mono.ttf"
+    url = "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Medium/FiraCodeNerdFontMono-Medium.ttf"
     refreshPeriod = "168h"
 ["{{ $fontDir }}/Fira Code Retina Nerd Font Complete Mono.ttf"]
     type = "file"
-    url = "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Retina/complete/Fira%20Code%20Retina%20Nerd%20Font%20Complete%20Mono.ttf"
+    url = "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Retina/FiraCodeNerdFontMono-Retina.ttf"
     refreshPeriod = "168h"
 {{- end }}
