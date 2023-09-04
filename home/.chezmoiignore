@@ -18,6 +18,7 @@ bin/rmport
 {{ end }}
 {{ if not .headless }}
 .config/kitty
+{{ end }}
 {{- if not .gotroot }}
 {{- end }}
 {{- if .fcluster }}
