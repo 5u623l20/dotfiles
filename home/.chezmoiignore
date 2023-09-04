@@ -13,10 +13,11 @@ bin/rmport
 .config/bash
 {{- end }}
 {{ if not .personal }}
-.config/kitty
 .config/neomutt
 .mbsyncrc
 {{ end }}
+{{ if not .headless }}
+.config/kitty
 {{- if not .gotroot }}
 {{- end }}
 {{- if .fcluster }}
