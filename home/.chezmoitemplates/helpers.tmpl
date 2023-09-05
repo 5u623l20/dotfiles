@@ -167,7 +167,11 @@ BAT_PKG="bat"
 CAT_BIN=$(command -v cat)
 CAT="$CAT_BIN"
 EMACS_BIN=$(command -v emacs)
+{{ if .headless -}}
+EMACS_PKG="emacs-nox"
+{{ else }}
 EMACS_PKG="emacs"
+{{ end }}
 FD_BIN=$(command -v fd)
 FD_PKG="fd-find"
 FORTUNE_BIN=$(command -v fortune)
