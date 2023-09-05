@@ -377,6 +377,17 @@ other Emacs programs.
 (use-package all-the-icons)
 #+end_src
 
+#+begin_src emacs-lisp
+(use-package nerd-icons
+  :custom
+  ;; The Nerd Font you want to use in GUI
+  ;; "Symbols Nerd Font Mono" is the default and is recommended
+  ;; but you can use any other Nerd Font if you want
+  ;; (nerd-icons-font-family "Symbols Nerd Font Mono")
+  (nerd-icons-font-family "FiraCode Nerd Font Mono")
+  )
+#+end_src
+
 ** Modeline
 Change Modeline To Doom’s Modeline
 
@@ -564,6 +575,7 @@ files, bookmarks, agenda items and an Emacs banner.
   :init      ;; tweak dashboard config before loading it
   (setq dashboard-set-heading-icons t)
   (setq dashboard-set-file-icons t)
+  (setq dashboard-icon-type 'all-the-icons)
   (setq dashboard-banner-logo-title "The power to serve!")
   (if (display-graphic-p)
       (setq dashboard-startup-banner "~/.config/emacs/freebsd.png")  ;; use custom image as banner
@@ -575,6 +587,11 @@ files, bookmarks, agenda items and an Emacs banner.
                           (bookmarks . 3)
                           (projects . 3)
                           (registers . 3)))
+  (setq dashboard-heading-icons '((recents   . "history")
+                                  (bookmarks . "bookmark")
+                                  (agenda    . "calendar")
+                                  (projects  . "rocket")
+                                  (registers . "database")))
   :config
   (dashboard-setup-startup-hook)
   (dashboard-modify-heading-icons '((recents . "file-text")
