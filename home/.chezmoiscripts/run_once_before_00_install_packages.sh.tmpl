@@ -135,14 +135,9 @@ fi
 ###############################################################################
 ################################Install zsh  ##################################
 ###############################################################################
-if [ -z "$ZSH_BIN" ]; then
 {{ if .gotroot }}
+if [ -z "$ZSH_BIN" ]; then
 $PKG_CMD $ZSH_PKG
-{{ else }}
-if [ ! -x "$HOME"/.local/bin/zsh ]; then
-  $DOWNLOAD_CMD https://raw.githubusercontent.com/romkatv/zsh-bin/master/install | sh -s -- -q -d "${HOME}"/.local -e no
-fi
-{{ end }}
 fi
 {{ end }}
 # vim: ft=sh:
