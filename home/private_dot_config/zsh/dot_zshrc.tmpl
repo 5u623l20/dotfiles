@@ -6,7 +6,7 @@ if [[ -r "${XDG_CACHE_HOME}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-{{ if eq .chezmoi.os "darwin" -}}
+{{ if (or (eq .chezmoi.os "darwin") (not .headless)) -}}
 # Running my gpg-agent from my own host I am sitting in front of.
 # Load ssh identities and gpg-agents plugin
 if [[ -d ~/.gnupg ]]; then
