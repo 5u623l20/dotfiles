@@ -12,7 +12,7 @@ fi
 if [[ -d ~/.gnupg ]]; then
     source $ZDOTDIR/plugins/gpg-agent.zsh
 fi
-{{- end -}}
+{{ end -}}
 
 {{- if (and (ne .chezmoi.os "darwin") (ne .chezmoi.hostname "pdr.bofh.network")) -}}
 # Not running gpg-agent if it's a remote host.
