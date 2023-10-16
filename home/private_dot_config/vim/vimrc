@@ -1,144 +1,145 @@
-"***************************************************************************** "" dein core
-"*****************************************************************************
+"================================================================================
+"" core
+"================================================================================
 if &compatible
   set nocompatible               " Be iMproved
 endif
 
-set runtimepath+=~/.local/share/dein/repos/github.com/Shougo/dein.vim,$XDG_CONFIG_HOME/vim,$XDG_CONFIG_HOME/vim/after,$VIM,$VIMRUNTIME
+set runtimepath+=$XDG_CONFIG_HOME/vim,$XDG_CONFIG_HOME/vim/after,$VIM,$VIMRUNTIME
 
-call dein#begin('~/.local/share/dein')
+"================================================================================
+"" plug install packages
+"================================================================================
+"
+call plug#begin('$XDG_CACHE_HOME/vim/plugged')
 
-call dein#add('~/.local/share/dein/repos/github.com/Shougo/dein.vim')
+Plug 'preservim/nerdtree', {'on': 'NERDTreeToggle'}
 
-"*****************************************************************************
-"" dein install packages
-"*****************************************************************************
-call dein#add('preservim/nerdtree', {'on_cmd': 'NERDTreeToggle'})
-call dein#add('alker0/chezmoi.vim')
-"call dein#add('tpope/vim-commentary')
-call dein#add('tpope/vim-fugitive')
-call dein#add('vim-airline/vim-airline')
-call dein#add('airblade/vim-gitgutter')
-"call dein#add('vim-scripts/grep.vim')
-"call dein#add('vim-scripts/CSApprox')
-"call dein#add('Raimondi/delimitMate')
-"call dein#add('majutsushi/tagbar')
-call dein#add('dense-analysis/ale')
-call dein#add('Yggdroot/indentLine')
-"call dein#add('tpope/vim-rhubarb') " required by fugitive to :Gbrowse
-call dein#add('arcticicestudio/nord-vim')
+Plug 'alker0/chezmoi.vim'
+Plug 'tpope/vim-fugitive' | Plug 'tpope/vim-rhubarb' " required by fugitive to :Gbrowse
+Plug 'vim-airline/vim-airline'
+Plug 'mhinz/vim-signify'
+Plug 'dense-analysis/ale'
+Plug 'Yggdroot/indentLine'
+Plug 'arcticicestudio/nord-vim'
+Plug 'sheerun/vim-polyglot'
 
-"if isdirectory('~/.config/zsh/plugins/fzf')
-"  Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
-"else
-"  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
-"  Plug 'junegunn/fzf.vim'
-"endif
+if isdirectory('~/.config/zsh/plugins/fzf')
+  Plug '~/.config/zsh/plugins/fzf'
+else
+  Plug 'junegunn/fzf'
+endif
+
 let g:make = 'gmake'
 if exists('make')
-        let g:make = 'make'
+  let g:make = 'make'
 endif
-"call dein#add('Shougo/vimproc.vim', {'do': g:make})
-"
+"Plug 'Shougo/vimproc.vim', {'do': g:make}
+"Plug 'tpope/vim-commentary'
+"Plug 'vim-scripts/grep.vim'
+"Plug 'vim-scripts/CSApprox'
+"Plug 'Raimondi/delimitMate'
+"Plug 'majutsushi/tagbar'
 " Vim-Session
-"call dein#add('xolox/vim-misc')
-"call dein#add('xolox/vim-session')
-"
+"Plug 'xolox/vim-misc'
+"Plug 'xolox/vim-session'
+
 " Snippets
-"call dein#add('SirVer/ultisnips')
-"call dein#add('honza/vim-snippets')
-"
-"*****************************************************************************
-"" Custom bundles
-"*****************************************************************************
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
+Plug 'garbas/vim-snipmate'
+
+"================================================================================
+" Custom bundles
+"================================================================================
 " c
-"call dein#add('vim-scripts/c.vim', {'for': ['c', 'cpp']})
-"call dein#add('ludwig/split-manpage.vim')
-"
+"Plug 'vim-scripts/c.vim', {'for': ['c', 'cpp']}
+"Plug 'ludwig/split-manpage.vim'
+
 " go
-" Go Lang Bundle
-" call dein#add('fatih/vim-go', {'on_ft': 'go'})
-"
+" Plug 'fatih/vim-go', {'on_ft': 'go'}
+
 " haskell
-"" Haskell Bundle
-"call dein#add('eagletmt/neco-ghc')
-"call dein#add('dag/vim2hs')
-"call dein#add('pbrisbin/vim-syntax-shakespeare')
-"
+"Plug 'eagletmt/neco-ghc'
+"Plug 'dag/vim2hs'
+"Plug 'pbrisbin/vim-syntax-shakespeare'
+
 " html
-"" HTML Bundle
-"call dein#add('hail2u/vim-css3-syntax')
-"call dein#add('gko/vim-coloresque')
-"call dein#add('tpope/vim-haml')
-"call dein#add('mattn/emmet-vim')
+"Plug 'hail2u/vim-css3-syntax'
+"Plug 'gko/vim-coloresque'
+"Plug 'tpope/vim-haml'
+"Plug 'mattn/emmet-vim'
 
 " lisp
-"" Lisp Bundle
-"call dein#add('vim-scripts/slimv.vim')
+"Plug 'vim-scripts/slimv.vim'
 
 " lua
-"" Lua Bundle
-"call dein#add('xolox/vim-lua-ftplugin')
-"call dein#add('xolox/vim-lua-inspect')
+"Plug 'xolox/vim-lua-ftplugin'
+"Plug 'xolox/vim-lua-inspect'
 
 " perl
-"" Perl Bundle
-"call dein#add('vim-perl/vim-perl')
-"call dein#add('c9s/perlomni.vim')
+if has('perl')
+  Plug 'vim-perl/vim-perl', { 'for': 'perl' }
+endif
 
 " php
-"" PHP Bundle
-"call dein#add('phpactor/phpactor', {'for': 'php', 'do': 'composer install --no-dev -o'})
-"call dein#add('stephpy/vim-php-cs-fixer')
+"Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install --no-dev -o'}
+"Plug 'stephpy/vim-php-cs-fixer'
 
 " python
-"" Python Bundle
-"call dein#add('davidhalter/jedi-vim')
-"call dein#add('raimon49/requirements.txt.vim', {'for': 'requirements'})
+if has('python3')
+"Plug 'davidhalter/jedi-vim'
+"Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
+endif
 
 " rust
-" Vim racer
-"call dein#add('racer-rust/vim-racer')
-
-" Rust.vim
-"call dein#add('rust-lang/rust.vim')
+"Plug 'racer-rust/vim-racer'
+"Plug 'rust-lang/rust.vim'
 
 " Async.vim
-"call dein#add('prabirshrestha/async.vim')
+"Plug 'prabirshrestha/async.vim'
 
 " Vim lsp
-"call dein#add('prabirshrestha/vim-lsp')
+"Plug 'prabirshrestha/vim-lsp'
 
 " Asyncomplete.vim
-"call dein#add('prabirshrestha/asyncomplete.vim')
+"Plug 'prabirshrestha/asyncomplete.vim'
 
 " Asyncomplete lsp.vim
-"call dein#add('prabirshrestha/asyncomplete-lsp.vim')
+"Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
 " scala
-if has('python')
-    " sbt-vim
-"    call dein#add('ktvoelker/sbt-vim')
-endif
-" vim-scala
-"call dein#add('derekwyatt/vim-scala')
-
-"*****************************************************************************
-"*****************************************************************************
+"Plug 'ktvoelker/sbt-vim'
+"Plug 'derekwyatt/vim-scala'
 
 " Include user's extra bundle
-"call dein#add('jiangmiao/auto-pairs')
-"call dein#add('preservim/nerdcommenter')
-"call dein#add('editorconfig/editorconfig-vim')
-"call dein#add('bronson/vim-trailing-whitespace', {'on_cmd': 'FixWhitespace'})
-"call dein#add('jamessan/vim-gnupg', {'on_ft': 'asc'})
-"call dein#add('jremmen/vim-ripgrep', {'on_cmd': 'Rg'})
-"call dein#add('junegunn/vim-easy-align')
-"call dein#add('sheerun/vim-polyglot')
-"call dein#add('tpope/vim-repeat')
-"call dein#add('tpope/vim-surround')
+"Plug 'jiangmiao/auto-pairs'
+"Plug 'preservim/nerdcommenter'
+"Plug 'editorconfig/editorconfig-vim'
+"Plug 'jamessan/vim-gnupg', {'on_ft': 'asc'})
+"Plug 'jremmen/vim-ripgrep', {'on_cmd': 'Rg'})
+"Plug 'junegunn/vim-easy-align')
+"Plug 'sheerun/vim-polyglot')
+"Plug 'tpope/vim-repeat')
+"Plug 'tpope/vim-surround')
 
-call dein#end()
+call plug#end()
+
+" Install plugins
+autocmd VimEnter *
+  \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \|   PlugInstall --sync | q
+  \| endif
+
+" Load matchit.vim, but only if the user hasn't installed a newer version.
+if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
+  runtime! macros/matchit.vim
+endif
+
+" Enable the :Man command shipped inside Vim's man filetype plugin.
+if exists(':Man') != 2 && !exists('g:loaded_man') && &filetype !=? 'man' && !has('nvim')
+  runtime ftplugin/man.vim
+endif
 
 " Environment
 set directory=$XDG_CACHE_HOME/vim,~/,/tmp
@@ -146,18 +147,20 @@ set backupdir=$XDG_CACHE_HOME/vim,~/,/tmp
 if !has('nvim') " Neovim has its own location which already complies with XDG specification
   set viminfofile=$XDG_CACHE_HOME/vim/viminfo
 endif
+" Persist g:UPPERCASE variables, used by some plugins, in .viminfo.
+if !empty(&viminfo)
+  set viminfo^=!
+endif
 let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc"
 
 " Required:
-filetype plugin indent on
-
-if dein#check_install()
-  call dein#install()
+if !(exists('g:did_load_filetypes') && exists('g:did_load_ftplugin') && exists('g:did_indent_on'))
+  filetype plugin indent on
 endif
 
-"*****************************************************************************
+"================================================================================
 "" Basic Setup
-"*****************************************************************************"
+"================================================================================
 " Encoding
 set encoding=utf-8
 if v:lang =~ "utf8$" || v:lang =~ "UTF-8$"
@@ -184,7 +187,9 @@ set hidden
 
 " Searching
 set hlsearch          " Highlight search results
-set incsearch         " Highlight search matches as you type them
+if has('reltime')
+  set incsearch " Highlight search matches as you type them
+endif
 set ignorecase
 set smartcase
 set showmatch
@@ -196,6 +201,11 @@ set wildignore+=*/vendor/*
 set wildignore+=*/node_modules/*
 " will mute highlighted search results
 nnoremap <silent> <Leader><space> :nohlsearch<cr>
+" Use CTRL-L to clear the highlighting of 'hlsearch' (off by default) and call
+" :diffupdate.
+if maparg('<C-L>', 'n') ==# ''
+  nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
+endif
 
 set fileformats=unix,mac
 
@@ -206,14 +216,18 @@ else
 endif
 
 " session management
-let g:session_directory = "~/./session"
+let g:session_directory = "$XDG_CACHE_HOME/vim/session"
 let g:session_autoload = "no"
 let g:session_autosave = "no"
 let g:session_command_aliases = 1
+" Saving options in session and view files causes more problems than it
+" solves, so disable it.
+set sessionoptions-=options
+set viewoptions-=options
 
-"*****************************************************************************
+"================================================================================
 "" Visual Settings
-"*****************************************************************************
+"================================================================================
 try
     syntax on         " Enable syntax highlighting
 catch | endtry        " vim-tiny is installed without the syntax files
@@ -263,7 +277,7 @@ endif
 " Disable the blinking cursor.
 set gcr=a:blinkon0
 
-set scrolloff=5
+set scrolloff=1
 
 " Status bar
 set laststatus=2
@@ -295,9 +309,9 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tagbar#enabled = 1
 let g:airline_skip_empty_sections = 1
 
-"*****************************************************************************
+"================================================================================
 "" Abbreviations
-"*****************************************************************************
+"================================================================================
 " no one is really happy until you have this shortcuts
 cnoreabbrev W! w!
 cnoreabbrev Q! q!
@@ -335,15 +349,18 @@ let Grep_Skip_Dirs = '.git node_modules'
 " terminal emulation
 nnoremap <silent> <leader>sh :terminal<CR>
 
-"*****************************************************************************
+"================================================================================
 "" Commands
-"*****************************************************************************
-" remove trailing whitespaces
-command! FixWhitespace :%s/\s\+$//e
+"================================================================================
+" From `:help :DiffOrig`.
+if exists(":DiffOrig") != 2
+  command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_
+        \ | diffthis | wincmd p | diffthis
+endif
 
-"*****************************************************************************
+"================================================================================
 "" Functions
-"*****************************************************************************
+"================================================================================
 if !exists('*s:setupWrapping')
   function s:setupWrapping()
     set wrap
@@ -352,9 +369,9 @@ if !exists('*s:setupWrapping')
   endfunction
 endif
 
-"*****************************************************************************
+"================================================================================
 "" Autocmd Rules
-"*****************************************************************************
+"================================================================================
 " The PC is fast enough, do syntax highlight syncing from start unless 200 lines
 augroup vimrc-sync-fromstart
   autocmd!
@@ -382,9 +399,9 @@ augroup END
 
 set autoread
 
-"*****************************************************************************
+"================================================================================
 "" Mappings
-"*****************************************************************************
+"================================================================================
 
 " Split
 noremap <Leader>h :<C-u>split<CR>
@@ -445,10 +462,7 @@ nnoremap <silent> <leader>e :FZF -m<CR>
 nmap <leader>y :History:<CR>
 
 " snippets
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<c-b>"
-let g:UltiSnipsEditSplit="vertical"
+let g:snipMate = { 'snippet_version' : 1 }
 
 " ale
 let g:ale_fixers = {
@@ -535,9 +549,9 @@ nmap ga <Plug>(EasyAlign)
 " Reselect visual block after indent/outdent
 vnoremap < <gv
 vnoremap > >gv
-"*****************************************************************************
+"================================================================================
 "" Custom configs
-"*****************************************************************************
+"================================================================================
 
 " c
 autocmd FileType c setlocal tabstop=4 shiftwidth=4 expandtab
@@ -612,20 +626,15 @@ let g:haskell_multiline_strings = 1
 let g:necoghc_enable_detailed_browse = 1
 autocmd Filetype haskell setlocal omnifunc=necoghc#omnifunc
 
-
 " html
 " for html files, 2 spaces
 autocmd Filetype html setlocal ts=2 sw=2 expandtab
 
-
 " lisp
-
 
 " lua
 
-
 " perl
-
 
 " php
 " Phpactor plugin
@@ -652,7 +661,6 @@ nmap <silent><Leader>ee :call phpactor#ExtractExpression(v:false)<CR>
 vmap <silent><Leader>ee :<C-U>call phpactor#ExtractExpression(v:true)<CR>
 " Extract method from selection
 vmap <silent><Leader>em :<C-U>call phpactor#ExtractMethod()<CR>
-
 
 " python
 " vim-python
@@ -687,9 +695,9 @@ au FileType rust nmap gs <Plug>(rust-def-split)
 au FileType rust nmap gx <Plug>(rust-def-vertical)
 au FileType rust nmap <leader>gd <Plug>(rust-doc)
 
-"*****************************************************************************
+"================================================================================
 "" Convenience variables
-"*****************************************************************************
+"================================================================================
 
 " vim-airline
 if !exists('g:airline_symbols')
@@ -734,14 +742,14 @@ set foldlevelstart=20
 set foldmethod=syntax
 set linebreak
 set mouse=a
-set nobackup
 set nolist
 set noswapfile
 set nowrap
 set nowritebackup
 set path+=**
 set shortmess+=c
-set sidescrolloff=5
+set sidescroll=1
+set sidescrolloff=2
 set smartindent
 set splitbelow
 set splitright
@@ -762,8 +770,22 @@ let g:netrw_winsize = 20
 set signcolumn=yes
 
 set wildmenu          " Show menu for tab completion in command mode
-let g:is_posix = 1    " Our /bin/sh is POSIX, not bash
+" Correctly highlight $() and other modern affordances in filetype=sh.
+if !exists('g:is_posix') && !exists('g:is_bash') && !exists('g:is_kornshell') && !exists('g:is_dash')
+  let g:is_posix = 1
+endif
 set belloff=all       " Turn off bells
-set display=truncate  " Show '@@@' when the last screen line overflows
+set display+=lastline
+set display+=truncate  " Show '@@@' when the last screen line overflows
 set formatoptions+=j  " Delete comment char when joining lines
+set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
 set history=100       " Undo up to this many commands
+set tabpagemax=50
+" Make the escape key more responsive by decreasing the wait time for an
+" escape sequence (e.g., arrow keys).
+if !has('nvim') && &ttimeoutlen == -1
+  set ttimeout
+  set ttimeoutlen=100
+endif
+set nrformats-=octal
+set smarttab
