@@ -2,42 +2,42 @@
 # prototype
 snippet proto
 	${1:class_name}.prototype.${2:method_name} = function(${3}) {
-		${0:${VISUAL}}
+		${0:TARGET}
 	};
 # Function
 snippet fun "function"
 	function ${1:function_name}(${2}) {
-		${0:${VISUAL}}
+		${0:TARGET}
 	}
 # Asynchronous Function
 snippet asf "async function"
 	async function ${1:function_name}(${2}) {
-		${0:${VISUAL}}
+		${0:TARGET}
 	}
 # Anonymous Function
 snippet anf "" w
 	function(${1}) {
-		${0:${VISUAL}}
+		${0:TARGET}
 	}
 # Anonymous Function assigned to variable
 snippet vaf
 	var ${1:function_name} = function(${2}) {
-		${0:${VISUAL}}
+		${0:TARGET}
 	};
 # Function assigned to variable
 snippet vf
 	var ${1:function_name} = function $1(${2}) {
-		${0:${VISUAL}}
+		${0:TARGET}
 	};
 # Immediate function
 snippet (f
 	(function(${1}) {
-		${0:${VISUAL}}
+		${0:TARGET}
 	}(${2}));
 # Minify safe iife
 snippet ;fe
 	;(function(${1}) {
-		${0:${VISUAL}}
+		${0:TARGET}
 	}(${2}))
 # self-defining function
 snippet sdf
@@ -45,19 +45,19 @@ snippet sdf
 		${3}
 
 		$1 = function ($2) {
-			${0:${VISUAL}}
+			${0:TARGET}
 		};
 	};
 # Flow control
 # if
 snippet if "if (condition) { ... }"
 	if (${1:true}) {
-		${0:${VISUAL}}
+		${0:TARGET}
 	}
 # if ... else
 snippet ife "if (condition) { ... } else { ... }"
 	if (${1:true}) {
-		${0:${VISUAL}}
+		${0:TARGET}
 	} else {
 		${2}
 	}
@@ -76,17 +76,17 @@ snippet switch
 	}
 snippet case "case 'xyz': ... break"
 	case '${1:case}':
-		${0:${VISUAL}}
+		${0:TARGET}
 		break;
 snippet try "try { ... } catch(e) { ... }"
 	try {
-		${0:${VISUAL}}
+		${0:TARGET}
 	} catch (${1:e}) {
 		${2:/* handle error */}
 	}
 snippet tryf "try { ... } catch(e) { ... } finally { ... }"
 	try {
-		${0:${VISUAL}}
+		${0:TARGET}
 	} catch (${1:e}) {
 		${2:/* handle error */}
 	} finally {
@@ -100,23 +100,23 @@ snippet ret
 	return ${0:result};
 snippet for "for (...) {...}"
 	for (let ${1:i} = 0, ${2:len} = ${3:Things.length}; $1 < $2; $1++) {
-		${0:${VISUAL}}
+		${0:TARGET}
 	}
 snippet forr "reversed for (...) {...}"
 	for (let ${2:i} = ${1:Things.length} - 1; $2 >= 0; $2--) {
-		${0:${VISUAL}}
+		${0:TARGET}
 	}
 snippet wh "(condition) { ... }"
 	while (${1:true}) {
-		${0:${VISUAL}}
+		${0:TARGET}
 	}
 snippet wht "(true) { ... }"
 	while (true) {
-		${0:${VISUAL}}
+		${0:TARGET}
 	}
 snippet do "do { ... } while (condition)"
 	do {
-		${0:${VISUAL}}
+		${0:TARGET}
 	} while ($1);
 # For in loop
 snippet fori
@@ -127,7 +127,7 @@ snippet fori
 # Object Method
 snippet :f
 	${1:method_name}: function (${2:attribute}) {
-		${0:${VISUAL}}
+		${0:TARGET}
 	},
 # hasOwnProperty
 snippet has
@@ -253,7 +253,7 @@ snippet ct "console.trace"
 	console.trace(${0:label});
 snippet ctime "console.time ... console.timeEnd"
 	console.time("${1:label}");
-	${0:${VISUAL}}
+	${0:TARGET}
 	console.timeEnd("$1");
 snippet ctimestamp "console.timeStamp"
 	console.timeStamp("${1:label}");
@@ -267,15 +267,15 @@ snippet cdirx "console.dirxml"
 	console.dirxml(${1:object});
 snippet cgroup "console.group"
 	console.group("${1:label}");
-	${0:${VISUAL}}
+	${0:TARGET}
 	console.groupEnd();
 snippet cgroupc "console.groupCollapsed"
 	console.groupCollapsed("${1:label}");
-	${0:${VISUAL}}
+	${0:TARGET}
 	console.groupEnd();
 snippet cprof "console.profile"
 	console.profile("${1:label}");
-	${0:${VISUAL}}
+	${0:TARGET}
 	console.profileEnd();
 snippet ctable "console.table"
 	console.table(${1:"${2:value}"});
@@ -301,16 +301,16 @@ snippet imm "import { member } from 'xyz'"
 	import { ${1} } from '${2}';
 snippet cla
 	class ${1} {
-		${0:${VISUAL}}
+		${0:TARGET}
 	}
 snippet clax
 	class ${1} extends ${2} {
-		${0:${VISUAL}}
+		${0:TARGET}
 	}
 snippet clac
 	class ${1} {
 		constructor(${2}) {
-			${0:${VISUAL}}
+			${0:TARGET}
 		}
 	}
 snippet foro "for (const prop of object}) { ... }"
@@ -323,33 +323,33 @@ snippet forl "for (let prop of object}) { ... }"
 	}
 snippet fun*
 	function* ${1:function_name}(${2}) {
-		${0:${VISUAL}}
+		${0:TARGET}
 	}
 snippet c=>
 	const ${1:function_name} = (${2}) => {
-		${0:${VISUAL}}
+		${0:TARGET}
 	}
 snippet ca=>
 	const ${1:function_name} = async (${2}) => {
-		${0:${VISUAL}}
+		${0:TARGET}
 	}
 snippet caf
 	const ${1:function_name} = (${2}) => {
-		${0:${VISUAL}}
+		${0:TARGET}
 	}
 snippet casf
 	const ${1:function_name} = async (${2}) => {
-		${0:${VISUAL}}
+		${0:TARGET}
 	}
 snippet =>
 	(${1}) => {
-		${0:${VISUAL}}
+		${0:TARGET}
 	}
 snippet af "() =>"
-	(${1}) => ${0:${VISUAL}}
+	(${1}) => ${0:TARGET}
 snippet afb "() => {}"
 	(${1}) => {
-		${0:${VISUAL}}
+		${0:TARGET}
 	}
 snippet sym
 	const ${1} = Symbol('${0}');
@@ -360,4 +360,4 @@ snippet ${
 snippet as "async"
 	async ${0}
 snippet aw "await"
-	await ${0:${VISUAL}}
+	await ${0:TARGET}

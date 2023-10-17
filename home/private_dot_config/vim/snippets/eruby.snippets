@@ -50,8 +50,8 @@ snippet conf
 		${0}
 	<% end %>
 
-snippet cs 
-	<%= collection_select(:${1:object}, :${2:method}, ${3:collection}, :${4:value_method}, :${5:text_method}, options = {${0:prompt: true}}) %>        
+snippet cs
+	<%= collection_select(:${1:object}, :${2:method}, ${3:collection}, :${4:value_method}, :${5:text_method}, options = {${0:prompt: true}}) %>
 snippet ct
 	<%= content_tag '${1:DIV}', ${2:content}${0:,options} %>
 snippet ff
@@ -126,7 +126,7 @@ snippet sslt
 	<%= stylesheet_link_tag "${0}" %>
 snippet if
 	<% if ${1} %>
-		${0:${VISUAL}}
+		${0:TARGET}
 	<% end %>
 snippet ife
 	<% if ${1} %>

@@ -90,19 +90,19 @@ snippet fors for some
 
 snippet if if
 	if ${1} then
-		${0:${VISUAL}}
+		${0:TARGET}
 	end if;
 
 snippet ife if ... else
 	if ${1} then
-		${2:${VISUAL}}
+		${2:TARGET}
 	else
 		${0}
 	end if;
 
 snippet el else
 	else
-		${0:${VISUAL}}
+		${0:TARGET}
 
 snippet eif elsif
 	elsif ${1} then
@@ -110,13 +110,13 @@ snippet eif elsif
 
 snippet wh while
 	while ${1} loop
-		${0:${VISUAL}}
+		${0:TARGET}
 	end loop;
 
 snippet nwh named while
 	${1}:
 	while ${2} loop
-		${0:${VISUAL}}
+		${0:TARGET}
 	end loop $1;
 
 snippet for for
@@ -214,4 +214,3 @@ snippet getl Ada.Text_IO.Get_Line
 
 snippet newline Ada.Text_IO.New_Line
 	Ada.Text_IO.New_Line(${1:1});${0}
-

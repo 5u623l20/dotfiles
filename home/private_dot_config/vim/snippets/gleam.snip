@@ -14,7 +14,7 @@ snippet test "test fn"
   }
 
 snippet af "anonymous fn"
-  fn(${1}) { ${0:${VISUAL}} }
+  fn(${1}) { ${0:TARGET} }
 
 snippet let "let binding"
   let ${1} = ${0}
@@ -78,21 +78,21 @@ snippet p "|>"
   |> ${0}
 
 snippet tup "tuple()"
-  tuple(${0:${VISUAL}})
+  tuple(${0:TARGET})
 
 snippet bl "block"
   {
-    ${0:${VISUAL}}
+    ${0:TARGET}
   }
 
 snippet tf "fn(Type) -> Type"
   fn(${1}) -> ${0}
 
 snippet seq "should.equal"
-  should.equal(${0:${VISUAL}})
+  should.equal(${0:TARGET})
 
 snippet strue "should.be_true"
-  should.be_true(${0:${VISUAL}})
+  should.be_true(${0:TARGET})
 
 snippet sfalse "should.be_false"
-  should.be_true(${0:${VISUAL}})
+  should.be_true(${0:TARGET})

@@ -36,7 +36,7 @@ snippet anyt "anything (js)"
 
 snippet objc "object containing (js)"
 	jasmine.objectContaining({
-		${VISUAL}$0
+		${0:TARGET}
 	});
 
 snippet arrc "array containing (js)"
@@ -172,4 +172,3 @@ snippet nthbc "expect not to have been called (js)"
 
 snippet ethbcw "expect to have been called with (js)"
 	expect(${1:target}).toHaveBeenCalledWith(${2:arguments});
-

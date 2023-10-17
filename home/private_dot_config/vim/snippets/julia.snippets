@@ -75,7 +75,7 @@ snippet tern ternary operator
 # Exceptions
 snippet try try catch
 	try
-		${1:${VISUAL}}
+		${1:TARGET}
 	catch ${2}
 		${0}
 	end
@@ -97,16 +97,16 @@ snippet @w
 
 snippet @e
 	@error "${1}" ${0}
-	
+
 snippet @d
 	@debug "${1}" ${0}
 
-snippet @t @testset with @test 
+snippet @t @testset with @test
 	@testset "${1}" begin
 		${2}
 		@test ${0}
 	end
-	
+
 snippet @tt @testset with @test_throws
 	@testset "${1}" begin
 		${2}

@@ -45,9 +45,7 @@ endif
 "Plug 'xolox/vim-session'
 
 " Snippets
-Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'tomtom/tlib_vim'
-Plug 'garbas/vim-snipmate'
+Plug 'Shougo/neosnippet.vim'
 
 "================================================================================
 " Custom bundles
@@ -57,7 +55,7 @@ Plug 'garbas/vim-snipmate'
 "Plug 'ludwig/split-manpage.vim'
 
 " go
-" Plug 'fatih/vim-go', {'on_ft': 'go'}
+" Plug 'fatih/vim-go', {'for': 'go'}
 
 " haskell
 "Plug 'eagletmt/neco-ghc'
@@ -78,19 +76,15 @@ Plug 'garbas/vim-snipmate'
 "Plug 'xolox/vim-lua-inspect'
 
 " perl
-if has('perl')
-  Plug 'vim-perl/vim-perl', { 'for': 'perl' }
-endif
+Plug 'vim-perl/vim-perl', { 'for': 'perl' }
 
 " php
 "Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install --no-dev -o'}
 "Plug 'stephpy/vim-php-cs-fixer'
 
 " python
-if has('python3')
 "Plug 'davidhalter/jedi-vim'
 "Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
-endif
 
 " rust
 "Plug 'racer-rust/vim-racer'
@@ -116,10 +110,9 @@ endif
 "Plug 'jiangmiao/auto-pairs'
 "Plug 'preservim/nerdcommenter'
 "Plug 'editorconfig/editorconfig-vim'
-"Plug 'jamessan/vim-gnupg', {'on_ft': 'asc'})
+"Plug 'jamessan/vim-gnupg', {'for': 'asc'})
 "Plug 'jremmen/vim-ripgrep', {'on_cmd': 'Rg'})
 "Plug 'junegunn/vim-easy-align')
-"Plug 'sheerun/vim-polyglot')
 "Plug 'tpope/vim-repeat')
 "Plug 'tpope/vim-surround')
 
@@ -462,7 +455,14 @@ nnoremap <silent> <leader>e :FZF -m<CR>
 nmap <leader>y :History:<CR>
 
 " snippets
-let g:snipMate = { 'snippet_version' : 1 }
+" Tell Neosnippet about the other snippets
+let g:neosnippet#snippets_directory='$XDG_CONFIG_HOME/vim/snippets'
+" SuperTab like snippets behavior.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <expr><TAB>
+ \ pumvisible() ? "\<C-n>" :
+ \ neosnippet#expandable_or_jumpable() ?
+ \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 " ale
 let g:ale_fixers = {
@@ -789,3 +789,6 @@ if !has('nvim') && &ttimeoutlen == -1
 endif
 set nrformats-=octal
 set smarttab
+
+" Global Variables
+let g:snips_author = "Muhammad Moinur Rahman"
