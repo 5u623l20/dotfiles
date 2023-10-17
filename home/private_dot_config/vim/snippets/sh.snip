@@ -5,22 +5,18 @@ options head
 	#!/bin/${1:sh}
 	${0}
 
-
 snippet if
 	if [ ${1:#:condition} ]; then
 		${0:TARGET}
 	fi
 
-
 snippet el
 	else
 		${0:TARGET}
 
-
 snippet elif
 	elif [ ${1:#:condition} ]; then
 		${0:TARGET}
-
 
 snippet for
 	for ${1:i} in ${2:#:words}; do
@@ -33,12 +29,10 @@ alias wh
 		${0:TARGET}
 	done
 
-
 snippet until
 	until ${1:#:condition} ; do
 		${0:TARGET}
 	done
-
 
 snippet heredoc
 alias   h <<
@@ -48,7 +42,6 @@ alias   h <<
 
 snippet env
 	#!/usr/bin/env ${1}
-
 
 snippet tmp
 	${1:TMPFILE}=$(mktemp ${2:XXX})
