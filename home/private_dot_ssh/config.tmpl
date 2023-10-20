@@ -1,0 +1,46 @@
+Include ~/.ssh/includes/*.config
+VerifyHostKeyDNS yes
+Host *
+  User root
+  Port 22
+  ForwardAgent no
+  SendEnv LANG LC_*
+  IdentitiesOnly yes
+  VerifyHostKeyDNS yes
+  ControlMaster auto
+  ControlPath ~/.ssh/control-master-%r@%h:%p
+  ControlPersist 3600
+{{- if .personal }}
+  {{-   if eq .chezmoi.os "darwin" }}
+  IdentityFile ~/.ssh/id_mbp_ed25519_256.pub
+  {{-   end }}
+{{-   end }}
+
+#  ForwardX11 no
+#  PasswordAuthentication yes
+#  HostbasedAuthentication no
+#  GSSAPIAuthentication no
+#  GSSAPIDelegateCredentials no
+#  BatchMode no
+#  CheckHostIP yes
+#  AddressFamily any
+#  Ciphers +aes128-ctr,aes192-ctr,aes256-ctr,aes128-cbc,3des-cbc
+#  ConnectTimeout 0
+#  EscapeChar ~
+#  HostKeyAlgorithms=+ssh-dss,ssh-rsa
+#  StrictHostKeyChecking ask
+#  KbdInteractiveAuthentication yes
+#  KexAlgorithms +diffie-hellman-group1-sha1,diffie-hellman-group14-sha1
+#  MACs hmac-md5,hmac-sha1,umac-64@openssh.com
+#  Tunnel no
+#  TunnelDevice any:any
+#  PermitLocalCommand no
+#  PreferredAuthentications password
+#  VisualHostKey no
+#  ProxyCommand ssh -q -W %h:%p gateway.example.com
+#  PubkeyAuthentication no
+#  RekeyLimit 1G 1h
+#  RemoteCommand zsh
+#  RequestTTY yes
+#  StrictHostKeyChecking ask
+#  UserKnownHostsFile ~/.ssh/known_hosts.d/%k
