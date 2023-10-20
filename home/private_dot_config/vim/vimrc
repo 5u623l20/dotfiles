@@ -358,7 +358,10 @@ if !exists('*s:setupWrapping')
   function s:setupWrapping()
     set wrap
     set wm=2
-   set textwidth=79
+    set textwidth=79
+    set breakindent
+    set breakindentopt=sbr
+    set showbreak=↪>\
   endfunction
 endif
 
@@ -380,7 +383,7 @@ augroup END
 " txt
 augroup vimrc-wrapping
   autocmd!
-  autocmd BufRead,BufNewFile *.txt call s:setupWrapping()
+  autocmd BufRead,BufNewFile * call s:setupWrapping()
 augroup END
 
 " make/cmake
@@ -455,7 +458,6 @@ nnoremap <silent> <leader>e :FZF -m<CR>
 nmap <leader>y :History:<CR>
 
 " snippets
-" Tell Neosnippet about the other snippets
 let g:neosnippet#snippets_directory='$XDG_CONFIG_HOME/vim/snippets'
 " SuperTab like snippets behavior.
 " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
@@ -755,7 +757,7 @@ set splitbelow
 set splitright
 set synmaxcol=500
 set textwidth=0
-set timeoutlen=300
+set timeoutlen=500
 set updatetime=300
 set wrapmargin=0
 
