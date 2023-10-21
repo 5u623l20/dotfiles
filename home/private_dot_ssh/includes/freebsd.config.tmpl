@@ -1,6 +1,10 @@
 Host freefall
   HostName freefall.freebsd.org
+{{- if .personal }}
+  {{-   if eq .chezmoi.os "darwin" }}
   IdentityFile ~/.ssh/id_mbp_ed25519_256.pub
+  {{-   end }}
+{{-   end }}
   User bofh
 Host fbsd-admin.nyi fbsd-ntp0.nyi
   HostName admin.nyi.freebsd.org
@@ -14,13 +18,21 @@ Host fbsd-filly1
   HostName filly1.nyi.freebsd.org
 Host fbsd-filly4
   HostName filly4.nyi.freebsd.org
+Host fbsd-grind.nyi fbsd-portscout.nyi fbsd-socsvn fbsd-distfetch.nyi fbsd-docbuild fbsd-portsindexbuild.nyi fbsd-bit0.nyi
+  Hostname grind.nyi.freebsd.org
 Host fbsd-igw-ext.syd
   HostName igw-ext.syd.freebsd.org
 Host fbsd-phabric
   Hostname reviews.nyi.freebsd.org
 Host fbsd-phabric-dev
   Hostname reviews-dev.nyi.freebsd.org
+Host fbsd-wfe0.nyi fbsd-portscout
+  Hostname wfe0.nyi.freebsd.org
 Host fbsd-*
   User bofh
+{{- if .personal }}
+  {{-   if eq .chezmoi.os "darwin" }}
   IdentityFile ~/.ssh/id_freebsd_ed25519_256.pub
+  {{-   end }}
+{{-   end }}
   ProxyJump freefall
