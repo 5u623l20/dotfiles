@@ -23,23 +23,21 @@ Host bc-mail
 Host bc-monitoring
   HostName 195.201.240.189
   User toor
-  IdentityFile ~/.ssh/id_bounce-experts_ed25519_256
-  IdentitiesOnly yes
 Host bc-page
   HostName 162.55.234.231
   ForwardAgent yes
   User toor
-Host bc-*
-  User root
-  IdentityFile ~/.ssh/id_bounce-experts_ed25519_256
 Host be-gitlab
   HostName gitlab.bounce-experts.com
   User git
-  IdentityFile ~/.ssh/id_bounce-experts_ed25519_256
 Host be-pkg
   HostName pkg.bounce-experts.com
   User toor
   ForwardAgent yes
-Host be-*
-  User root
+Host bc-* be-*
+  User toor
+{{- if .personal }}
+  {{-   if eq .chezmoi.os "darwin" }}
   IdentityFile ~/.ssh/id_bounce-experts_ed25519_256
+  {{-   end }}
+{{-   end }}
