@@ -5,13 +5,10 @@ Host *
   Port 22
   ForwardAgent no
   SendEnv LANG LC_*
-  IdentitiesOnly yes
   VerifyHostKeyDNS yes
-  ControlMaster auto
-  ControlPath ~/.ssh/control-master-%r@%h:%p
-  ControlPersist 3600
 {{- if .personal }}
   {{-   if eq .chezmoi.os "darwin" }}
+  IdentitiesOnly yes
   IdentityFile ~/.ssh/id_mbp_ed25519_256.pub
   {{-   end }}
 {{-   end }}
