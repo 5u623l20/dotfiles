@@ -6,24 +6,31 @@ _COLOR_RESET="\033[0;0m"
 _COLOR_YELLOW="\033[1;33m"
 
 _GIT_BIN=/usr/local/bin/git
+if [ "$(hostname)" = "pdr.bofh.network" ]; then
+    _INFRASTRUCTURE_JAIL="MAIN"
+    _JAIL_LIST="124i386 124 132 140 MAIN"
+elif [ "$(hostname)" = "dev.bofh.network" ] || [ "$(hostname)" = "pkg.bofh.network" ]; then
+    _INFRASTRUCTURE_JAIL="132 140"
+    _JAIL_LIST="124i386 124 132 140"
+elif [ "$(hostname)" = "rpi4a.bofh.network" ]; then
+    _INFRASTRUCTURE_JAIL="132"
+    _JAIL_LIST="132"
+fi
 _INFRASTRUCTURE_LIST="/usr/local/etc/poudriere.d/ports-list/infrastructure"
-_INFRASTRUCTURE_PORTS="head"
 _INFRASTRUCTURE_SET="infrastructure"
-_JAIL_LIST="124i386 124 132 140 MAIN"
 _PORTGREP_BIN=/usr/local/bin/portgrep
 _PORTSLIST=/usr/local/etc/poudriere.d/ports-list/bofh.ports
+_PORTSLISTDIR="/usr/local/etc/poudriere.d/ports-list"
+_POUDRIERE_BIN="/usr/local/bin/poudriere"
 _PORTSTREE=default
-_PORTSDIR=/usr/local/poudriere/ports/${_PORTSTREE}
-_POUDRIERE_BIN=/usr/local/bin/poudriere
 _SORT_BIN="/usr/bin/sort -u"
+_TEST_PORTS=${_PORTSTREE}
+_TEST_SET="test"
+_TEMPLIST="/tmp/tempPHP"
 _TEMPPDR=$(basename "$0")
 _TMPFILE=$(mktemp -q /tmp/${_TEMPPDR}.XXXXXX)
-
-if [ $(hostname) = "pdr.bofh.network" ]; then
-    _INFRASTRUCTURE_JAIL="MAIN"
-elif [ $(hostname) = "dev.bofh.network" ] || [ $(hostname) = "pkg.bofh.network" ] || [ $(hostname) = "rpi4a.bofh.network" ]; then
-    _INFRASTRUCTURE_JAIL="132"
-fi
+_TESTQATJAIL="132"
+_PORTSDIR=/usr/local/poudriere/ports/${_PORTSTREE}
 
 # Notify message on error, but do not exit
 e_notify() {
@@ -52,10 +59,11 @@ Usage:
   pdr [args] [TARGET]
 
 Available Commands:
-  -p                    Build ports that belongs to bofh@FreeBSD.org
+  -p                    Build ports that are php* ports
+  -P                    Build ports that are consumers of php ports
   -i                    Build ports that are required by infrastructure
   -a                    Build all equivalent to -p -i
-  -t [TARGET]           Test [TARGET] port for all available jails
+  -t [TARGET]           Test [TARGET] port
   help or -h or --help  Print this message
 
 EOF
@@ -63,7 +71,7 @@ EOF
 }
 
 update_tree() {
-    e_warning "UPDATE default portstree"
+    e_warning "UPDATE ${_PORTSTREE} portstree"
     cd ${_PORTSDIR} || exit
     ${_GIT_BIN} checkout working && ${_GIT_BIN} stash
     ${_GIT_BIN} checkout main && ${_GIT_BIN} pull --ff-only && ${_GIT_BIN} rebase main working
@@ -71,33 +79,74 @@ update_tree() {
 }
 
 generate_ports_list() {
-    ${_PORTGREP_BIN} -R /usr/local/poudriere/ports/${_PORTSTREE} -o -m bofh@FreeBSD.org -O tz@FreeBSD.org > "$_TMPFILE"
+    e_warning "Creating bofh ports list"
+    ${_PORTGREP_BIN} -R /usr/local/poudriere/ports/${_PORTSTREE} -o -m bofh@FreeBSD.org > "$_TMPFILE"
     find $_PORTSDIR -type d -d 2 \( -iname "*php80*" -o -iname "*php81*" -o -iname "*php82*" -o -iname "*php83*"  \) | sed -e "s|$_PORTSDIR/||g" >> "$_TMPFILE"
     ${_SORT_BIN} "$_TMPFILE" > "$_PORTSLIST"
+
+    e_warning "Creating php ports list"
+    find $_PORTSDIR -type d -d 2 \( -iname "*php80*" -o -iname "*php81*" -o -iname "*php82*" -o -iname "*php83*" \) | sed -e "s|$_PORTSDIR/||g" > "$_PORTSLISTDIR"/PHP
+
+    e_warning "Creating php consumers ports list"
+    portgrep -R $_PORTSDIR -u php -o | grep -v -E 'icingaweb2-module-idoreports|icingaweb2-module-pdfexport|icingaweb2-module-reporting|php80|php81|php82|php83' > $_TEMPLIST
+    portgrep -R $_PORTSDIR -u pear -o >> $_TEMPLIST
+    sort -u $_TEMPLIST > "$_PORTSLISTDIR"/php
+    rm $_TEMPLIST
 }
 
 build_ports() {
     for _JAILS in $_JAIL_LIST
     do
-        ${_POUDRIERE_BIN} pkgclean -j $_JAILS -p default -y -f ${_PORTSLIST}
-        ${_POUDRIERE_BIN} logclean -j $_JAILS -y 60
-        ${_POUDRIERE_BIN} bulk -t -j $_JAILS -f ${_PORTSLIST}
+        ${_POUDRIERE_BIN} pkgclean -j "$_JAILS" -p $_PORTSTREE -y -f ${_PORTSLIST}
+        ${_POUDRIERE_BIN} logclean -j "$_JAILS" -y 60
+        ${_POUDRIERE_BIN} bulk -t -j "$_JAILS" -f ${_PORTSLIST}
+    done
+}
+
+build_php_ports() {
+    for _VARIANT in testDEBUG testZTS
+    do
+        e_warning "Starting bulk for: $_TESTQATJAIL"
+        poudriere bulk -j $_TESTQATJAIL -t -p ${_PORTSTREE} -z $_VARIANT -f "$_PORTSLISTDIR"/PHP
+        e_warning "Starting pkgclean for: $_TESTQATJAIL"
+        poudriere pkgclean -j $_TESTQATJAIL -p ${_PORTSTREE} -z $_VARIANT -y -f "$_PORTSLISTDIR"/PHP
+        e_warning "Starting logclean for: $_TESTQATJAIL"
+        poudriere logclean -j $_TESTQATJAIL -p ${_PORTSTREE} -z $_VARIANT -y 10
+    done
+}
+
+build_php_consumer_ports() {
+    for _SETS in testPHP80 testPHP81 testPHP82 testPHP83
+    do
+        e_warning "Starting bulk for: $_TESTQATJAIL with $_SETS"
+        ${_POUDRIERE_BIN} bulk -j $_TESTQATJAIL -p ${_PORTSTREE} -z $_SETS -b latest -f "$_PORTSLISTDIR"/php
+        e_warning "Starting pkgclean for: $_TESTQATJAIL with $_SETS"
+        ${_POUDRIERE_BIN} pkgclean -j $_TESTQATJAIL -p ${_PORTSTREE} -z $_SETS -y -f "$_PORTSLISTDIR"/php
+        e_warning "Starting logclean for: $_TESTQATJAIL with $_SETS"
     done
 }
 
 build_infrastructure() {
     for _JAILS in $_INFRASTRUCTURE_JAIL
     do
-        ${_POUDRIERE_BIN} pkgclean -j $_JAILS -p $_PORTSTREE -z $_INFRASTRUCTURE_SET -y -f $_INFRASTRUCTURE_LIST
-        ${_POUDRIERE_BIN} logclean -j $_JAILS -p $_PORTSTREE -z $_INFRASTRUCTURE_SET -y 30
-        ${_POUDRIERE_BIN} bulk -j $_JAILS -p $_PORTSTREE -z $_INFRASTRUCTURE_SET -f $_INFRASTRUCTURE_LIST
+        ${_POUDRIERE_BIN} pkgclean -j "$_JAILS" -p $_PORTSTREE -z $_INFRASTRUCTURE_SET -y -f $_INFRASTRUCTURE_LIST
+        ${_POUDRIERE_BIN} logclean -j "$_JAILS" -p $_PORTSTREE -z $_INFRASTRUCTURE_SET -y 30
+        ${_POUDRIERE_BIN} bulk -j "$_JAILS" -p $_PORTSTREE -z $_INFRASTRUCTURE_SET -f $_INFRASTRUCTURE_LIST
     done
 }
 
 test_ports() {
     for _JAILS in $_JAIL_LIST
     do
-        ${_POUDRIERE_BIN} bulk -t -j $_JAILS -p $_PORTSTREE "$@"
+        ${_POUDRIERE_BIN} bulk -t -j "$_JAILS" -p $_PORTSTREE "$@"
+    done
+}
+
+test_php_ports() {
+    for _SETS in testPHP80 testPHP81 testPHP82 testPHP83
+    do
+        e_warning "Starting bulk for: $_TESTQATJAIL with $_SETS"
+        ${_POUDRIERE_BIN} bulk -j $_TESTQATJAIL -p ${_PORTSTREE} -z $_SETS -t "$@"
     done
 }
 
@@ -117,18 +166,36 @@ main() {
         update_tree
         generate_ports_list
         build_ports
+        if [ "$(hostname)" = "pdr.bofh.network" ]; then
+            build_php_ports
+        fi
+        ;;
+    -P)
+        # Build ports that are consumers of php ports
+        update_tree
+        if [ "$(hostname)" = "pdr.bofh.network" ]; then
+            build_php_consumer_ports
+        fi
         ;;
     -i)
         # Build ports that are required by infrastructure
         update_tree
         build_infrastructure
         ;;
+    -g)
+        update_tree
+        generate_ports_list
+        ;;
     -a)
         # Build all
-        generate_ports_list
         update_tree
+        generate_ports_list
         build_infrastructure
         build_ports
+        if [ "$(hostname)" = "pdr.bofh.network" ]; then
+            build_php_ports
+            build_php_consumer_ports
+        fi
         ;;
     -t)
         # Parse the target and ensure it exists.
