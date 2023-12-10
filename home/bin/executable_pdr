@@ -107,7 +107,7 @@ build_php_ports() {
     for _VARIANT in testDEBUG testZTS
     do
         e_warning "Starting bulk for: $_TESTQATJAIL"
-        poudriere bulk -j $_TESTQATJAIL -t -p ${_PORTSTREE} -z $_VARIANT -f "$_PORTSLISTDIR"/PHP
+        poudriere bulk -j $_TESTQATJAIL -t -p ${_PORTSTREE} -z $_VARIANT -b latest -f "$_PORTSLISTDIR"/PHP
         e_warning "Starting pkgclean for: $_TESTQATJAIL"
         poudriere pkgclean -j $_TESTQATJAIL -p ${_PORTSTREE} -z $_VARIANT -y -f "$_PORTSLISTDIR"/PHP
         e_warning "Starting logclean for: $_TESTQATJAIL"
