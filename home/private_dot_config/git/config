@@ -3,3 +3,9 @@
 # Please adapt and uncomment the following lines:
 	name = Muhammad Moinur Rahman
 	email = moin@bofh.im
+[init]
+	defaultbranch = main
+[advice]
+	detachedHead = false
+[log]
+	date = iso8601
