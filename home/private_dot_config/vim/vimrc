@@ -109,7 +109,7 @@ Plug 'vim-perl/vim-perl', { 'for': 'perl' }
 " Include user's extra bundle
 "Plug 'jiangmiao/auto-pairs'
 "Plug 'preservim/nerdcommenter'
-"Plug 'editorconfig/editorconfig-vim'
+Plug 'editorconfig/editorconfig-vim'
 "Plug 'jamessan/vim-gnupg', {'for': 'asc'})
 "Plug 'jremmen/vim-ripgrep', {'on_cmd': 'Rg'})
 "Plug 'junegunn/vim-easy-align')
