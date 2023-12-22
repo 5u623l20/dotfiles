@@ -16,7 +16,6 @@ XDG_CONFIG_HOME="$HOME/.config"; export XDG_CONFIG_HOME
 XDG_STATE_HOME="$HOME/.local/state"; export XDG_STATE_HOME
 XDG_STATE_HOME="$XDG_DATA_HOME"; export XDG_STATE_HOME
 XDG_CACHE_HOME="$HOME/.cache"; export XDG_CACHE_HOME
-TMUX_CONFIG="$XDG_CONFIG_HOME/tmux/tmux.conf"; export TMUX_CONFIG
 VIMINIT="source $XDG_CONFIG_HOME/vim/vimrc"; export VIMINIT
 
 #-----------------------------------------------------------------------------#
