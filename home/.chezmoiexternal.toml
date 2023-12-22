@@ -51,9 +51,9 @@
     exact = true
     stripComponents = 1
     refreshPeriod = "168h"
-[".config/tmux/plugins/tpm"]
+[".config/tmux/plugins/nord"]
     type = "archive"
-    url = "https://github.com/tmux-plugins/tpm/archive/refs/heads/master.zip"
+    url = "https://github.com/nordtheme/tmux/archive/refs/heads/develop.zip"
     exact = true
     stripComponents = 1
     refreshPeriod = "168h"
