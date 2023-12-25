@@ -192,10 +192,10 @@ main() {
         generate_ports_list
         build_infrastructure
         build_ports
-        if [ "$(hostname)" = "pdr.bofh.network" ]; then
-            build_php_ports
-            build_php_consumer_ports
-        fi
+        #if [ "$(hostname)" = "pdr.bofh.network" ]; then
+        build_php_ports
+        build_php_consumer_ports
+        #fi
         ;;
     -t)
         # Parse the target and ensure it exists.
