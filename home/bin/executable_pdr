@@ -8,10 +8,10 @@ _COLOR_YELLOW="\033[1;33m"
 _GIT_BIN=/usr/local/bin/git
 if [ "$(hostname)" = "pdr.bofh.network" ]; then
     _INFRASTRUCTURE_JAIL="MAIN"
-    _JAIL_LIST="124i386 124 132 140 MAIN"
+    _JAIL_LIST="132 140 MAIN"
 elif [ "$(hostname)" = "dev.bofh.network" ] || [ "$(hostname)" = "pkg.bofh.network" ]; then
     _INFRASTRUCTURE_JAIL="140"
-    _JAIL_LIST="124i386 124 132 140"
+    _JAIL_LIST="132 140"
 elif [ "$(hostname)" = "rpi4a.bofh.network" ]; then
     _INFRASTRUCTURE_JAIL="140"
     _JAIL_LIST="140"
@@ -81,14 +81,14 @@ update_tree() {
 generate_ports_list() {
     e_warning "Creating bofh ports list"
     ${_PORTGREP_BIN} -R /usr/local/poudriere/ports/${_PORTSTREE} -o -m bofh@FreeBSD.org > "$_TMPFILE"
-    find $_PORTSDIR -type d -d 2 \( -iname "*php80*" -o -iname "*php81*" -o -iname "*php82*" -o -iname "*php83*"  \) | sed -e "s|$_PORTSDIR/||g" >> "$_TMPFILE"
+    find $_PORTSDIR -type d -d 2 \( -iname "*php81*" -o -iname "*php82*" -o -iname "*php83*"  \) | sed -e "s|$_PORTSDIR/||g" >> "$_TMPFILE"
     ${_SORT_BIN} "$_TMPFILE" > "$_PORTSLIST"
 
     e_warning "Creating php ports list"
-    find $_PORTSDIR -type d -d 2 \( -iname "*php80*" -o -iname "*php81*" -o -iname "*php82*" -o -iname "*php83*" \) | sed -e "s|$_PORTSDIR/||g" > "$_PORTSLISTDIR"/PHP
+    find $_PORTSDIR -type d -d 2 \( -iname "*php81*" -o -iname "*php82*" -o -iname "*php83*" \) | sed -e "s|$_PORTSDIR/||g" > "$_PORTSLISTDIR"/PHP
 
     e_warning "Creating php consumers ports list"
-    portgrep -R $_PORTSDIR -u php -o | grep -v -E 'icingaweb2-module-idoreports|icingaweb2-module-pdfexport|icingaweb2-module-reporting|php80|php81|php82|php83' > $_TEMPLIST
+    portgrep -R $_PORTSDIR -u php -o | grep -v -E 'icingaweb2-module-idoreports|icingaweb2-module-pdfexport|icingaweb2-module-reporting|php81|php82|php83' > $_TEMPLIST
     portgrep -R $_PORTSDIR -u pear -o >> $_TEMPLIST
     sort -u $_TEMPLIST > "$_PORTSLISTDIR"/php
     rm $_TEMPLIST
@@ -116,7 +116,7 @@ build_php_ports() {
 }
 
 build_php_consumer_ports() {
-    for _SETS in testPHP80 testPHP81 testPHP82 testPHP83
+    for _SETS in testPHP81 testPHP82 testPHP83
     do
         e_warning "Starting bulk for: $_TESTQATJAIL with $_SETS"
         ${_POUDRIERE_BIN} bulk -j $_TESTQATJAIL -p ${_PORTSTREE} -z $_SETS -b latest -f "$_PORTSLISTDIR"/php
@@ -143,7 +143,7 @@ test_ports() {
 }
 
 test_php_ports() {
-    for _SETS in testPHP80 testPHP81 testPHP82 testPHP83
+    for _SETS in testPHP81 testPHP82 testPHP83
     do
         e_warning "Starting bulk for: $_TESTQATJAIL with $_SETS"
         ${_POUDRIERE_BIN} bulk -j $_TESTQATJAIL -p ${_PORTSTREE} -z $_SETS -t "$@"
