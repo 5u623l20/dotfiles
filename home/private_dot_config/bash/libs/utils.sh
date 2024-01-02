@@ -14,7 +14,6 @@
 
 ########################## Styled text output ##################################
 
-# e_header "I am a sample script"
 # e_success "I am a success message"
 # e_error "I am an error message"
 # e_warning "I am a warning message"
@@ -105,8 +104,6 @@
 #
 # Headers and Logging
 #
-#e_header() { printf "\n${bold}${purple}==========  %s  ==========${reset}\n" "$@"
-#}
 #e_arrow() { printf "➜ %s\n" "$@"
 #}
 #e_success() { printf "${green}✔ %s${reset}\n" "$@"
