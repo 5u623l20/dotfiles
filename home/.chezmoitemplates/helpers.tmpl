@@ -161,7 +161,6 @@ CHEZMOI_OS={{ .chezmoi.os }}
 CHEZMOI_ARCH={{ .chezmoi.arch }}
 
 AG_BIN=$(command -v ag)
-AG_PKG="the_silver_searcher"
 BAT_BIN=$(command -v bat)
 BAT_PKG="bat"
 CAT_BIN=$(command -v cat)
@@ -262,7 +261,6 @@ GIT_PKG="git-lite"
 {{- else if (eq .chezmoi.osRelease.id "arch" ) }}
 {{- else if (eq .chezmoi.osRelease.id "centos" ) }}
 {{- else if (eq .chezmoi.osRelease.id "debian" ) }}
-AG_PKG="silversearcher-ag"
 BAT_BIN=$(command -v batcat)
 VIM_PKG="vim-nox"
 {{- else if (eq .chezmoi.osRelease.id "fedora" ) }}
@@ -271,7 +269,6 @@ VIM_PKG="vim-nox"
 {{- else if (eq .chezmoi.osRelease.id "slackware" ) }}
 {{- else if (eq .chezmoi.osRelease.id "sles" ) }}
 {{- else if (eq .chezmoi.osRelease.id "ubuntu" ) }}
-AG_PKG="silversearcher-ag"
 BAT_BIN=$(command -v batcat)
 STRFILE_PKG="fortune-mod"
 VIM_PKG="vim-nox"
