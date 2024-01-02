@@ -43,9 +43,9 @@ function __powerline_user_info_prompt {
 function __powerline_ruby_prompt {
   local ruby_version=""
 
-  if command_exists 'rvm'; then
+  if check_cmd 'rvm'; then
     ruby_version="$(rvm_version_prompt)"
-  elif command_exists 'rbenv'; then
+  elif check_cmd 'rbenv'; then
     ruby_version=$(rbenv_version_prompt)
   fi
 

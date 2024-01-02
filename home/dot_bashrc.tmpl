@@ -14,12 +14,12 @@ export LSCOLORS='Gxfxcxdxdxegedabagacad'
 source $XDG_CONFIG_HOME/shells/functions
 source $BASHDOTDIR/libs/base.sh
 # Check if UID is not zero and sudo exists.
-if ( command_exists sudo ) && [ $UID -ne 0 ] && ( sudo -vn 2>&1 | grep 'password' > /dev/null ); then
+if ( check_cmd sudo ) && [ $UID -ne 0 ] && ( sudo -vn 2>&1 | grep 'password' > /dev/null ); then
     export SUDO='sudo '
 else
     export SUDO=''
 fi
-if ( command_exists fzf ); then
+if ( check_cmd fzf ); then
     export FZF_COMPLETION_TRIGGER=''
 fi
 # User configuration

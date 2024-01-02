@@ -1,7 +1,3 @@
-command_exists() {
-  command -v "$@" >/dev/null 2>&1
-}
-
 lowercase() {
   echo "$1" | sed "y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/"
 }
@@ -104,7 +100,7 @@ else
 fi
 
 set_sudo() {
-  if command_exists sudo; then
+  if check_cmd sudo; then
     if sudo -vn 2>&1 | grep 'password' > /dev/null; then
       SUDO_CMD=$(command -v sudo)
     else
@@ -117,19 +113,19 @@ set_sudo
 
 {{ if (ne .chezmoi.os "darwin") -}}
 check_packagemgr() {
-  if command_exists yum; then
+  if check_cmd yum; then
     PKG_BIN=$(command -v yum)
     PKG_CMD="$SUDO_CMD $PKG_BIN -y -qq install"
-  elif command_exists pkg; then
+  elif check_cmd pkg; then
     PKG_BIN=$(command -v pkg)
     PKG_CMD="$SUDO_CMD $PKG_BIN install -y"
-  elif command_exists pkg_add; then
+  elif check_cmd pkg_add; then
     PKG_BIN=$(command -v pkg_add)
     PKG_CMD="$SUDO_CMD $PKG_BIN -U -I -x"
-  elif command_exists apk; then
+  elif check_cmd apk; then
     PKG_BIN=$(command -v apk)
     PKG_CMD="$SUDO_CMD $PKG_BIN add"
-  elif command_exists apt; then
+  elif check_cmd apt; then
     PKG_BIN=$(command -v apt)
     PKG_CMD="$SUDO_CMD $PKG_BIN -y install"
   fi
@@ -137,16 +133,16 @@ check_packagemgr() {
 {{ end }}
 
 set_download() {
-  if command_exists curl; then
+  if check_cmd curl; then
     DOWNLOAD_BIN=$(command -v curl)
     DOWNLOAD_CMD="$DOWNLOAD_BIN -fsSL"
-  elif command_exists wget; then
+  elif check_cmd wget; then
     DOWNLOAD_BIN=$(command -v wget)
     DOWNLOAD_CMD="$DOWNLOAD_BIN -q -O-"
-  elif command_exists fetch; then
+  elif check_cmd fetch; then
     DOWNLOAD_BIN=$(command -v fetch)
     DOWNLOAD_CMD="$DOWNLOAD_BIN -q -o -"
-  elif command_exists curlie; then
+  elif check_cmd curlie; then
     DOWNLOAD_BIN=$(command -v curlie)
     DOWNLOAD_CMD="$DOWNLOAD_BIN -fsSL"
   fi
@@ -275,19 +271,19 @@ VIM_PKG="vim-nox"
 {{- end }}
 {{- end }}
 {{- end }}
-if command_exists python3; then
+if check_cmd python3; then
   PYTHON_BIN="python3"
-elif command_exists python3.8; then
+elif check_cmd python3.8; then
   PYTHON_BIN="python3.8"
-elif command_exists python3.9; then
+elif check_cmd python3.9; then
   PYTHON_BIN="python3.9"
-elif command_exists python3.10; then
+elif check_cmd python3.10; then
   PYTHON_BIN="python3.10"
-elif command_exists python3.11; then
+elif check_cmd python3.11; then
   PYTHON_BIN="python3.11"
-elif command_exists python; then
+elif check_cmd python; then
   PYTHON_BIN="python"
-elif command_exists python2; then
+elif check_cmd python2; then
   PYTHON_BIN="python2"
 fi
 FREEBSD_PY_DEFAULT="py39-"

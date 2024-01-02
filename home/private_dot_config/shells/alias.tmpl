@@ -9,7 +9,7 @@ alias .../="cd ../../"
 alias /-="cd -"
 alias /="cd /"
 alias alais="alias"
-if command_exists fortune; then
+if check_cmd fortune; then
     alias bofh="fortune $XDG_DATA_HOME/fortunes/bofh"
 fi
 alias bye="echo 'bye';exit"
@@ -18,11 +18,11 @@ alias csl="clear"
 alias cp="cp -ivRL"
 alias del="rm -v -i"
 alias df="df -h"
-if command_exists emacs; then
+if check_cmd emacs; then
     alias emacs="emacs -nw"
 fi
 alias g="egrep -i"
-if command_exists gcc; then
+if check_cmd gcc; then
 alias gcc="gcc -Wall -W -Wpointer-arith -Wbad-function-cast -std=c99"
 alias gcc_debug="gcc -ggdb3"
 alias gcc_optimize="gcc -fforce-mem -fforce-addr -finline-functions \
@@ -52,13 +52,13 @@ alias msgcheck="msgfmt -o /dev/null --statistics --strict --verbose"
 alias mute="mixer pcm 0:0"
 alias mv="mv -vi"
 alias pgr="$PAGER"
-if command_exists drill; then
+if check_cmd drill; then
     alias publicip4='drill -4 -Q myip.opendns.com @resolver1.opendns.com A'
     alias publicip6='drill -6 -Q myip.opendns.com @resolver1.opendns.com AAAA'
-elif command_exists dig; then
+elif check_cmd dig; then
     alias publicip4='dig -4 myip.opendns.com A @resolver1.opendns.com +short'
     alias publicip6='dig -6 myip.opendns.com AAAA @resolver1.opendns.com +short'
-elif command_exists curl; then
+elif check_cmd curl; then
     alias publicip4="curl https://icanhazip.com"
     alias publicip6="curl https://ipv6.icanhazip.com"
 fi
@@ -68,25 +68,25 @@ alias rmdir="rmdir -v"
 alias today="date '+%Y-%m-%d'"
 alias x="exit"
 e() {
-    if command_exists vim; then
+    if check_cmd vim; then
         vim "$@"
-    elif command_exists vi; then
+    elif check_cmd vi; then
         vi "$@"
     fi
 }
 rfcget() {
-    if command_exists curl; then
+    if check_cmd curl; then
         curl https://www.rfc-editor.org/rfc/rfc"$1".txt | $PAGER
-    elif command_exists fetch; then
+    elif check_cmd fetch; then
         fetch -o - https://www.rfc-editor.org/rfc/rfc"$1".txt | $PAGER
     fi
 }
 v() {
-    if command_exists batcat; then
+    if check_cmd batcat; then
         batcat --theme Nord "$@"
-    elif command_exists bat; then
+    elif check_cmd bat; then
         bat --theme Nord "$@"
-    elif command_exists view; then
+    elif check_cmd view; then
         view "$@"
     else
         cat "$@"
@@ -105,7 +105,7 @@ gi() {
 ###############################################################################
 #################################NMAP ALIASES #################################
 ###############################################################################
-if command_exists nmap; then
+if check_cmd nmap; then
     alias nmap_open_ports="nmap --open"
     alias nmap_list_interfaces="nmap --iflist"
     alias nmap_slow="${SUDO}nmap -sS -v -T1"
@@ -125,7 +125,7 @@ fi
 ###############################################################################
 #################################VAGRANT ALIASES ##############################
 ###############################################################################
-if command_exists vagrant; then
+if check_cmd vagrant; then
     alias vgi="vagrant init"
     alias vup="vagrant up"
     alias vd="vagrant destroy"
@@ -156,7 +156,7 @@ fi
 ###############################################################################
 #################################rsync ALIASES ################################
 ###############################################################################
-if command_exists rsync; then
+if check_cmd rsync; then
     alias rsync-copy="rsync -avz --progress -h"
     alias rsync-move="rsync -avz --progress -h --remove-source-files"
     alias rsync-update="rsync -avzu --progress -h"
@@ -169,7 +169,7 @@ fi
 ###############################################################################
 #################################ANSIBLE ALIASES ##############################
 ###############################################################################
-if command_exists ansible; then
+if check_cmd ansible; then
     # Functions
     ansible-version() {
         ansible --version
@@ -216,7 +216,7 @@ fi
 ###############################################################################
 #################################ARCANIST ALIASES##############################
 ###############################################################################
-if command_exists arc; then
+if check_cmd arc; then
     alias ara='arc amend'
     alias arb='arc branch'
     alias arco='arc cover'
@@ -244,7 +244,7 @@ fi
 ###############################################################################
 #################################base64 ALIASES################################
 ###############################################################################
-if command_exists base64; then
+if check_cmd base64; then
     encode64() {
         if [[ $# -eq 0 ]]; then
             cat | base64
@@ -271,7 +271,7 @@ fi
 ################################################################################
 ############################apache specific aliases ############################
 ################################################################################
-if command_exists apachectl; then
+if check_cmd apachectl; then
     alias apachestart="${SUDO}apachectl start"
     alias apachestop="${SUDO}apachectl stop"
     alias apacherestart="${SUDO}apachectl restart"
@@ -370,7 +370,7 @@ pacmansignkeys() {
     done
 }
 
-if command_exists xdg-open; then
+if check_cmd xdg-open; then
 # Open the website of an ArchLinux package
 pacweb() {
     if [[ $# = 0 || "$1" =~ "--help|-h" ]]; then

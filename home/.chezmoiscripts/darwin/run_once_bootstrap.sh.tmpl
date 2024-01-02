@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 {{ template "libsh.tmpl" . }}
 
 {{ if (eq .chezmoi.os "darwin") -}}
@@ -5,7 +7,7 @@
 {{ template "helpers.tmpl" . }}
 
 # Install HomeBrew
-if ! command_exists brew; then
+if ! check_cmd brew; then
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
