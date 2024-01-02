@@ -1003,4 +1003,9 @@ info_start() {
   esac
 }
 
+# Convert a string to lowercase
+lowercase() {
+  echo "$1" | tr "[:upper:]" "[:lower:]"
+}
+
 # END: libsh.sh
