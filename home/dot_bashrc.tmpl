@@ -12,6 +12,8 @@ source ~/.config/env
 export BASHDOTDIR=$XDG_CONFIG_HOME/bash
 export LSCOLORS='Gxfxcxdxdxegedabagacad'
 source $XDG_CONFIG_HOME/shells/functions
+# Alias definitions.
+source $XDG_CONFIG_HOME/shells/alias
 source $BASHDOTDIR/libs/base.sh
 # Check if UID is not zero and sudo exists.
 if ( check_cmd sudo ) && [ $UID -ne 0 ] && ( sudo -vn 2>&1 | grep 'password' > /dev/null ); then
@@ -66,11 +68,6 @@ if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
 true
 else
 true
-fi
-
-# Alias definitions.
-if [ -f $BASHDOTDIR/aliases ]; then
-    . $BASHDOTDIR/aliases
 fi
 
 # enable programmable completion features (you don't need to enable
