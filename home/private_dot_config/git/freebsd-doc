@@ -1,0 +1,21 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "freebsd"]
+	fetch = +refs/notes/*:refs/notes/*
+	url = https://git.freebsd.org/doc.git
+	fetch = +refs/heads/*:refs/remotes/freebsd/*
+	pushurl = git@gitrepo.freebsd.org:doc.git
+	fetch = +refs/internal/*:refs/internal/*
+[branch "main"]
+	remote = freebsd
+	merge = refs/heads/main
+[user]
+	name = Muhammad Moinur Rahman
+	email = bofh@FreeBSD.org
+	signingKey = BDB9B5A617C0BC91
+[branch "admin"]
+	remote = freebsd
+	merge = refs/internal/admin

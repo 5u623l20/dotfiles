@@ -1,11 +1,284 @@
-# This is Git's per-user configuration file.
 [user]
-# Please adapt and uncomment the following lines:
 	name = Muhammad Moinur Rahman
 	email = moin@bofh.im
+	useConfigOnly = true
+	signingKey = BDB9B5A617C0BC91
+[core]
+	editor = "vim"
+	excludesfile = "~/.config/git/ignore"
+	attributesfile = "~/.config/git/attributes"
+	autocrlf = "input"
+	whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+	trustctime = false
+[color]
+	ui = auto
+	diff = auto
+	status = auto
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold # line info
+	old = red # deletions
+	new = green # additions
+[color "status"]
+	added = yellow
+	changed = green
+	untracked = cyan
 [init]
 	defaultbranch = main
+[apply]
+	whitespace = fix
 [advice]
 	detachedHead = false
+[interactive]
+	singlekey = true
 [log]
-	date = iso8601
+	date = iso-strict
+[rebase]
+	autoSquash = true
+[push]
+	pushoption = confirm-subject
+	pushoption = confirm-author
+	autoSetupRemote = true
+[includeIf "gitdir:/usr/local/poudriere/ports/default/"]
+	path = ~/.config/git/freebsd-ports
+[includeIf "gitdir:~/Projects/FreeBSD/src/"]
+	path = ~/.config/git/freebsd-src
+[includeIf "gitdir:~/Projects/FreeBSD/doc/"]
+	path = ~/.config/git/freebsd-doc
+[commit]
+	gpgsign = true
+	verbose = true
+[pull]
+	rebase = false
+[diff]
+	wsErrorHighlight = all
+	renames = copies
+	compactionHeuristic = true
+	indentHeuristic = true
+[help]
+	autocorrect = 1
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[fetch]
+	recurseSubmodules = on-demand
+	prune = true
+[merge]
+	log = true
+	tool = vimdiff
+	conflictStyle = diff3
+[url "git@codeberg.org:"]
+	insteadOf = "cb:"
+	insteadOf = "codeberg:"
+	insteadOf = "git://codeberg.org/"
+	insteadOf = "https://codeberg.org/"
+	pushInsteadOf = "git://codeberg.org/"
+	pushInsteadOf = "https://codeberg.org/"
+[url "git@github.com:"]
+	insteadOf = "gh:"
+	insteadOf = "github:"
+	insteadOf = "git://github.com/"
+	insteadOf = "https://github.com/"
+	pushInsteadOf = "git://github.com/"
+	pushInsteadOf = "https://gist.github.com/5u623l20/"
+	pushInsteadOf = "https://github.com/"
+[url "git@gist.github.com:"]
+	insteadOf = "gist:"
+	insteadOf = "gst:"
+[url "git@gitlab.com:"]
+	insteadOf = "gl:"
+	insteadOf = "gitlab:"
+	insteadOf = "git://gitlab.com/"
+	insteadOf = "https://gitlab.com/"
+	pushInsteadOf = "git://gitlab.com/"
+	pushInsteadOf = "https://gitlab.com/"
+[url "ssh://git@gitrepo.freebsd.org:"]
+	pushInsteadOf = "git://git.freebsd.org/"
+	pushInsteadOf = "https://git.freebsd.org/"
+[url "https://git.freebsd.org/"]
+	insteadOf = "fbsd:"
+	insteadOf = "fo:"
+	insteadOf = "freebsd:"
+[web]
+	browser = xdg-open
+[alias]
+	a = "add"
+	al = "aliases"
+	aliases = "!git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'"
+	all = "!f() { unset GIT_DIR GIT_WORK_TREE; w=dirs; case \"$1\" in --*) w=${1#--}; shift;; esac; c=$(tput setaf 5); r=$(tput sgr0); rc=0; for d in $(eval \"echo $(git config alias.all.$w)\"); do if [ -e $d/.git ]; then printf \"$c+ %s$r\\n\" \"$(printf %s $d|sed /^\\\\/root/!s,^$HOME,~,)\"; cd $d && git \"$@\" || rc=1; fi; done; exit $rc; }; f"
+	all-quiet = "!f() { unset GIT_DIR GIT_WORK_TREE; w=dirs; case \"$1\" in --*) w=${1#--}; shift;; esac; c=$(tput setaf 5); r=$(tput sgr0); rc=0; for d in $(eval \"echo $(git config alias.all.$w)\"); do if [ -e $d/.git ]; then prefix=\"$(printf \"$c+ %s$r\\n\" \"$(printf %s $d|sed /^\\\\/root/!s,^$HOME,~,)\")\"; cd $d && output=\"$(git \"$@\" 2>&1)\" || rc=1; test -z \"$output\" || printf %s \"$prefix\n$output\n\"; fi; done; exit $rc; }; f"
+	amend = "commit --amend --reuse-message=HEAD"
+	ap = "add --patch"
+	archive-branch = "!f() { p=archived; for arg in \"$@\"; do case \"$arg\" in --archived|--applied|--abandoned) p=\"${arg#--}\"; continue;; --*) printf \"unrecognized argument: %s\\n\" \"$arg\"; exit 1;; esac; git branch -m \"$arg\" \"$p/$arg\"; done; }; f"
+	autosquash = "rebase -i --autosquash -r"
+	back = "git reset HEAD~"
+	br = "branch -a -v"
+	branch-changes = "!f() { b=origin/$1; m=$(git log --pretty=%H -1 --first-parent --merges --grep=\"^Merge branch '$1'\" master); shift; git diff $m^...$m^2 \"$@\"; }; f"
+	branch-diff = "!git diff $(git main-branch)@{u}..."
+	branch-log = "!git log $(git main-branch)@{u}.."
+	branch-name = "symbolic-ref --short HEAD"
+	branches = "!f() { git branch --color=always \"$@\" | grep -v -e applied/ -e archived/ -e abandoned/; }; f"
+	c = "commit"
+	cS = "commit --no-gpg-sign"
+	ca = "commit --all"
+	#ca = !"git add -A && git commit -av"
+	caam = "commit --all --amend"
+	cam = "commit --amend"
+	cb = "checkout -b"
+	changelog-filename = "!f() { git config alias.changelog.filename \"$@\" || echo CHANGES.rst; }; f"
+	checkout-if-not-already-on = "!f() { branch=$1; if [ \"$(git symbolic-ref --short HEAD 2>/dev/null)\" != $branch ]; then git checkout $branch; fi; }; f"
+	ci = "commit -v"
+	ci-split = "!git ci -c ORIG_MESSAGE"
+	cl = "clone --recurse-submodules"
+	clean-merged-branches = !git list-merged-branches | xargs -r git branch -d
+	clean-pull-requests = "!f() { git for-each-ref \"refs/heads/pull/*\" --format \"%(refname:short)\" | xargs -r git branch -D; }; f"
+	clone-h = "! [ $# -ne 1 ] && echo 'Args: REPO_NAME' || git clone https://github.com/5u623l20/$1.git"
+	clone-https = "! [ $# -ne 1 ]  && echo 'Args: USERNAME/REPO_NAME (one arg, including forward-slash)' || git clone https://github.com/$1.git "
+	clone-s = "! [ $# -ne 1 ] && echo 'Args: REPO_NAME' || git clone git@github.com:5u623l20/$1.git "
+	clone-shallow = "clone --depth 1 --single-branch"
+	clone-ssh = "! [ $# -ne 1 ] && echo 'Args: USERNAME/REPO_NAME (one arg, including forward-slash)' || git clone git@github.com:$1.git"
+	co = "checkout"
+	co-tag-latest = "! git checkout $(git tag-latest)"
+	cob = "checkout -b"
+	contributors = "shortlog --summary --numbered"
+	cop = "checkout --patch"
+	crchange = "codereview change"
+	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
+	crgofmt = "codereview gofmt"
+	crmail = "codereview mail"
+	crpending = "codereview pending"
+	crsubmit = "codereview submit"
+	crsync = "codereview sync"
+	d = "diff"
+	dc = "diff --cached"
+	df = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+	dh = "diff HEAD"
+	di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
+	dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d; git remote -v update -p"
+	do-push-branch = "push -u origin HEAD"
+	ds = "diff --staged"
+	exclude = "!f() { for arg in \"$@\"; do echo \"$arg\" >> \"$(git rev-parse --git-path info/exclude)\"; done; }; f"
+	exec = "! exec "
+	f = "fetch"
+	fb = "!f() { git branch -a --contains $1; }; f"
+	fc = "!f() { git log --pretty=format:'%C(yellow)%h	%Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
+	fetch-pull-requests = "!f() { a=${1:-*}; git fetch origin \"+refs/pull/$a/head:refs/remotes/origin/pull/$a\"; }; f"
+	find-merge = "!sh -c 'commit=$0 && branch=${1:-HEAD} && (git rev-list $commit..$branch --ancestry-path | cat -n; git rev-list $commit..$branch --first-parent | cat -n) | sort -k2 -s | uniq -f1 -d | sort -n | tail -1 | cut -f2'"
+	fm = "!f() { git log --pretty=format:'%C(yellow)%h	%Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
+	fpush = "push --force-with-lease"
+	ft = "!f() { git describe --always --contains $1; }; f"
+	go = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
+	graph = "log --graph --color --pretty=format:"%C(yellow)%H%C(green)%d%C(reset)%n%x20%cd%n%x20%cn%x20(%ce)%n%x20%s%n""
+	grt="! cd $(git rev-parse --show-toplevel)"
+	has-upstream = "!git rev-parse @{u} >/dev/null 2>/dev/null"
+	ig = "edit-ignore # not a Git builtin either"
+	ign = "ls-files -o -i --exclude-standard"
+	ignore = "!f() { for arg in \"$@\"; do echo \"$arg\" >> .gitignore; done; git add .gitignore 2>/dev/null; }; f"
+	ignored = "ls-files --others -i --exclude-standard"
+	incoming = "!git fetch && git log --oneline ..$(git upstream)"
+	l  = "log --graph --pretty=format:'%Cred%h%Creset %C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --"
+	ladd = "local add"
+	last-release = "describe --tags --abbrev=0 --exclude=last*"
+	lci = "local ci"
+	lcommit = "local commit"
+	ldiff = "local diff"
+	lg = "log --color --decorate --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an (%G?)>%Creset' --abbrev-commit"
+	lg = "log --patch"
+	list-merged-branches = "!f() { git branch --merged $(git main-branch) | grep -v -E '^[^ ]|^  (master|staging|live)$'; true; }; f"
+	local = "!f() { command=$1; shift; file=$1; if [ -d $file ]; then dir=$file; shift; else dir=$(dirname $file); fi; echo + cd $dir; cd $dir && git $command \"$@\"; }; f"
+	logd = "log --pretty='%C(yellow)%h %C(cyan)%ar %Creset%s'"
+	loge = "log --pretty='%C(yellow)%h %Creset%C(cyan)%ai %C(green)%ae %C(reset)%s'"
+	logn = "log --pretty='%C(yellow)%h %Creset%C(cyan)%ai %C(green)%an %C(reset)%s'"
+	lol = "log --graph --decorate --oneline"
+	lola = "lol --all"
+	lolt = "log --simplify-by-decoration --pretty='%C(yellow)%h %C(bold blue)%ci%C(green)%d %Creset%s'"
+	lp = "log --pretty='%h %ci %cN %s'"
+	lpp = "log --pretty=oneline -n 20 --graph --abbrev-commit"
+	lpush = local push
+	ls = "ls-files"
+	lst = "log --stat"
+	#lst = local st
+	lstatus = local status
+	main-branch = "!f() { git config alias.main-branch.name \"$@\" || for c in main master devel; do git show-ref --quiet --verify refs/heads/$c && echo $c && break; done || git config init.defaultBranch || echo master; }; f"
+	mdiff = "!f() { git stash | head -1 | grep -q 'No local changes to save'; x=$?; git merge --no-commit $1 &>/dev/null; git add -u &>/dev/null; git diff --staged; git reset --hard &>/dev/null; test $x -ne 0 && git stash pop &>/dev/null; }; f"
+	new = "!f() { case \"$1\" in -*|\"\") b=;; *) b=$1; shift;; esac; git log $b@{1}..$b@{0} \"$@\"; }; f"
+	nosign = "config commit.gpgSign false"
+	nx = "annex"
+	nxa = "annex add"
+	open-url = "!f() { xdg-open $(git url \"$@\"); }; f"
+	outgoing = !git log --oneline $(git upstream)..
+	p = "push"
+	patchit = "!f() { echo $1.patch | sed s_pull/[0-9]*/commits_commit_ | xargs curl -L | git am --whitespace=fix; }; f"
+	patchit-please = "!f() { echo $1.patch | sed s_pull/[0-9]*/commits_commit_ | xargs curl -L | git am -3 --whitespace=fix; }; f"
+	penultimate-release = !git describe --tags --abbrev=0 --exclude=last* --exclude=$(git last-release)
+	pf = "push --no-verify"
+	pl = !"git pull; git submodule foreach git pull origin master"
+	#pr = !"pr() { git fetch origin pull/$1/head:pr-$1; git checkout pr-$1; }; pr"
+	#pr = "!f() { a=${1:?usage: git pr NNN}; git fetch-pull-requests $a; git checkout origin/pull/$a; }; f"
+	pr = "remote prune origin"
+	preview-merge = "!f() { b=origin/$1; git log --oneline master..$b && git merge --no-commit --no-ff $b; }; f"
+	pu = "! git push --no-verify -u origin $(git branch --show-current)"
+	push-branch = "!master=$(git main-branch); if [ \"$(git symbolic-ref --short HEAD 2>/dev/null)\" = \"$master\" ]; then echo \"$master is not a branch\" 1>&2; exit 1; fi; git do-push-branch"
+	push-to-fridge = "!f() { repo=${1:-git/$(basename $(pwd)).git} && ssh mg@fridge.pov.lt git init --bare $repo && git remote add origin mg@fridge.pov.lt:$repo && git push -u origin HEAD; }; f"
+	push-to-plato = "!f() { repo=${1:-git/$(basename $(pwd)).git} && ssh mg@plato.gedmin.as git init --bare $repo && git remote add origin mg@plato.gedmin.as:$repo && git push -u origin HEAD; }; f"
+	pushf = "push --force-with-lease"
+	pushu = "push -u origin HEAD"
+	rb = "rebase"
+	rbc = "rebase --continue"
+	rbi = "rebase --interactive"
+	reb = "!r() { git rebase -i HEAD~$1; }; r"
+	remotes = "remote -v"
+	rename-current-branch = branch -m
+	resetco = "! git reset HEAD && git checkout . && git status "
+	review = "!vim +'set ft=diff bt=nofile|exe \"0r !git branch-diff -p --stat\"|1|exe \"silent file\" escape(printf(\"git diff of the %s branch\", systemlist(\"git branch-name\")[0]), \" |\\\\\")'"
+	reword = commit --amend --only -v
+	root = "rev-parse --show-toplevel"
+	roots = log --all --oneline --decorate --max-parents=0
+	s = "status -s -b"
+	serve = daemon --reuseaddr --base-path=. --export-all --verbose
+	sha = "!f() { rev=HEAD; for a; do case \"$a\" in -*) ;; *) rev=;; esac; done; git rev-parse \"$@\" $rev; }; f"
+	short-status-with-branch-info = "!f() { o=$(git -c color.status=always status -bsu --ignore-submodules=none \"$@\"); rc=$?; printf \"%s\" \"$o\" | grep -v '## [^ ]*$'; exit $rc; }; f"
+	show-merge = "!sh -c 'merge=$(git find-merge $0 $1) && [ -n \"$merge\" ] && git show $merge'"
+	show-original-commit = !git show $(cat .git/rebase-apply/original-commit .git/rebase-merge/stopped-sha 2>/dev/null)
+	split-commit = "!git tag ORIG_MESSAGE && git reset HEAD^ && echo 'Now do git ci-split -p; git ci-split -p; git tag -d ORIG_MESSAGE'"
+	st = "stash"
+	stp = "stash pop"
+	sw = switch
+	#sync = !git fetch $(git sync-source) && git push $(git sync-target) $(git sync-source)/$(git main-branch):$(git main-branch)
+	sync = "! git pull --rebase && git push"
+	sync-all = "! git pull --rebase && git push --progress && git push --tags --no-verify "
+	sync-source = "!f() { git config alias.sync.source \"$@\" || echo origin; }; f"
+	sync-stash = "! git stash -u && git sync && git stash pop"
+	sync-tags = "! git fetch --tags && git push --tags --no-verify"
+	sync-target = "!f() { git config alias.sync.target \"$@\" || echo mgedmin; }; f"
+	tag-latest = "! git describe --tags $(git rev-list --tags --max-count=1)"
+	#tags = "! git tag | sort -V -r"
+	tags = "tag -l"
+	top = "!git log --format=format:%an | sort | uniq -c | sort -r | head -n 20"
+	u = "pull"
+	uncommit = reset HEAD^
+	undo = "! [ -z $(git status --porcelain) ] && git reset --hard HEAD~ || echo 'Unstaged changes!'"
+	#undo = "!git reset HEAD~1 --mixed"
+	undo = reset HEAD@{1}
+	#unreleased = !git shortlog $(git last-release)..
+	unreleased = "!f() { git fetch --tags && git diff $(git tag | tail -n 1); }; f"
+	unreleased-changelog = !git diff $(git last-release) -- $(git changelog-filename)
+	unreleased-diff = !git diff $(git last-release)
+	unreleased-log = !git log $(git last-release)..
+	#up = !git update
+	up = "!git pull origin master && git remote prune origin && git submodule update --init --recursive"
+	update = "!f() { git checkout-if-not-already-on $(git main-branch) && git pull --rebase \"$@\" && git clean-merged-branches; }; f"
+	upstream = "!if git has-upstream; then echo '@{u}'; else git main-branch; fi"
+	ur = "pull --rebase --autostash"
+	url = "!f() { remote=${1:-origin}; git config remote.\"$remote\".url; }; f"
+	whatsmodified = !git wm
+	whoami = !git var GIT_COMMITTER_IDENT | sed 's/ [0-9]\\+ [-+0-9]\\+$//'
+	wm = "!f() { git all \"$@\" short-status-with-branch-info; }; f"
+	wmq = "!f() { git all-quiet \"$@\" short-status-with-branch-info; }; f"
+	wmqa = !git wmq --all
