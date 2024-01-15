@@ -116,6 +116,7 @@ Plug 'editorconfig/editorconfig-vim'
 "Plug 'tpope/vim-repeat')
 "Plug 'tpope/vim-surround')
 
+Plug 'nblock/vim-dokuwiki'
 call plug#end()
 
 " Install plugins
@@ -237,6 +238,9 @@ if !empty($TMUX) || $COLORTERM == 'truecolor' || $TERM =~ '^\(tmux\|xterm\|iterm
     set background=dark
     if !exists('g:colors_name') || g:colors_name != 'nord'
         colorscheme nord
+        let g:nord_uniform_status_lines = 1
+        let g:nord_bold_vertical_split_line = 1
+        let g:nord_uniform_diff_background = 1
     endif
 endif
 
@@ -393,6 +397,10 @@ augroup vimrc-make-cmake
   autocmd BufNewFile,BufRead CMakeLists.txt setlocal filetype=cmake
 augroup END
 
+" DokuWIki
+" autocmd BufRead,BufNewFile *.dokuwiki set filetype=dokuwiki
+let dokuwiki_comment=1
+let g:dokuwiki_fenced_languages = ['c', 'python', 'html', 'yaml']
 set autoread
 
 "================================================================================
@@ -558,6 +566,37 @@ vnoremap > >gv
 " c
 autocmd FileType c setlocal tabstop=4 shiftwidth=4 expandtab
 autocmd FileType cpp setlocal tabstop=4 shiftwidth=4 expandtab
+
+" FreeBSD
+" FreeBSD mapping to switch current buffer to style(9).  This is generally '\f'.
+nmap <silent> <Leader>f :call FreeBSD_Style()<CR>
+
+" Ignore indents caused by parentheses in FreeBSD style.
+function! IgnoreParenIndent()
+	let indent = cindent(v:lnum)
+
+	if indent > 4000
+		if cindent(v:lnum - 1) > 4000
+			return indent(v:lnum - 1)
+		else
+			return indent(v:lnum - 1) + 4
+		endif
+	else
+		return (indent)
+	endif
+endfun
+
+" Follow the FreeBSD style(9).
+function! FreeBSD_Style()
+	setlocal cindent
+	setlocal cinoptions=(4200,u4200,+0.5s,*500,:0,t0,U4200
+	setlocal indentexpr=IgnoreParenIndent()
+	setlocal indentkeys=0{,0},0),:,0#,!^F,o,O,e
+	setlocal noexpandtab
+	setlocal shiftwidth=8
+	setlocal tabstop=8
+	setlocal textwidth=80
+endfun
 
 " go
 " vim-go
