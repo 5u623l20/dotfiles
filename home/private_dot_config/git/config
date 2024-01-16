@@ -198,8 +198,8 @@
 	lol = "log --graph --decorate --oneline"
 	lola = "lol --all"
 	lolt = "log --simplify-by-decoration --pretty='%C(yellow)%h %C(bold blue)%ci%C(green)%d %Creset%s'"
-	lp = "log --pretty='%h %ci %cN %s'"
-	lpp = "log --pretty=oneline -n 20 --graph --abbrev-commit"
+	lp = "log --pretty=oneline -n 20 --graph --abbrev-commit"
+	lpp = "log --pretty='%h %ci %cN %s'"
 	lpush = local push
 	ls = "ls-files"
 	lst = "log --stat"
