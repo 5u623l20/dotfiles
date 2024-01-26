@@ -6,7 +6,7 @@ Host freefall
   {{-   end }}
 {{-   end }}
   User bofh
-Host fbsd-admin.svn
+Host fbsd-admin-svn
   Hostname admin-svn.freebsd.org
 Host fbsd-admin.nyi fbsd-ntp0.nyi
   HostName admin.nyi.freebsd.org
@@ -14,15 +14,17 @@ Host fbsd-bedlam1 fbsd-ref12-amd64 fbsd-ref12-i386 fbsd-ref15-amd64 fbsd-ref15-i
   HostName bedlam1.nyi.freebsd.org
 Host fbsd-bratwurst.fra
   Hostname bratwurst.fra.freebsd.org
-Host fbsd-dist.nyi
+Host fbsd-bsd3.sec
+  HostName bsd3.sec.freebsd.org
+Host fbsd-dist.nyi fbsd-svn-master fbsd-git-mirror0 fbsd-ftp-master fbsd-gitpush fbsd-git2svn
   HostName dist.nyi.freebsd.org
 Host fbsd-dropbear-ipmi.syd
   Hostname dropbear-ipmi.syd.freebsd.org
-Host fbsd-dropbear.syd fbsd-wbe0.syd fbsd-fbs-pkg0-ctl.syd fbsd-websync0.syd fbsd-ftpsync.syd fbsd-syncthing.syd fbsd-wfe0.syd fbsd-gitmir.syd fbsd-pkg0.syd fbsd-ftp0.syd fbsd-monitor.syd fbsd-admin-http.syd fbsd-ns1.syd fbsd-mxrelay.syd
+Host fbsd-dropbear.syd fbsd-wbe0.syd fbsd-fbs-pkg0-ctl.syd fbsd-websync0.syd fbsd-ftpsync.syd fbsd-syncthing.syd fbsd-wfe0.syd fbsd-gitmir.syd fbsd-pkg0.syd fbsd-ftp0.syd fbsd-monitor.syd fbsd-admin-http.syd fbsd-ns1.syd fbsd-mxrelay.syd fbsd-smarthost.syd
   Hostname dropbear.syd.freebsd.org
-Host fbsd-ds4
+Host fbsd-ds4 fbsd-ds4.nyi fbsd-phabric-dev
   HostName ds4.nyi.freebsd.org
-Host fbsd-filly1
+Host fbsd-filly1 fbsd-svnmir.nyi
   HostName filly1.nyi.freebsd.org
 Host fbsd-filly3 fbsd-wbe-wiki.nyi fbsd-kenobi fbsd-wiki-dev.nyi fbsd-www-dev.nyi fbsd-www-builder fbsd-www-sync0 fbsd-docs-builder fbsd-docs-sync0 fbsd-web3.nyi fbsd-wiki fbsd-wiki-dev fbsd-wiki.nyi
   HostName filly3.nyi.freebsd.org
@@ -30,20 +32,20 @@ Host fbsd-filly4
   HostName filly4.nyi.freebsd.org
 Host fbsd-grind.nyi fbsd-portscout fbsd-portscout.nyi fbsd-socsvn fbsd-distfetch.nyi fbsd-docbuild fbsd-portsindexbuild.nyi fbsd-bit0.nyi
   Hostname grind.nyi.freebsd.org
-Host fbsd-halo
+Host fbsd-halo fbsd-admin-http fbsd-admin-http.nyi
   HostName halo.nyi.freebsd.org
 Host fbsd-igw-ext.syd
   HostName igw-ext.syd.freebsd.org
 Host fbsd-mail.svn
   Hostname mail-svn.freebsd.org
+Host fbsd-mare2.nyi fbsd-wfe0.nyi fbsd-portscout fbsd-security
+  HostName mare2.nyi.freebsd.org
 Host fbsd-phabric
-  Hostname reviews.nyi.freebsd.org
-Host fbsd-phabric-dev
-  HostName reviews-dev.nyi.freebsd.org
-Host fbsd-mare2.nyi fbsd-wfe0.nyi fbsd-portscout
-  Hostname mare2.nyi.freebsd.org
-Host fbsd-web3.nyi
-  HostName web3.nyi.freebsd.org
+  HostName reviews.nyi.freebsd.org
+Host fbsd-stanley
+  HostName stanley.nyi.freebsd.org
+Host fbsd-update2 fbsd-westy.tuk
+  HostName westy.tuk.freebsd.org
 Host fbsd-*
   User bofh
 {{- if .personal }}
