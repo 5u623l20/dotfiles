@@ -1,8 +1,9 @@
-###############################################################################
-################################COMMON ALIASES ###############################
-###############################################################################
-alias _='sudo'
-alias .="pwd"
+################################################################################
+################################COMMON ALIASES #################################
+################################################################################
+#######################
+# DIRECTORY TRAVERSE #
+#######################
 alias ..="cd .."
 alias ../="cd ../"
 alias ...="cd ../.."
@@ -15,6 +16,20 @@ alias .4='cd ../../../../'                  # Go back 4 directory levels
 alias .5='cd ../../../../../'               # Go back 5 directory levels
 alias .6='cd ../../../../../../'            # Go back 6 directory levels
 alias -- -='cd -'
+###########################
+# DIRECTORY MANIPULATION #
+###########################
+alias del="rm -v -i"
+alias md="mkdir -v -p"
+alias mkdir="mkdir -v -p"
+alias rd="rmdir -v"
+alias rm="rm -v -i"
+alias rmdir="rmdir -v"
+####################
+# NON CATEGORIZED #
+####################
+alias _='sudo'
+alias .="pwd"
 alias alais="alias"
 if check_cmd fortune; then
     alias bofh="fortune $XDG_DATA_HOME/fortunes/bofh"
@@ -23,7 +38,6 @@ alias bye="echo 'bye';exit"
 alias cls="clear"
 alias csl="clear"
 alias cp="cp -ivRL"
-alias del="rm -v -i"
 alias df="df -h"
 if check_cmd emacs; then
     alias emacs="emacs -nw"
@@ -51,8 +65,6 @@ alias ls="ls -FGH"
 alias sl="ls -FGH"
 alias m="$PAGER"
 alias maek="make"
-alias md="mkdir -v -p"
-alias mkdir="mkdir -v -p"
 alias mess="clear ; tail -f /var/log/messages"
 alias more="$PAGER"
 alias msgcheck="msgfmt -o /dev/null --statistics --strict --verbose"
@@ -70,11 +82,105 @@ elif check_cmd curl; then
     alias publicip4="curl https://icanhazip.com"
     alias publicip6="curl https://ipv6.icanhazip.com"
 fi
-alias rd="rmdir -v"
-alias rm="rm -v -i"
-alias rmdir="rmdir -v"
 alias today="date '+%Y-%m-%d'"
 alias x="exit"
+## Add an "alert" alias for long running commands.  Use like so:
+#alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+#alias d='dirs -v | head -10'
+## List directory contents
+#alias lsa='ls -lah'
+#alias la='ls -A'
+#alias l='ls -CF'
+#alias perm='stat --printf "%a %n \n "'      # perm: Show permission of target in number
+#alias 000='chmod 000'                       # ---------- (nobody)
+#alias 640='chmod 640'                       # -rw-r----- (user: rw, group: r, other: -)
+#alias 644='chmod 644'                       # -rw-r--r-- (user: rw, group: r, other: -)
+#alias 755='chmod 755'                       # -rwxr-xr-x (user: rwx, group: rx, other: x)
+#alias 775='chmod 775'                       # -rwxrwxr-x (user: rwx, group: rwx, other: rx)
+#alias mx='chmod a+x'                        # ---x--x--x (user: --x, group: --x, other: --x)
+#alias ux='chmod u+x'                        # ---x------ (user: --x, group: -, other: -)
+## Directory Listing aliases
+#alias dir='ls -hFx'
+#alias l.='ls -d .* --color=tty' # short listing, only hidden files - .*
+#alias l='ls -lathF'             # long, sort by newest to oldest
+#alias L='ls -latrhF'            # long, sort by oldest to newest
+#alias la='ls -Al'               # show hidden files
+#alias lc='ls -lcr'              # sort by change time
+#alias lk='ls -lSr'              # sort by size
+#alias lh='ls -lSrh'             # sort by size human readable
+#alias lm='ls -al | more'        # pipe through 'more'
+#alias lo='ls -laSFh'            # sort by size largest to smallest
+#alias lr='ls -lR'               # recursive ls
+#alias lt='ls -ltr'              # sort by date
+#alias lu='ls -lur'              # sort by access time
+#alias lr='ls -R | grep ":$" | sed -e '\''s/:$//'\'' -e '\''s/[^-][^\/]*\//--/g'\'' -e '\''s/^/   /'\'' -e '\''s/-/|/'\'' | less' #   lr:  Full Recursive Directory Listing
+#alias dud='du -d 1 -h'                      # Short and human-readable file listing
+#alias duf='du -sh *'                        # Short and human-readable directory listing
+##   -------------------------------
+##   1.  FILE AND FOLDER MANAGEMENT
+##   -------------------------------
+#alias numFiles='echo $(ls -1 | wc -l)'       # numFiles:     Count of non-hidden files in current dir
+#alias make1mb='truncate -s 1m ./1MB.dat'     # make1mb:      Creates a file of 1mb size (all zeros)
+#alias make5mb='truncate -s 5m ./5MB.dat'     # make5mb:      Creates a file of 5mb size (all zeros)
+#alias make10mb='truncate -s 10m ./10MB.dat'  # make10mb:     Creates a file of 10mb size (all zeros)
+##   ---------------------------
+##   2.  SEARCHING
+##   ---------------------------
+#alias qfind="find . -name "                 # qfind:    Quickly search for file
+##   ---------------------------
+##   3.  PROCESS MANAGEMENT
+##   ---------------------------
+##   memHogsTop, memHogsPs:  Find memory hogs
+##   -----------------------------------------------------
+#alias memHogsTop='top -l 1 -o rsize | head -20'
+#alias memHogsPs='ps wwaxm -o pid,stat,vsize,rss,time,command | head -10'
+##   cpuHogs:  Find CPU hogs
+##   -----------------------------------------------------
+#alias cpu_hogs='ps wwaxr -o pid,stat,%cpu,time,command | head -10'
+##   topForever:  Continual 'top' listing (every 10 seconds)
+##   -----------------------------------------------------
+#alias topForever='top -l 9999999 -s 10 -o cpu'
+##   ttop:  Recommended 'top' invocation to minimize resources
+##   ------------------------------------------------------------
+#alias ttop="top -R -F -s 10 -o rsize"
+##   ---------------------------
+##   4.  NETWORKING
+##   ---------------------------
+#
+#alias netCons='lsof -i'                                   # netCons:      Show all open TCP/IP sockets
+#alias lsock='sudo /usr/sbin/lsof -i -P'                   # lsock:        Display open sockets
+#alias lsockU='sudo /usr/sbin/lsof -nP | grep UDP'         # lsockU:       Display only open UDP sockets
+#alias lsockT='sudo /usr/sbin/lsof -nP | grep TCP'         # lsockT:       Display only open TCP sockets
+#alias openPorts='sudo lsof -i | grep LISTEN'              # openPorts:    All listening connections
+#alias showBlocked='sudo ipfw list'                        # showBlocked:  All ipfw rules inc/ blocked IPs
+##   ---------------------------------------
+##   5.  SYSTEMS OPERATIONS & INFORMATION
+##   ---------------------------------------
+#alias mountReadWrite='/sbin/mount -uw /'    # mountReadWrite:   For use when booted into single-user
+##   ---------------------------------------
+##   6.  DATE & TIME MANAGEMENT
+##   ---------------------------------------
+#alias bdate="date '+%a, %b %d %Y %T %Z'"
+#alias cal3='cal -3'
+#alias da='date "+%Y-%m-%d %A    %T %Z"'
+#alias daysleft='echo "There are $(($(date +%j -d"Dec 31, $(date +%Y)")-$(date +%j))) left in year $(date +%Y)."'
+#alias epochtime='date +%s'
+#alias mytime='date +%H:%M:%S'
+#alias secconvert='date -d@1234567890'
+#alias stamp='date "+%Y%m%d%a%H%M"'
+#alias timestamp='date "+%Y%m%dT%H%M%S"'
+#alias today='date +"%A, %B %-d, %Y"'
+#alias weeknum='date +%V'
+##   -----------------------------
+##   9.  MAKE TERMINAL BETTER
+##   -----------------------------
+#alias less='less -FSRXc'                    # Preferred 'less' implementation
+#alias nano='nano -W'                        # Preferred 'nano' implementation
+#alias wget='wget -c'                        # Preferred 'wget' implementation (resume download)
+#alias c='clear'                             # c:            Clear terminal display
+#alias path='echo -e ${PATH//:/\\n}'         # path:         Echo all executable Paths
+#alias fix_stty='stty sane'                  # fix_stty:     Restore terminal settings when screwed up
+#alias fix_term='echo -e "\033c"'            # fix_term:     Reset the conosle.  Similar to the reset command
 e() {
     if check_cmd vim; then
         vim "$@"
@@ -314,96 +420,7 @@ alias puU="pu && puU"
 alias pv="pkg version"
 {{ else if eq .chezmoi.os "linux" -}}
 {{ if hasKey .chezmoi.osRelease "id" }}
-{{ if eq .chezmoi.osRelease.id "arch" -}}
-###############################################################################
-###############################archlinux ALIASES ##############################
-###############################################################################
-#######################################
-#              Pacman               #
-#######################################
-alias p="${SUDO}pacman"                                 # Pacman
-alias pac="${SUDO}pacman -Rs $(pacman -Qtdq)"           # Delete all orphaned packages
-alias pc="${SUDO}pacman -Rns"                           # Remove packages, including its settings and dependencies
-alias pi="${SUDO}pacman -S"                             # Install packages from the repositories
-alias pks="pacman -Ss"                                  # Search for packages in the repositories
-alias pu="${SUDO}pacman -Syyu"                          # Sync with repositories before upgrading packages
-alias pU="${SUDO}pacman -Fy"                            # Download fresh package databases from the server
-alias puU="pu && puU"
-# alias pacins="${SUDO}pacman -U"                       # Install a package from a local file
-# alias pacre="${SUDO}pacman -R"                        # Remove packages, keeping its settings and dependencies
-# alias pacrep="pacman -Si"                             # Display information about a package in the repositories
-# alias pacloc="pacman -Qi"                             # Display information about a package in the local database
-# alias paclocs="pacman -Qs"                            # Search for packages in the local database
-# alias pacinsd="${SUDO}pacman -S --asdeps"             # Install packages as dependencies of another package
-# alias pacmir="${SUDO}pacman -Syy"                     # Force refresh of all package lists after updating mirrorlist
-# alias paclsorphans="${SUDO}pacman -Qdt"               # List all orphaned packages
-# alias pacfiles="pacman -F"                            # Search package file names for matching strings
-# alias pacls="pacman -Ql"                              # List files in a package
-# alias pacown="pacman -Qo"                             # Show which package owns a file
-# alias pacupd="${SUDO}pacman -Sy"                      # Update and refresh local package, ABS and AUR databases
-
-# List all explicitly installed packages with a description
-paclist() {
-    pacman -Qqe | \
-        xargs -I "{}" \
-        expac "${bold_color}% 20n ${fg_no_bold[white]}%d${reset_color}" "{}"
-}
-
-# List all disowned files in your system
-pacdisowned() {
-    local tmp db fs
-    tmp=${TMPDIR-/tmp}/pacman-disowned-$UID-$$
-    db=$tmp/db
-    fs=$tmp/fs
-
-    mkdir "$tmp"
-    trap "rm -rf "$tmp"" EXIT
-
-    pacman -Qlq | sort -u > "$db"
-
-    find /bin /etc /lib /sbin /usr ! -name lost+found \
-       \( -type d -printf "%p/\n" -o -print \) | sort > "$fs"
-
-    comm -23 "$fs" "$db"
-}
-
-# Get all keys for developers and trusted users
-alias pacmanallkeys="${SUDO}pacman-key --refresh-keys"
-
-# Locally trust all keys passed as parameters
-pacmansignkeys() {
-    local key
-    for key in $@; do
-        ${SUDO}pacman-key --recv-keys $key
-        ${SUDO}pacman-key --lsign-key $key
-        printf "trust\n3\n" | sudo gpg --homedir /etc/pacman.d/gnupg \
-            --no-permission-warning --command-fd 0 --edit-key $key
-    done
-}
-
-if check_cmd xdg-open; then
-# Open the website of an ArchLinux package
-pacweb() {
-    if [[ $# = 0 || "$1" =~ "--help|-h" ]]; then
-        local underline_color="\e[${color[underline]}m"
-        echo "$0 - open the website of an ArchLinux package"
-        echo
-        echo "Usage:"
-        echo "    $bold_color$0$reset_color ${underline_color}target${reset_color}"
-        return 1
-    fi
-
-    local pkg="$1"
-    local infos="$(LANG=C pacman -Si "$pkg")"
-    if [[ -z "$infos" ]]; then
-        return
-    fi
-    local repo="$(grep -m 1 "^Repo" <<< "$infos" | grep -oP "[^ ]+$")"
-    local arch="$(grep -m 1 "^Arch" <<< "$infos" | grep -oP "[^ ]+$")"
-    xdg-open "https://www.archlinux.org/packages/$repo/$arch/$pkg/" &>/dev/null
-}
-fi
-{{ else if eq .chezmoi.osRelease.id "centos" -}}
+{{ if eq .chezmoi.osRelease.id "centos" -}}
 ################################################################################
 ################################centos ALIASES #################################
 ################################################################################
@@ -839,6 +856,12 @@ case ${SHELL##*/} in
         alias h="history 25"
         alias reload="clear ; exec zsh"
         ;;
+    bash)
+        alias show_options='shopt'                  # Show_options: display bash options settings
+        alias cic='set completion-ignore-case On'   # cic:          Make tab-completion case-insensitive
+        alias src='source ~/.bashrc'                # src:          Reload .bashrc file
+        alias bashconfig="vi ~/.bashrc"
+        ;;
     sh)
         alias h="fc -l"
         alias reload="clear ; source ~/.shrc"
@@ -846,110 +869,3 @@ case ${SHELL##*/} in
 esac
 
 # vim: ft=sh:
-## Add an "alert" alias for long running commands.  Use like so:
-##   sleep 10; alert
-#alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-#alias d='dirs -v | head -10'
-## List directory contents
-#alias lsa='ls -lah'
-#alias la='ls -A'
-#alias l='ls -CF'
-#alias perm='stat --printf "%a %n \n "'      # perm: Show permission of target in number
-#alias 000='chmod 000'                       # ---------- (nobody)
-#alias 640='chmod 640'                       # -rw-r----- (user: rw, group: r, other: -)
-#alias 644='chmod 644'                       # -rw-r--r-- (user: rw, group: r, other: -)
-#alias 755='chmod 755'                       # -rwxr-xr-x (user: rwx, group: rx, other: x)
-#alias 775='chmod 775'                       # -rwxrwxr-x (user: rwx, group: rwx, other: rx)
-#alias mx='chmod a+x'                        # ---x--x--x (user: --x, group: --x, other: --x)
-#alias ux='chmod u+x'                        # ---x------ (user: --x, group: -, other: -)
-## Directory Listing aliases
-#alias dir='ls -hFx'
-#alias l.='ls -d .* --color=tty' # short listing, only hidden files - .*
-#alias l='ls -lathF'             # long, sort by newest to oldest
-#alias L='ls -latrhF'            # long, sort by oldest to newest
-#alias la='ls -Al'               # show hidden files
-#alias lc='ls -lcr'              # sort by change time
-#alias lk='ls -lSr'              # sort by size
-#alias lh='ls -lSrh'             # sort by size human readable
-#alias lm='ls -al | more'        # pipe through 'more'
-#alias lo='ls -laSFh'            # sort by size largest to smallest
-#alias lr='ls -lR'               # recursive ls
-#alias lt='ls -ltr'              # sort by date
-#alias lu='ls -lur'              # sort by access time
-#alias lr='ls -R | grep ":$" | sed -e '\''s/:$//'\'' -e '\''s/[^-][^\/]*\//--/g'\'' -e '\''s/^/   /'\'' -e '\''s/-/|/'\'' | less' #   lr:  Full Recursive Directory Listing
-#alias dud='du -d 1 -h'                      # Short and human-readable file listing
-#alias duf='du -sh *'                        # Short and human-readable directory listing
-##   -------------------------------
-##   1.  FILE AND FOLDER MANAGEMENT
-##   -------------------------------
-#alias numFiles='echo $(ls -1 | wc -l)'       # numFiles:     Count of non-hidden files in current dir
-#alias make1mb='truncate -s 1m ./1MB.dat'     # make1mb:      Creates a file of 1mb size (all zeros)
-#alias make5mb='truncate -s 5m ./5MB.dat'     # make5mb:      Creates a file of 5mb size (all zeros)
-#alias make10mb='truncate -s 10m ./10MB.dat'  # make10mb:     Creates a file of 10mb size (all zeros)
-##   ---------------------------
-##   2.  SEARCHING
-##   ---------------------------
-#alias qfind="find . -name "                 # qfind:    Quickly search for file
-##   ---------------------------
-##   3.  PROCESS MANAGEMENT
-##   ---------------------------
-##   memHogsTop, memHogsPs:  Find memory hogs
-##   -----------------------------------------------------
-#alias memHogsTop='top -l 1 -o rsize | head -20'
-#alias memHogsPs='ps wwaxm -o pid,stat,vsize,rss,time,command | head -10'
-##   cpuHogs:  Find CPU hogs
-##   -----------------------------------------------------
-#alias cpu_hogs='ps wwaxr -o pid,stat,%cpu,time,command | head -10'
-##   topForever:  Continual 'top' listing (every 10 seconds)
-##   -----------------------------------------------------
-#alias topForever='top -l 9999999 -s 10 -o cpu'
-##   ttop:  Recommended 'top' invocation to minimize resources
-##   ------------------------------------------------------------
-#alias ttop="top -R -F -s 10 -o rsize"
-##   ---------------------------
-##   4.  NETWORKING
-##   ---------------------------
-#
-#alias netCons='lsof -i'                                   # netCons:      Show all open TCP/IP sockets
-#alias lsock='sudo /usr/sbin/lsof -i -P'                   # lsock:        Display open sockets
-#alias lsockU='sudo /usr/sbin/lsof -nP | grep UDP'         # lsockU:       Display only open UDP sockets
-#alias lsockT='sudo /usr/sbin/lsof -nP | grep TCP'         # lsockT:       Display only open TCP sockets
-#alias openPorts='sudo lsof -i | grep LISTEN'              # openPorts:    All listening connections
-#alias showBlocked='sudo ipfw list'                        # showBlocked:  All ipfw rules inc/ blocked IPs
-##   ---------------------------------------
-##   5.  SYSTEMS OPERATIONS & INFORMATION
-##   ---------------------------------------
-#alias mountReadWrite='/sbin/mount -uw /'    # mountReadWrite:   For use when booted into single-user
-##   ---------------------------------------
-##   6.  DATE & TIME MANAGEMENT
-##   ---------------------------------------
-#alias bdate="date '+%a, %b %d %Y %T %Z'"
-#alias cal3='cal -3'
-#alias da='date "+%Y-%m-%d %A    %T %Z"'
-#alias daysleft='echo "There are $(($(date +%j -d"Dec 31, $(date +%Y)")-$(date +%j))) left in year $(date +%Y)."'
-#alias epochtime='date +%s'
-#alias mytime='date +%H:%M:%S'
-#alias secconvert='date -d@1234567890'
-#alias stamp='date "+%Y%m%d%a%H%M"'
-#alias timestamp='date "+%Y%m%dT%H%M%S"'
-#alias today='date +"%A, %B %-d, %Y"'
-#alias weeknum='date +%V'
-##   -----------------------------
-##   9.  MAKE TERMINAL BETTER
-##   -----------------------------
-#alias less='less -FSRXc'                    # Preferred 'less' implementation
-#alias nano='nano -W'                        # Preferred 'nano' implementation
-#alias wget='wget -c'                        # Preferred 'wget' implementation (resume download)
-#alias c='clear'                             # c:            Clear terminal display
-#alias path='echo -e ${PATH//:/\\n}'         # path:         Echo all executable Paths
-#alias fix_stty='stty sane'                  # fix_stty:     Restore terminal settings when screwed up
-#alias fix_term='echo -e "\033c"'            # fix_term:     Reset the conosle.  Similar to the reset command
-##   -----------------------------
-##   10.  bash specific
-##   -----------------------------
-#alias show_options='shopt'                  # Show_options: display bash options settings
-#alias cic='set completion-ignore-case On'   # cic:          Make tab-completion case-insensitive
-#alias src='source ~/.bashrc'                # src:          Reload .bashrc file
-#alias bashconfig="vi ~/.bashrc"
-#
-## vi: ft=sh
