@@ -1097,12 +1097,19 @@ set_colors() {
 }
 
 seek_confirmation() {
-    printf "\\n${COLOR_BOLD}%s${COLOR_RESET}" "$@"
-    old_stty_cfg=$(stty -g)
-    stty raw -echo
-    answer=$( while ! head -c 1 | grep -i '[ny]' ;do true ;done )
-    stty $old_stty_cfg
-    if echo "$answer" | grep -iq "^n" ;then
-        exit 1
-    fi
+  printf "\\n${COLOR_BOLD}%s${COLOR_RESET}" "$@"
+  old_stty_cfg=$(stty -g)
+  stty raw -echo
+  answer=$( while ! head -c 1 | grep -i '[ny]' ;do true ;done )
+  stty $old_stty_cfg
+  if echo "$answer" | grep -iq "^n" ;then
+    exit 1
+  fi
+}
+
+is_confirmed() {
+  if [[ "$REPLY" =~ ^[Yy]$ ]]; then
+    return 0
+  fi
+  return 1
 }

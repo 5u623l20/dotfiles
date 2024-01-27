@@ -14,14 +14,6 @@
 
 ########################## Styled text output ##################################
 
-################# Performing simple Yes/No confirmations #######################
-
-# if is_confirmed; then
-#   e_info_end "Here is a success message"
-# else
-#   e_die "You did not ask for a success message"
-# fi
-
 ############ Testing if packages, apps, gems, etc. are installed ###############
 
 # if type_exists 'git'; then
@@ -63,12 +55,6 @@
 ################################################################################
 
 # Test whether the result of an 'ask' is a confirmation
-#is_confirmed() {
-#  if [[ "$REPLY" =~ ^[Yy]$ ]]; then
-#    return 0
-#  fi
-#  return 1
-#}
 
 #
 # Test which OS the user runs
