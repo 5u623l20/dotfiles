@@ -6,13 +6,14 @@ _GIT_BIN=/usr/local/bin/git
 if [ "$(hostname)" = "pdr.bofh.network" ]; then
     _INFRASTRUCTURE_JAIL="MAIN"
     _JAIL_LIST="132 140 MAIN"
-elif [ "$(hostname)" = "dev.bofh.network" ] || [ "$(hostname)" = "pkg.bofh.network" ]; then
-    _INFRASTRUCTURE_JAIL="140"
-    _JAIL_LIST="132 140"
 elif [ "$(hostname)" = "rpi4a.bofh.network" ]; then
     _INFRASTRUCTURE_JAIL="140"
     _JAIL_LIST="140"
 fi
+{{- if (or (eq .chezmoi.hostname "dev.bofh.network") (ne .chezmoi.hostname "pkg.bofh.network")) -}}
+_INFRASTRUCTURE_JAIL="140"
+_JAIL_LIST="132 140"
+{{- end }}
 _INFRASTRUCTURE_LIST="/usr/local/etc/poudriere.d/ports-list/infrastructure"
 _INFRASTRUCTURE_SET="infrastructure"
 _PORTGREP_BIN=/usr/local/bin/portgrep
