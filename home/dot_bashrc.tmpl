@@ -6,7 +6,7 @@ case $- in
       *) return;;
 esac
 
-source ~/.config/env
+source {{ .chezmoi.homeDir -}}/.config/env
 
 # { env
 export BASHDOTDIR=$XDG_CONFIG_HOME/bash
@@ -55,7 +55,6 @@ PROMPT_COMMAND='history -a'
 source $BASHDOTDIR/libs/shopt.sh
 source $BASHDOTDIR/libs/utils.sh
 source $BASHDOTDIR/libs/functions.sh
-source $BASHDOTDIR/libs/git.sh
 source $BASHDOTDIR/libs/spinner.sh
 source $BASHDOTDIR/libs/grep.sh
 source $BASHDOTDIR/libs/keybindings.sh
