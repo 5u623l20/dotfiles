@@ -25,6 +25,20 @@ alias mkdir="mkdir -v -p"
 alias rd="rmdir -v"
 alias rm="rm -v -i"
 alias rmdir="rmdir -v"
+########################
+# DATE and TIMESTAMPS #
+########################
+alias bdate="date '+%a, %b %d %Y %T %Z'"
+alias cal3='cal -3'
+alias da='date "+%Y-%m-%d %A    %T %Z"'
+alias daysleft='echo "There are $(($(date +%j -d"Dec 31, $(date +%Y)")-$(date +%j))) left in year $(date +%Y)."'
+alias epochtime='date +%s'
+alias mytime='date +%H:%M:%S'
+alias secconvert='date -d@1234567890'
+alias stamp='date "+%Y%m%d%a%H%M"'
+alias timestamp='date "+%Y%m%dT%H%M%S"'
+alias today="date '+%Y-%m-%d'"
+alias weeknum='date +%V'
 ####################
 # NON CATEGORIZED #
 ####################
@@ -82,7 +96,6 @@ elif check_cmd curl; then
     alias publicip4="curl https://icanhazip.com"
     alias publicip6="curl https://ipv6.icanhazip.com"
 fi
-alias today="date '+%Y-%m-%d'"
 alias x="exit"
 ## Add an "alert" alias for long running commands.  Use like so:
 #alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
@@ -157,20 +170,6 @@ alias x="exit"
 ##   5.  SYSTEMS OPERATIONS & INFORMATION
 ##   ---------------------------------------
 #alias mountReadWrite='/sbin/mount -uw /'    # mountReadWrite:   For use when booted into single-user
-##   ---------------------------------------
-##   6.  DATE & TIME MANAGEMENT
-##   ---------------------------------------
-#alias bdate="date '+%a, %b %d %Y %T %Z'"
-#alias cal3='cal -3'
-#alias da='date "+%Y-%m-%d %A    %T %Z"'
-#alias daysleft='echo "There are $(($(date +%j -d"Dec 31, $(date +%Y)")-$(date +%j))) left in year $(date +%Y)."'
-#alias epochtime='date +%s'
-#alias mytime='date +%H:%M:%S'
-#alias secconvert='date -d@1234567890'
-#alias stamp='date "+%Y%m%d%a%H%M"'
-#alias timestamp='date "+%Y%m%dT%H%M%S"'
-#alias today='date +"%A, %B %-d, %Y"'
-#alias weeknum='date +%V'
 ##   -----------------------------
 ##   9.  MAKE TERMINAL BETTER
 ##   -----------------------------

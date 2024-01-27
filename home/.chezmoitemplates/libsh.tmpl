@@ -1456,6 +1456,7 @@ SED_BIN=$(command -v sed)
 SED="$SED_BIN -i '' -E"
 STRFILE_BIN=$(command -v strfile)
 TMUX_BIN=$(command -v tmux)
+TODAY=$(date -u +%Y-%m-%d)
 VIM_BIN=$(command -v vim)
 ZSH_BIN=$(command -v zsh)
 {{- if (eq .chezmoi.os "aix" ) }}
