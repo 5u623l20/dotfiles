@@ -3,14 +3,15 @@
 . {{ .chezmoi.homeDir -}}/.config/shells/functions
 
 _GIT_BIN=/usr/local/bin/git
-if [ "$(hostname)" = "pdr.bofh.network" ]; then
+{{ if eq .chezmoi.hostname "pdr.bofh.network" -}}
     _INFRASTRUCTURE_JAIL="MAIN"
     _JAIL_LIST="132 140 MAIN"
-elif [ "$(hostname)" = "rpi4a.bofh.network" ]; then
-    _INFRASTRUCTURE_JAIL="140"
-    _JAIL_LIST="140"
-fi
-{{- if (or (eq .chezmoi.hostname "dev.bofh.network") (ne .chezmoi.hostname "pkg.bofh.network")) -}}
+{{- end }}
+{{ if eq .chezmoi.hostname "rpi4a.bofh.network" -}}
+_INFRASTRUCTURE_JAIL="140"
+_JAIL_LIST="140"
+{{- end }}
+{{ if (or (eq .chezmoi.hostname "dev.bofh.network") (eq .chezmoi.hostname "pkg.bofh.network")) -}}
 _INFRASTRUCTURE_JAIL="140"
 _JAIL_LIST="132 140"
 {{- end }}
@@ -155,16 +156,16 @@ main() {
         update_tree
         generate_ports_list
         build_ports
-        if [ "$(hostname)" = "pdr.bofh.network" ]; then
-            build_php_ports
-        fi
+{{ if eq .chezmoi.hostname "pdr.bofh.network" -}}
+        build_php_ports
+{{- end }}
         ;;
     -P)
         # Build ports that are consumers of php ports
         update_tree
-        if [ "$(hostname)" = "pdr.bofh.network" ]; then
-            build_php_consumer_ports
-        fi
+{{ if eq .chezmoi.hostname "pdr.bofh.network" -}}
+        build_php_consumer_ports
+{{- end }}
         ;;
     -i)
         # Build ports that are required by infrastructure
@@ -181,10 +182,10 @@ main() {
         generate_ports_list
         build_infrastructure
         build_ports
-        #if [ "$(hostname)" = "pdr.bofh.network" ]; then
+{{ if eq .chezmoi.hostname "pdr.bofh.network" -}}
         build_php_ports
         build_php_consumer_ports
-        #fi
+{{- end }}
         ;;
     -t)
         # Parse the target and ensure it exists.
