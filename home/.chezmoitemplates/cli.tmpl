@@ -1,0 +1,22 @@
+# shellcheck disable=SC3043
+
+cli_stats() {
+  fc -l 1 | awk '{CMD[$2]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' | grep -v "./" | column -c3 -s " " -t | sort -nr | nl |  head -n20
+}
+
+alias_value() {
+  alias "$1" | sed "s/^$1='\(.*\)'$/\1/"
+  test $(alias "$1")
+}
+
+default() {
+  typeset -p "$1" &>/dev/null && return 0
+  typeset -g "$1"="$2"   && return 3
+}
+
+env_default() {
+  env | grep -q "^$1=" && return 0
+  export "$1=$2"       && return 3
+}
+
+# vim: ft=sh
