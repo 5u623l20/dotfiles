@@ -14,8 +14,6 @@
 
 ########################## Styled text output ##################################
 
-# e_note "I am a note"
-
 ################# Performing simple Yes/No confirmations #######################
 
 # seek_confirmation "Do you want to print a success message?"
@@ -94,12 +92,6 @@
 #  purple=""
 #  tan=""
 #fi
-
-#
-# Headers and Logging
-#
-#e_note() { printf "${underline}${bold}${blue}Note:${reset}  ${yellow}%s${reset}\n" "$@"
-#}
 
 #
 # USAGE FOR SEEKING CONFIRMATION
