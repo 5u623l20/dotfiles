@@ -14,7 +14,6 @@
 
 ########################## Styled text output ##################################
 
-# e_underline "I am underlined text"
 # e_bold "I am bold text"
 # e_note "I am a note"
 
@@ -100,8 +99,6 @@
 #
 # Headers and Logging
 #
-#e_underline() { printf "${underline}${bold}%s${reset}\n" "$@"
-#}
 #e_bold() { printf "${bold}%s${reset}\n" "$@"
 #}
 #e_note() { printf "${underline}${bold}${blue}Note:${reset}  ${yellow}%s${reset}\n" "$@"
