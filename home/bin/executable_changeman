@@ -1,0 +1,14 @@
+#!/bin/sh
+PORTSDIR=${PORTSDIR:-/usr/local/poudriere/ports/default}
+if [ -f $1/pkg-plist ]; then
+	sed -i '' -e 's|^man|share/man|g; s|%%man|%%share/man|g' $1/pkg-plist*
+fi
+sed -i '' -E '/[[:space:]]+man\/man/s/man\/man/share\/man\/man/g; s|MANPREFIX}/man/man|PREFIX}/share/man/man|g' $1/Makefile
+sed -i '' -E 's|MANPREFIX}/share/man/man|PREFIX}/share/man/man|g; s|PREFIX}/man/man|PREFIX}/share/man/man|g' $1/Makefile
+${PORTSDIR}/Tools/scripts/bump-revision.sh $1
+sed -E -i '' -e "/^GNU_CONFIGURE=[[:space:]].*yes/a\\
+GNU_CONFIGURE_MANPREFIX=\${PREFIX}/share" $1/Makefile
+vim ${PORTSDIR}/$1/Makefile
+poudriere testport -j 132 -p default $1
+git add $1
+git commit -m "$1: Moved man to share/man" -m "" -m "Approved by:    portmgr (blanket)"
