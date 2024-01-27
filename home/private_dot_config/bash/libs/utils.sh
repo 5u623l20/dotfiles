@@ -65,7 +65,6 @@
 #     echo "$item is not on the list"
 #   done
 # else
-# e_arrow "Nothing to install.  You've already got them all."
 # fi
 
 
@@ -104,8 +103,6 @@
 #
 # Headers and Logging
 #
-#e_arrow() { printf "➜ %s\n" "$@"
-#}
 #e_success() { printf "${green}✔ %s${reset}\n" "$@"
 #}
 #e_error() { printf "${red}✖ %s${reset}\n" "$@"
