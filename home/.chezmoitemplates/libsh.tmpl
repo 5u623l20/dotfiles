@@ -1389,7 +1389,7 @@ seek_confirmation() {
 }
 
 is_confirmed() {
-  if [[ "$answer" =~ ^[Yy]$ ]]; then
+  if [ "$answer" =~ ^[Yy]$ ]; then
     return 0
   fi
   return 1
