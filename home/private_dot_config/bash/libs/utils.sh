@@ -16,7 +16,6 @@
 
 ################# Performing simple Yes/No confirmations #######################
 
-# seek_confirmation "Do you want to print a success message?"
 # if is_confirmed; then
 #   e_info_end "Here is a success message"
 # else
@@ -62,53 +61,6 @@
 
 
 ################################################################################
-
-#
-# Set Colors
-#
-# Use colors, but only if connected to a terminal, and that terminal
-# supports them.
-#if which tput >/dev/null 2>&1; then
-#    ncolors=$(tput colors)
-#fi
-#if [ -t 1 ] && [ -n "$ncolors" ] && [ "$ncolors" -ge 8 ]; then
-#  bold="$(tput bold)"
-#  underline=$(tput sgr 0 1)
-#  reset="$(tput sgr0)"
-#  red="$(tput setaf 1)"
-#  green="$(tput setaf 2)"
-#  yellow="$(tput setaf 3)"
-#  blue="$(tput setaf 4)"
-#  purple=$(tput setaf 171)
-#  tan=$(tput setaf 3)
-#else
-#  bold=""
-#  underline=""
-#  reset=""
-#  red=""
-#  green=""
-#  yellow=""
-#  blue=""
-#  purple=""
-#  tan=""
-#fi
-
-#
-# USAGE FOR SEEKING CONFIRMATION
-# seek_confirmation "Ask a question"
-# Credit: https://github.com/kevva/dotfiles
-#
-# if is_confirmed; then
-#   some action
-# else
-#   some other action
-# fi
-#
-#seek_confirmation() {
-#  printf "\\n${bold}%s${reset}" "$@"
-#  read -p " (y/n) " -n 1
-#  printf "\\n"
-#}
 
 # Test whether the result of an 'ask' is a confirmation
 #is_confirmed() {
