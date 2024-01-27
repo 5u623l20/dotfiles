@@ -14,7 +14,6 @@
 
 ########################## Styled text output ##################################
 
-# e_bold "I am bold text"
 # e_note "I am a note"
 
 ################# Performing simple Yes/No confirmations #######################
@@ -99,8 +98,6 @@
 #
 # Headers and Logging
 #
-#e_bold() { printf "${bold}%s${reset}\n" "$@"
-#}
 #e_note() { printf "${underline}${bold}${blue}Note:${reset}  ${yellow}%s${reset}\n" "$@"
 #}
 

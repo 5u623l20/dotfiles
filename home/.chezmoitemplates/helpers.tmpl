@@ -31,10 +31,6 @@ COLOR_BG_MAGENTA="\033[45m"
 COLOR_BG_CYAN="\033[46m"
 COLOR_BG_LIGHT_GRAY="\033[47m"
 
-e_bold() {
-  printf "${bold}%s${reset}\n" "$@"
-}
-
 e_note() {
   printf "${underline}${bold}${blue}Note:${reset}  ${yellow}%s${reset}\n" "$@"
 }
@@ -259,7 +255,6 @@ GIT_PKG="git-lite"
 {{- if hasKey .chezmoi.osRelease "id" }}
 {{- if (eq .chezmoi.osRelease.id "alpine" ) }}
 {{- else if (eq .chezmoi.osRelease.id "amzn" ) }}
-{{- else if (eq .chezmoi.osRelease.id "arch" ) }}
 {{- else if (eq .chezmoi.osRelease.id "centos" ) }}
 {{- else if (eq .chezmoi.osRelease.id "debian" ) }}
 BAT_BIN=$(command -v batcat)
