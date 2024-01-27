@@ -1132,14 +1132,68 @@ pushover () {
     "${PUSHOVERURL}" > /dev/null 2>&1
 }
 
-set_sudo() {
-  if check_cmd sudo; then
-    if sudo -vn 2>&1 | grep 'password' > /dev/null; then
-      SUDO_CMD=$(command -v sudo)
-    else
-      SUDO_CMD=""
-    fi
-  fi
-}
+BAT_BIN=$(command -v bat)
+CAT_BIN=$(command -v cat)
+CAT="$CAT_BIN"
+EMACS_BIN=$(command -v emacs)
+FD_BIN=$(command -v fd)
+FORTUNE_BIN=$(command -v fortune)
+FZF_BIN=$(command -v fzf)
+GIT_BIN=$(command -v git)
+GIT=${GIT_BIN}
+HTOP_BIN=$(command -v htop)
+KITTY_BIN=$(command -v kitty)
+MKDIR_BIN=$(command -v mkdir)
+MKDIR="${MKDIR_BIN} -p"
+RG_BIN=$(command -v rg)
+SED_BIN=$(command -v sed)
+SED="$SED_BIN"
+STRFILE_BIN=$(command -v strfile)
+TMUX_BIN=$(command -v tmux)
+VIM_BIN=$(command -v vim)
+ZSH_BIN=$(command -v zsh)
+{{- if (eq .chezmoi.os "aix" ) }}
+{{- else if (eq .chezmoi.os "darwin") }}
+{{- else if (eq .chezmoi.os "dragonfly" ) }}
+{{- else if (eq .chezmoi.os "freebsd" ) }}
+{{- else if (eq .chezmoi.os "netbsd" ) }}
+{{- else if (eq .chezmoi.os "openbsd" ) }}
+{{- else if (eq .chezmoi.os "solaris" ) }}
+{{- else if (eq .chezmoi.os "linux" ) }}
+{{- if hasKey .chezmoi.osRelease "id" }}
+{{- if (eq .chezmoi.osRelease.id "alpine" ) }}
+{{- else if (eq .chezmoi.osRelease.id "amzn" ) }}
+{{- else if (eq .chezmoi.osRelease.id "centos" ) }}
+{{- else if (eq .chezmoi.osRelease.id "debian" ) }}
+BAT_BIN=$(command -v batcat)
+{{- else if (eq .chezmoi.osRelease.id "fedora" ) }}
+{{- else if (eq .chezmoi.osRelease.id "opensuse" ) }}
+{{- else if (eq .chezmoi.osRelease.id "rhel" ) }}
+{{- else if (eq .chezmoi.osRelease.id "slackware" ) }}
+{{- else if (eq .chezmoi.osRelease.id "sles" ) }}
+{{- else if (eq .chezmoi.osRelease.id "sles" ) }}
+{{- else if (eq .chezmoi.osRelease.id "ubuntu" ) }}
+BAT_BIN=$(command -v batcat)
+{{- end }}
+{{- end }}
+{{- end }}
+if check_cmd python; then
+  PYTHON_BIN="python3"
+elif check_cmd python3; then
+  PYTHON_BIN="python3"
+elif check_cmd python3.8; then
+  PYTHON_BIN="python3.8"
+elif check_cmd python3.9; then
+  PYTHON_BIN="python3.9"
+elif check_cmd python3.10; then
+  PYTHON_BIN="python3.10"
+elif check_cmd python3.11; then
+  PYTHON_BIN="python3.11"
+elif check_cmd python; then
+  PYTHON_BIN="python"
+elif check_cmd python2; then
+  PYTHON_BIN="python2"
+fi
+FREEBSD_PY_DEFAULT="py39-"
 
 # vim: ft=sh
