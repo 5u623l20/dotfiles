@@ -14,7 +14,6 @@
 
 ########################## Styled text output ##################################
 
-# e_error "I am an error message"
 # e_warning "I am a warning message"
 # e_underline "I am underlined text"
 # e_bold "I am bold text"
@@ -26,7 +25,7 @@
 # if is_confirmed; then
 #   e_info_end "Here is a success message"
 # else
-#   e_error "You did not ask for a success message"
+#   e_die "You did not ask for a success message"
 # fi
 
 ############ Testing if packages, apps, gems, etc. are installed ###############
@@ -34,14 +33,14 @@
 # if type_exists 'git'; then
 #   e_info_end "Git good to go"
 # else
-#   e_error "Git should be installed. It isn't. Aborting."
+#   e_die "Git should be installed. It isn't. Aborting."
 #   exit 1
 # fi
 
 # if is_os "darwin"; then
 #   e_info_end "You are on a mac"
 # else
-#   e_error "You are not on a mac"
+#   e_die "You are not on a mac"
 #   exit 1
 # fi
 
@@ -102,8 +101,6 @@
 #
 # Headers and Logging
 #
-#e_error() { printf "${red}✖ %s${reset}\n" "$@"
-#}
 #e_warning() { printf "${tan}➜ %s${reset}\n" "$@"
 #}
 #e_underline() { printf "${underline}${bold}%s${reset}\n" "$@"
