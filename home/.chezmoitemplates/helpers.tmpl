@@ -21,23 +21,7 @@ check_packagemgr() {
 }
 {{ end }}
 
-set_download() {
-  if check_cmd curl; then
-    DOWNLOAD_BIN=$(command -v curl)
-    DOWNLOAD_CMD="$DOWNLOAD_BIN -fsSL"
-  elif check_cmd wget; then
-    DOWNLOAD_BIN=$(command -v wget)
-    DOWNLOAD_CMD="$DOWNLOAD_BIN -q -O-"
-  elif check_cmd fetch; then
-    DOWNLOAD_BIN=$(command -v fetch)
-    DOWNLOAD_CMD="$DOWNLOAD_BIN -q -o -"
-  elif check_cmd curlie; then
-    DOWNLOAD_BIN=$(command -v curlie)
-    DOWNLOAD_CMD="$DOWNLOAD_BIN -fsSL"
-  fi
-}
 
-set_download
 {{ if (ne .chezmoi.os "darwin") -}}
 check_packagemgr
 {{ end }}

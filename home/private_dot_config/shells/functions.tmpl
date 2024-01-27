@@ -20,19 +20,6 @@ check_packagemgr() {
 }
 {{ end }}
 
-set_download() {
-  if check_cmd curl; then
-    DOWNLOAD_BIN=$(command -v curl)
-  elif check_cmd wget; then
-    DOWNLOAD_BIN=$(command -v wget)
-  elif check_cmd fetch; then
-    DOWNLOAD_BIN=$(command -v fetch)
-  elif check_cmd curlie; then
-    DOWNLOAD_BIN=$(command -v curlie)
-  fi
-}
-
-set_download
 {{ if (ne .chezmoi.os "darwin") -}}
 check_packagemgr
 {{ end }}
