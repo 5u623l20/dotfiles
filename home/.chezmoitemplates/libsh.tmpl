@@ -1438,27 +1438,61 @@ spinner() {
   esac
 }
 
-BAT_BIN=$(command -v bat)
-CAT_BIN=$(command -v cat)
-CAT="$CAT_BIN"
-EMACS_BIN=$(command -v emacs)
-FD_BIN=$(command -v fd)
-FORTUNE_BIN=$(command -v fortune)
-FZF_BIN=$(command -v fzf)
-GIT_BIN=$(command -v git)
-GIT=${GIT_BIN}
-HTOP_BIN=$(command -v htop)
-KITTY_BIN=$(command -v kitty)
-MKDIR_BIN=$(command -v mkdir)
-MKDIR="${MKDIR_BIN} -p"
-RG_BIN=$(command -v rg)
-SED_BIN=$(command -v sed)
-SED="$SED_BIN -i '' -E"
-STRFILE_BIN=$(command -v strfile)
-TMUX_BIN=$(command -v tmux)
-TODAY=$(date -u +%Y-%m-%d)
-VIM_BIN=$(command -v vim)
+if check_cmd bat; then
+  BAT_BIN=$(command -v bat)
+fi
+if check_cmd cat; then
+  CAT_BIN=$(command -v cat)
+  CAT="$CAT_BIN"
+fi
+if check_cmd emacs; then
+  EMACS_BIN=$(command -v emacs)
+fi
+if check_cmd fd; then
+  FD_BIN=$(command -v fd)
+fi
+if check_cmd fortune; then
+  FORTUNE_BIN=$(command -v fortune)
+fi
+if check_cmd fzf; then
+  FZF_BIN=$(command -v fzf)
+fi
+if check_cmd git; then
+  GIT_BIN=$(command -v git)
+  GIT=${GIT_BIN}
+fi
+if check_cmd htop; then
+  HTOP_BIN=$(command -v htop)
+fi
+if check_cmd kitty; then
+  KITTY_BIN=$(command -v kitty)
+fi
+if check_cmd mkdir; then
+  MKDIR_BIN=$(command -v mkdir)
+  MKDIR="${MKDIR_BIN} -p"
+fi
+if check_cmd rg; then
+  RG_BIN=$(command -v rg)
+fi
+if check_cmd sed; then
+  SED_BIN=$(command -v sed)
+  SED="$SED_BIN -i '' -E"
+fi
+if check_cmd strfile; then
+  STRFILE_BIN=$(command -v strfile)
+fi
+if check_cmd tmux; then
+  TMUX_BIN=$(command -v tmux)
+fi
+if check_cmd date; then
+  TODAY=$(date -u +%Y-%m-%d)
+fi
+if check_cmd vim; then
+  VIM_BIN=$(command -v vim)
+fi
+if check_cmd zsh; then
 ZSH_BIN=$(command -v zsh)
+fi
 {{- if (eq .chezmoi.os "aix" ) }}
 {{- else if (eq .chezmoi.os "darwin") }}
 {{- else if (eq .chezmoi.os "dragonfly" ) }}
@@ -1472,7 +1506,9 @@ ZSH_BIN=$(command -v zsh)
 {{- else if (eq .chezmoi.osRelease.id "amzn" ) }}
 {{- else if (eq .chezmoi.osRelease.id "centos" ) }}
 {{- else if (eq .chezmoi.osRelease.id "debian" ) }}
-BAT_BIN=$(command -v batcat)
+if check_cmd batcat; then
+  BAT_BIN=$(command -v batcat)
+fi
 {{- else if (eq .chezmoi.osRelease.id "fedora" ) }}
 {{- else if (eq .chezmoi.osRelease.id "opensuse" ) }}
 {{- else if (eq .chezmoi.osRelease.id "rhel" ) }}
@@ -1480,7 +1516,9 @@ BAT_BIN=$(command -v batcat)
 {{- else if (eq .chezmoi.osRelease.id "sles" ) }}
 {{- else if (eq .chezmoi.osRelease.id "sles" ) }}
 {{- else if (eq .chezmoi.osRelease.id "ubuntu" ) }}
-BAT_BIN=$(command -v batcat)
+if check_cmd batcat; then
+  BAT_BIN=$(command -v batcat)
+fi
 {{- end }}
 {{- end }}
 {{- end }}
