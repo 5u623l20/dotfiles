@@ -214,7 +214,7 @@
 #      (find . -type d -print0 | xargs -0 chmod 0755) &
 #      spinner
 #      echo -ne "${echo_normal}"
-#      
+#
 #      echo -ne "${echo_bold_blue}Applying 0644 permission for all files..."
 #      (find . -type f -print0 | xargs -0 chmod 0644) &
 #      spinner
@@ -283,9 +283,8 @@
 #   mount -t msdos /dev/disk1s1 /Volumes/Foo
 #   mount -t hfs /dev/disk1s1 /Volumes/Foo
 
-#   to create a file of a given size: /usr/sbin/mkfile or /usr/bin/hdiutil
+#   to create a file of a given size: /usr/bin/hdiutil
 #   ---------------------------------------
-#   e.g.: mkfile 10m 10MB.dat
 #   e.g.: hdiutil create -size 10m 10MB.dmg
 #   the above create files that are almost all zeros - if random bytes are desired
 #   then use: ~/Dev/Perl/randBytes 1048576 > 10MB.dat
