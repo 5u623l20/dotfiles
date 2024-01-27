@@ -1113,3 +1113,33 @@ is_confirmed() {
   fi
   return 1
 }
+
+pushover () {
+  PUSHOVERURL="https://api.pushover.net/1/messages.json"
+  API_KEY=$PUSHOVER_API_KEY
+  USER_KEY=$PUSHOVER_USER_KEY
+  DEVICE=$PUSHOVER_DEVICE
+
+  TITLE="${1}"
+  MESSAGE="${2}"
+
+  curl \
+    -F "token=${API_KEY}" \
+    -F "user=${USER_KEY}" \
+    -F "device=${DEVICE}" \
+    -F "title=${TITLE}" \
+    -F "message=${MESSAGE}" \
+    "${PUSHOVERURL}" > /dev/null 2>&1
+}
+
+set_sudo() {
+  if check_cmd sudo; then
+    if sudo -vn 2>&1 | grep 'password' > /dev/null; then
+      SUDO_CMD=$(command -v sudo)
+    else
+      SUDO_CMD=""
+    fi
+  fi
+}
+
+# vim: ft=sh
