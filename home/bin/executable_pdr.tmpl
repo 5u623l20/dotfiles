@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. {{ .chezmoi.homeDir -}}/.config/shells/functions
+. {{ .chezmoi.homeDir -}}/.config/shells/libs
 
 _GIT_BIN=/usr/local/bin/git
 {{ if eq .chezmoi.fqdnHostname "pdr.bofh.network" -}}
