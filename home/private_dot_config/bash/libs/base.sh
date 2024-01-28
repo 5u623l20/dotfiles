@@ -56,29 +56,6 @@
 
 #zipf () { zip -r "$1".zip "$1" ; }           # zipf:         To create a ZIP archive of a folder
 
-#   extract:  Extract most know archives with one command
-#   ---------------------------------------------------------
-#    extract () {
-#      if [ -f "$1" ] ; then
-#        case "$1" in
-#          *.tar.bz2)   tar xjf "$1"     ;;
-#          *.tar.gz)    tar xzf "$1"     ;;
-#          *.bz2)       bunzip2 "$1"     ;;
-#          *.rar)       unrar e "$1"     ;;
-#          *.gz)        gunzip "$1"      ;;
-#          *.tar)       tar xf "$1"      ;;
-#          *.tbz2)      tar xjf "$1"     ;;
-#          *.tgz)       tar xzf "$1"     ;;
-#          *.zip)       unzip "$1"       ;;
-#          *.Z)         uncompress "$1"  ;;
-#          *.7z)        7z x "$1"        ;;
-#          *)     echo "'$1' cannot be extracted via extract()" ;;
-#        esac
-#      else
-#        echo "'$1' is not a valid file"
-#      fi
-#    }
-
 #   buf:  back up file with timestamp
 #   ---------------------------------------------------------
 #    buf () {
@@ -94,39 +71,6 @@
 #      mkdir -p /tmp/.trash && mv "$@" /tmp/.trash;
 #    }
 
-#   mkiso:  creates iso from current dir in the parent dir (unless defined)
-#   ---------------------------------------------------------
-#    mkiso () {
-#      if type "mkisofs" > /dev/null; then
-#        if [ -z ${1+x} ]; then
-#          local isoname=${PWD##*/}
-#        else
-#          local isoname=$1
-#        fi
-#
-#        if [ -z ${2+x} ]; then
-#          local destpath=../
-#        else
-#          local destpath=$2
-#        fi
-#
-#        if [ -z ${3+x} ]; then
-#          local srcpath=${PWD}
-#        else
-#          local srcpath=$3
-#        fi
-#
-#        if [ ! -f "${destpath}${isoname}.iso" ]; then
-#          echo "writing ${isoname}.iso to ${destpath} from ${srcpath}"
-#          mkisofs -V "${isoname}" -iso-level 3 -r -o "${destpath}${isoname}.iso" "${srcpath}"
-#        else
-#          echo "${destpath}${isoname}.iso already exists"
-#        fi
-#      else
-#        echo "mkisofs cmd does not exist, please install cdrtools"
-#      fi
-#    }
-#
 #   ---------------------------
 #   3.  SEARCHING
 #   ---------------------------

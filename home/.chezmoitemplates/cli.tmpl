@@ -1,22 +1,123 @@
 # shellcheck disable=SC3043
 
-cli_stats() {
-  fc -l 1 | awk '{CMD[$2]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' | grep -v "./" | column -c3 -s " " -t | sort -nr | nl |  head -n20
-}
-
 alias_value() {
   alias "$1" | sed "s/^$1='\(.*\)'$/\1/"
   test $(alias "$1")
 }
+
+if check_cmd ansible; then
+    ansible-role-init() {
+        if ! [ -z $1 ] ; then
+            echo "Ansible Role : $1 Creating...."
+            ansible-galaxy init $1
+            tree $1
+        else
+            echo "Usage : ansible-role-init <role name>"
+            echo "Example : ansible-role-init role1"
+        fi
+    }
+fi
+
+if check_cmd arc; then
+    ardu() {
+        arc diff --update "${1:t}"
+    }
+
+    arpa() {
+        arc patch "${1:t}"
+    }
+fi
+
+cli_stats() {
+  fc -l 1 | awk '{CMD[$2]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' | grep -v "./" | column -c3 -s " " -t | sort -nr | nl |  head -n20
+}
+
+if check_cmd rsync; then
+    cpv() {
+        rsync -pogbr -hhh --backup-dir=/tmp/rsync -e /dev/null --progress "$@"
+    }
+fi
 
 default() {
   typeset -p "$1" &>/dev/null && return 0
   typeset -g "$1"="$2"   && return 3
 }
 
+e() {
+    if check_cmd vim; then
+        vim "$@"
+    elif check_cmd vi; then
+        vi "$@"
+    fi
+}
+
 env_default() {
   env | grep -q "^$1=" && return 0
   export "$1=$2"       && return 3
+}
+
+gi() {
+    curl -sLw "\n" https://www.toptal.com/developers/gitignore/api/\$@ ;
+}
+
+rfcget() {
+    if check_cmd curl; then
+        curl https://www.rfc-editor.org/rfc/rfc"$1".txt | $PAGER
+    elif check_cmd fetch; then
+        fetch -o - https://www.rfc-editor.org/rfc/rfc"$1".txt | $PAGER
+    fi
+}
+
+v() {
+    if check_cmd batcat; then
+        batcat --theme Nord "$@"
+    elif check_cmd bat; then
+        bat --theme Nord "$@"
+    elif check_cmd view; then
+        view "$@"
+    else
+        cat "$@"
+    fi
+}
+
+if check_cmd base64; then
+    encode64() {
+        if [[ $# -eq 0 ]]; then
+            cat | base64
+        else
+            printf '%s' $1 | base64
+        fi
+    }
+
+    decode64() {
+    if [[ $# -eq 0 ]]; then
+        cat | base64 --decode
+    else
+        printf '%s' $1 | base64 --decode
+    fi
+    }
+    alias e64=encode64
+    alias d64=decode64
+fi
+
+
+extract () {
+    if [ -f "$1" ] ; then
+        case "$1" in
+            *.tar.bz2|*.tbz2)   tar xjf "$1"     ;;
+            *.tar.gz|*.tgz)    tar xzf "$1"     ;;
+            *.rar)       unrar e "$1"     ;;
+            *.bz2)       bunzip2 "$1"     ;;
+            *.gz)        gunzip "$1"      ;;
+            *.tar)       tar xf "$1"      ;;
+            *.zip)       unzip "$1"       ;;
+            *.Z)         uncompress "$1"  ;;
+            *.7z)        7z x "$1"        ;;
+            *) e_warn "'$1' cannot be extracted via extract()" ;;
+        esac
+    else
+        e_warn "'$1' is not a valid file"
+    fi
 }
 
 # vim: ft=sh

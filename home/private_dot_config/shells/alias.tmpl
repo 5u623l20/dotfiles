@@ -180,35 +180,6 @@ alias x="exit"
 #alias path='echo -e ${PATH//:/\\n}'         # path:         Echo all executable Paths
 #alias fix_stty='stty sane'                  # fix_stty:     Restore terminal settings when screwed up
 #alias fix_term='echo -e "\033c"'            # fix_term:     Reset the conosle.  Similar to the reset command
-e() {
-    if check_cmd vim; then
-        vim "$@"
-    elif check_cmd vi; then
-        vi "$@"
-    fi
-}
-rfcget() {
-    if check_cmd curl; then
-        curl https://www.rfc-editor.org/rfc/rfc"$1".txt | $PAGER
-    elif check_cmd fetch; then
-        fetch -o - https://www.rfc-editor.org/rfc/rfc"$1".txt | $PAGER
-    fi
-}
-v() {
-    if check_cmd batcat; then
-        batcat --theme Nord "$@"
-    elif check_cmd bat; then
-        bat --theme Nord "$@"
-    elif check_cmd view; then
-        view "$@"
-    else
-        cat "$@"
-    fi
-}
-
-gi() {
-    curl -sLw "\n" https://www.toptal.com/developers/gitignore/api/\$@ ;
-}
 
 ###############################################################################
 ##############################TERMINAL ALIASES ###############################
@@ -277,32 +248,11 @@ if check_cmd rsync; then
     alias rsync-move="rsync -avz --progress -h --remove-source-files"
     alias rsync-update="rsync -avzu --progress -h"
     alias rsync-synchronize="rsync -avzu --delete --progress -h"
-
-    cpv() {
-        rsync -pogbr -hhh --backup-dir=/tmp/rsync -e /dev/null --progress "$@"
-    }
 fi
 ###############################################################################
 #################################ANSIBLE ALIASES ##############################
 ###############################################################################
 if check_cmd ansible; then
-    # Functions
-    ansible-version() {
-        ansible --version
-    }
-
-    ansible-role-init() {
-        if ! [ -z $1 ] ; then
-            echo "Ansible Role : $1 Creating...."
-            ansible-galaxy init $1
-            tree $1
-        else
-            echo "Usage : ansible-role-init <role name>"
-            echo "Example : ansible-role-init role1"
-        fi
-    }
-
-    # Alias
     alias a='ansible '
     alias aconf='ansible-config '
     alias acon='ansible-console '
@@ -312,6 +262,7 @@ if check_cmd ansible; then
     alias ainv='ansible-inventory '
     alias adoc='ansible-doc '
     alias al='ansible-pull '
+    alias ansible-version='ansible --version'
     alias aval='ansible-vault'
     alias avc='ansible-vault create'
     alias ave='ansible-vault edit'
@@ -329,9 +280,9 @@ if check_cmd ansible; then
     alias agar='ansible-galaxy remove'
     alias agas='ansible-galaxy search'
 fi
-###############################################################################
-#################################ARCANIST ALIASES##############################
-###############################################################################
+################################################################################
+#################################ARCANIST ALIASES #############################
+################################################################################
 if check_cmd arc; then
     alias ara='arc amend'
     alias arb='arc branch'
@@ -348,36 +299,6 @@ if check_cmd arc; then
     alias arl='arc land'
     alias arli='arc lint'
     alias arls='arc list'
-
-    ardu() {
-        arc diff --update "${1:t}"    # Both `ardu https://arcanist-url.com/<REVISION>`, and `ardu <REVISION>` work.
-    }
-
-    arpa() {
-        arc patch "${1:t}"            # Both `arpa https://arcanist-url.com/<REVISION>`, and `arpa <REVISION>` work.
-    }
-fi
-###############################################################################
-#################################base64 ALIASES################################
-###############################################################################
-if check_cmd base64; then
-    encode64() {
-        if [[ $# -eq 0 ]]; then
-            cat | base64
-        else
-            printf '%s' $1 | base64
-        fi
-    }
-
-    decode64() {
-    if [[ $# -eq 0 ]]; then
-        cat | base64 --decode
-    else
-        printf '%s' $1 | base64 --decode
-    fi
-    }
-    alias e64=encode64
-    alias d64=decode64
 fi
 
 {{ if eq .chezmoi.os "darwin" -}}
@@ -505,54 +426,6 @@ alias pv="pkg version"
 #
 #        alias mydeb='time dpkg-buildpackage -rfakeroot -us -uc'
 #                                          # Create a basic .deb package
-
-### Completion
-#
-# Registers a compdef for $1 that calls $APT with the commands $2
-# To do that it creates a new completion function called _APT_$2
-#
-#        function apt_pref_compdef() {
-#          local f fb
-#          f="_APT_${2}"
-#
-#          eval "function ${f}() {
-#            shift words;
-#            service=\"\$APT\";
-#            words=(\"\$APT\" '$2' \$words);
-#            ((CURRENT++))
-#            test \"\${APT}\" = 'aptitude' && _aptitude || _apt
-#          }"
-#
-#          compdef "$f" "$1"
-#        }
-#
-#        apt_pref_compdef aac "autoclean"
-#        apt_pref_compdef abd "build-dep"
-#        apt_pref_compdef ac  "clean"
-#        apt_pref_compdef ad  "update"
-#        apt_pref_compdef afu "update"
-#        apt_pref_compdef au  "$APT_UPGR"
-#        apt_pref_compdef ai  "install"
-#        apt_pref_compdef ail "install"
-#        apt_pref_compdef ap  "purge"
-#        apt_pref_compdef ar  "remove"
-#        apt_pref_compdef ads "dselect-upgrade"
-
-### Functions
-# create a simple script that can be used to 'duplicate' a system
-#        function apt-copy() {
-#          print '#!/bin/sh'"\n" > apt-copy.sh
-#
-#          cmd='$APT install'
-#
-#          for p in ${(f)"$(aptitude search -F "%p" --disable-columns \~i)"}; {
-#            cmd="${cmd} ${p}"
-#          }
-#
-#          print $cmd "\n" >> apt-copy.sh
-#
-#          chmod +x apt-copy.sh
-#        }
 
 # Prints apt history
 # Usage:
