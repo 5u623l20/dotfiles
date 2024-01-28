@@ -126,32 +126,6 @@ export OSH=$XDG_CONFIG_HOME/bash
 
 THEME="random"
 
-completions=(
-  git
-  composer
-  ssh
-)
-
-is_completion() {
-  local base_dir=$1
-  local name=$2
-  test -f $base_dir/completions/$name/$name.completion.sh
-}
-# Add all defined completions to fpath. This must be done
-# before running compinit.
-for completion in ${completions[@]}; do
-  if is_completion $OSH $completion; then
-    fpath=($OSH/completions/$completion $fpath)
-  fi
-done
-
-# Load all of the completions that were defined in ~/.bashrc
-for completion in ${completions[@]}; do
-  if [ -f $OSH/completions/$completion.completion.sh ]; then
-    source $OSH/completions/$completion.completion.sh
-  fi
-done
-
 # Load colors first so they can be use in base theme
 source "${BASHDOTDIR}/plugins/colours.prompt.sh"
 source "${BASHDOTDIR}/plugins/base.prompt.sh"
