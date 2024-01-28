@@ -8,7 +8,7 @@
 	excludesfile = "~/.config/git/ignore"
 	attributesfile = "~/.config/git/attributes"
 	autocrlf = "input"
-	whitespace = space-before-tab,indent-with-non-tab,trailing-space,tab-in-indent,cr-at-eol
+	whitespace = space-before-tab,indent-with-non-tab,trailing-space,cr-at-eol
 	trustctime = false
 [color]
 	ui = auto
