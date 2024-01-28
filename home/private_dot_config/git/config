@@ -8,7 +8,7 @@
 	excludesfile = "~/.config/git/ignore"
 	attributesfile = "~/.config/git/attributes"
 	autocrlf = "input"
-	whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+	whitespace = space-before-tab,indent-with-non-tab,trailing-space,tab-in-indent,cr-at-eol
 	trustctime = false
 [color]
 	ui = auto
@@ -39,6 +39,7 @@
 	date = iso-strict
 [rebase]
 	autoSquash = true
+	autoStash = true
 [push]
 	pushoption = confirm-subject
 	pushoption = confirm-author
@@ -74,30 +75,30 @@
 	tool = vimdiff
 	conflictStyle = diff3
 [url "git@codeberg.org:"]
-	insteadOf = "cb:"
-	insteadOf = "codeberg:"
-	insteadOf = "git://codeberg.org/"
-	insteadOf = "https://codeberg.org/"
-	pushInsteadOf = "git://codeberg.org/"
-	pushInsteadOf = "https://codeberg.org/"
+	insteadOf = "cb:5u623l20"
+	insteadOf = "codeberg:5u623l20"
+	insteadOf = "git://codeberg.org/5u623l20"
+	insteadOf = "https://codeberg.org/5u623l20"
+	pushInsteadOf = "git://codeberg.org/5u623l20"
+	pushInsteadOf = "https://codeberg.org/5u623l20"
 [url "git@github.com:"]
-	insteadOf = "gh:"
-	insteadOf = "github:"
-	insteadOf = "git://github.com/"
-	insteadOf = "https://github.com/"
-	pushInsteadOf = "git://github.com/"
+	insteadOf = "gh:5u623l20"
+	insteadOf = "github:5u623l20"
+	insteadOf = "git://github.com/5u623l20"
+	insteadOf = "https://github.com/5u623l20"
+	pushInsteadOf = "git://github.com/5u623l20"
 	pushInsteadOf = "https://gist.github.com/5u623l20/"
-	pushInsteadOf = "https://github.com/"
+	pushInsteadOf = "https://github.com/5u623l20"
 [url "git@gist.github.com:"]
-	insteadOf = "gist:"
-	insteadOf = "gst:"
+	insteadOf = "gist:5u623l20"
+	insteadOf = "gst:5u623l20"
 [url "git@gitlab.com:"]
-	insteadOf = "gl:"
-	insteadOf = "gitlab:"
-	insteadOf = "git://gitlab.com/"
-	insteadOf = "https://gitlab.com/"
-	pushInsteadOf = "git://gitlab.com/"
-	pushInsteadOf = "https://gitlab.com/"
+	insteadOf = "gl:5u623l20"
+	insteadOf = "gitlab:5u623l20"
+	insteadOf = "git://gitlab.com/5u623l20"
+	insteadOf = "https://gitlab.com/5u623l20"
+	pushInsteadOf = "git://gitlab.com/5u623l20"
+	pushInsteadOf = "https://gitlab.com/5u623l20"
 [url "ssh://git@gitrepo.freebsd.org:"]
 	pushInsteadOf = "git://git.freebsd.org/"
 	pushInsteadOf = "https://git.freebsd.org/"
