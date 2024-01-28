@@ -117,6 +117,8 @@ Plug 'editorconfig/editorconfig-vim'
 "Plug 'tpope/vim-surround')
 
 Plug 'nblock/vim-dokuwiki'
+Plug 'chrisbra/vim-diff-enhanced'
+Plug 'https://github.com/github/copilot.vim.git'
 call plug#end()
 
 " Install plugins
@@ -162,6 +164,11 @@ if v:lang =~ "utf8$" || v:lang =~ "UTF-8$"
 endif
 set fileencoding=utf-8
 set ttyfast           " Redraw faster for smoother scrolling
+
+" Set diff Mode to patience algorithm
+if &diff
+  let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=patience")'
+endif
 
 " Fix backspace indent
 set backspace=indent,eol,start  " Allow backspacing over anything
