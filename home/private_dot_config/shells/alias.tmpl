@@ -25,6 +25,26 @@ alias mkdir="mkdir -v -p"
 alias rd="rmdir -v"
 alias rm="rm -v -i"
 alias rmdir="rmdir -v"
+######################
+# DIRECTORY LISTING #
+######################
+alias dir='ls -hFx --color=always'
+alias L='ls -latrhF --color=always'             # long, sort by oldest to newest
+alias l='ls -lathF --color=always'              # long, sort by newest to oldest
+alias l.='ls -d .* --color=tty'                 # short listing, only hidden files - .*
+alias la='ls -Al --color=always'                # show hidden files
+alias lc='ls -lcr --color=always'               # sort by change time
+alias lh='ls -lSrh --color=always'              # sort by size human readable
+alias ll="ls -lAFhHo --color=always"
+alias lk='ls -lSr --color=always'               # sort by size
+alias lm='ls -al --color=always | more'         # pipe through 'more'
+alias lo='ls -laSFh --color=always'             # sort by size largest to smallest
+alias lr='ls -R --color=always | grep ":$" | sed -e '\''s/:$//'\'' -e '\''s/[^-][^\/]*\//--/g'\'' -e '\''s/^/   /'\'' -e '\''s/-/|/'\'' | less'                      # lr:  Full Recursive Directory Listing
+alias ls="ls -FGH --color=always"
+alias lsa='ls -lah'
+alias lt='ls -ltr --color=always'               # sort by date
+alias lu='ls -lur --color=always'               # sort by access time
+alias sl="ls -FGH"
 ########################
 # DATE and TIMESTAMPS #
 ########################
@@ -39,6 +59,11 @@ alias stamp='date "+%Y%m%d%a%H%M"'
 alias timestamp='date "+%Y%m%dT%H%M%S"'
 alias today="date '+%Y-%m-%d'"
 alias weeknum='date +%V'
+##############
+# SEARCHING #
+##############
+alias ff="find . -name $*"
+alias qfind="find . -name "                 # qfind:    Quickly search for file
 ####################
 # NON CATEGORIZED #
 ####################
@@ -68,15 +93,9 @@ alias gcc_wall="gcc -Wall -Wpointer-arith -Wcast-qual -Wcast-align \
     -Wredundant-decls -Winline -Wnested-externs -std=c99 \
     -march=i686 -pipe"
 fi
-alias ff="find . -name $*"
 alias j="jobs -l"
-alias l="ls -lA --color=always"
-alias la="ls -aF --color=always"
-alias ll="ls -lAFhHo --color=always"
 alias log_tcpdump="clear ; exec tcpdump -s 2000 -n -i eth0"
 alias log_messages="clear; exec tail -f /var/log/messages --follow=name --retry"
-alias ls="ls -FGH"
-alias sl="ls -FGH"
 alias m="$PAGER"
 alias maek="make"
 alias mess="clear ; tail -f /var/log/messages"
@@ -101,9 +120,6 @@ alias x="exit"
 #alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 #alias d='dirs -v | head -10'
 ## List directory contents
-#alias lsa='ls -lah'
-#alias la='ls -A'
-#alias l='ls -CF'
 #alias perm='stat --printf "%a %n \n "'      # perm: Show permission of target in number
 #alias 000='chmod 000'                       # ---------- (nobody)
 #alias 640='chmod 640'                       # -rw-r----- (user: rw, group: r, other: -)
@@ -113,20 +129,6 @@ alias x="exit"
 #alias mx='chmod a+x'                        # ---x--x--x (user: --x, group: --x, other: --x)
 #alias ux='chmod u+x'                        # ---x------ (user: --x, group: -, other: -)
 ## Directory Listing aliases
-#alias dir='ls -hFx'
-#alias l.='ls -d .* --color=tty' # short listing, only hidden files - .*
-#alias l='ls -lathF'             # long, sort by newest to oldest
-#alias L='ls -latrhF'            # long, sort by oldest to newest
-#alias la='ls -Al'               # show hidden files
-#alias lc='ls -lcr'              # sort by change time
-#alias lk='ls -lSr'              # sort by size
-#alias lh='ls -lSrh'             # sort by size human readable
-#alias lm='ls -al | more'        # pipe through 'more'
-#alias lo='ls -laSFh'            # sort by size largest to smallest
-#alias lr='ls -lR'               # recursive ls
-#alias lt='ls -ltr'              # sort by date
-#alias lu='ls -lur'              # sort by access time
-#alias lr='ls -R | grep ":$" | sed -e '\''s/:$//'\'' -e '\''s/[^-][^\/]*\//--/g'\'' -e '\''s/^/   /'\'' -e '\''s/-/|/'\'' | less' #   lr:  Full Recursive Directory Listing
 #alias dud='du -d 1 -h'                      # Short and human-readable file listing
 #alias duf='du -sh *'                        # Short and human-readable directory listing
 ##   -------------------------------
@@ -136,10 +138,6 @@ alias x="exit"
 #alias make1mb='truncate -s 1m ./1MB.dat'     # make1mb:      Creates a file of 1mb size (all zeros)
 #alias make5mb='truncate -s 5m ./5MB.dat'     # make5mb:      Creates a file of 5mb size (all zeros)
 #alias make10mb='truncate -s 10m ./10MB.dat'  # make10mb:     Creates a file of 10mb size (all zeros)
-##   ---------------------------
-##   2.  SEARCHING
-##   ---------------------------
-#alias qfind="find . -name "                 # qfind:    Quickly search for file
 ##   ---------------------------
 ##   3.  PROCESS MANAGEMENT
 ##   ---------------------------
@@ -181,14 +179,6 @@ alias x="exit"
 #alias fix_stty='stty sane'                  # fix_stty:     Restore terminal settings when screwed up
 #alias fix_term='echo -e "\033c"'            # fix_term:     Reset the conosle.  Similar to the reset command
 
-###############################################################################
-##############################TERMINAL ALIASES ###############################
-###############################################################################
-#alias vt    	'tar tvf'
-#alias xt    	'tar xvf'
-#alias ct    	'tar cvf'
-#alias zv    	'unzip -v'
-#alias zt    	'unzip -t'
 ###############################################################################
 #################################NMAP ALIASES #################################
 ###############################################################################
@@ -326,7 +316,7 @@ alias lock="pmset displaysleepnow"
 ###############################################################################
 ################################freebsd ALIASES ###############################
 ###############################################################################
-alias cdp="cd /usr/local/poudriere/ports/default"
+alias cdp="cd /usr/ports"
 alias portlint="portlint -abct"
 alias p="${SUDO}pkg"
 alias pac="${SUDO}pkg autoremove -y && ${SUDO} pkg clean -ay"
