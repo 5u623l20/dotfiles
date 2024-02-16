@@ -29,7 +29,7 @@ _TEMPLIST="/tmp/tempPHP"
 _TEMPPDR=$(basename "$0")
 _TMPFILE=$(mktemp -q /tmp/${_TEMPPDR}.XXXXXX)
 _TESTQATJAIL="132"
-_PORTSDIR=/usr/local/poudriere/ports/${_PORTSTREE}
+_PORTSDIR=/usr/ports
 
 usage() {
     cat << EOF
@@ -61,7 +61,7 @@ update_tree() {
 
 generate_ports_list() {
     e_info_start "Creating bofh ports list"
-    ${_PORTGREP_BIN} -R /usr/local/poudriere/ports/${_PORTSTREE} -o -m bofh@FreeBSD.org > "$_TMPFILE"
+    ${_PORTGREP_BIN} -R ${_PORTSDIR} -o -m bofh@FreeBSD.org > "$_TMPFILE"
     find $_PORTSDIR -type d -d 2 \( -iname "*php81*" -o -iname "*php82*" -o -iname "*php83*"  \) | sed -e "s|$_PORTSDIR/||g" >> "$_TMPFILE"
     ${_SORT_BIN} "$_TMPFILE" > "$_PORTSLIST"
 
@@ -156,16 +156,12 @@ main() {
         update_tree
         generate_ports_list
         build_ports
-{{ if eq .chezmoi.fqdnHostname "pdr.bofh.network" -}}
         build_php_ports
-{{- end }}
         ;;
     -P)
         # Build ports that are consumers of php ports
         update_tree
-{{ if eq .chezmoi.fqdnHostname "pdr.bofh.network" -}}
         build_php_consumer_ports
-{{- end }}
         ;;
     -i)
         # Build ports that are required by infrastructure
@@ -182,7 +178,7 @@ main() {
         generate_ports_list
         build_infrastructure
         build_ports
-{{ if eq .chezmoi.fqdnHostname "pdr.bofh.network" -}}
+{{ if eq .chezmoi.fqdnHostname "pdr.bofh.network" }}
         build_php_ports
         build_php_consumer_ports
 {{- end }}
