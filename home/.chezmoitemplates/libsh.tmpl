@@ -1442,11 +1442,11 @@ if check_cmd bat; then
   BAT_BIN=$(command -v bat)
 fi
 if check_cmd curl; then
-  DOWNLOAD_CMD=$(curl -sSfL)
+  DOWNLOAD_CMD="curl -sSfL"
 elif check_cmd wget; then
-  DOWNLOAD_CMD=$(wget -q -O - )
+  DOWNLOAD_CMD="wget -q -O -"
 elif check_cmd fetch; then
-  DOWNLOAD_CMD=$(fetch -qR -o - )
+  DOWNLOAD_CMD="fetch -qR -o -"
 fi
 if check_cmd cat; then
   CAT_BIN=$(command -v cat)
