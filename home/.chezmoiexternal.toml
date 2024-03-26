@@ -16,7 +16,7 @@
     executable = true
 [".local/bin/fzf-csh-impl.sh"]
     type = "file"
-    url = "https://raw.githubusercontent.com/graahnul-grom/fzf-csh/master/fzf-csh-impl.sh"
+    url = "https://raw.githubusercontent.com/graahnul-grom/fzf-csh/master/fzf-csh-impl.csh"
     refreshPeriod = "84h"
     executable = true
 {{- end }}
