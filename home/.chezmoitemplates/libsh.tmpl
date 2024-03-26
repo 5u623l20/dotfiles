@@ -863,79 +863,6 @@ download() {
   return 1
 }
 
-stdoutdownload() {
-  local _url _code _orig_flags
-  _url="$1"
-
-  need_cmd sed
-
-  # Attempt to download with curl, if found. If successful, quick return
-  if check_cmd curl; then
-    info "Downloading $_url (curl)"
-    _orig_flags="$-"
-    set +e
-    curl -sSfL "$_url"
-    _code="$?"
-    set "-$(echo "$_orig_flags" | sed s/s//g)"
-    if [ $_code -eq 0 ]; then
-      unset _url _code _orig_flags
-      return 0
-    else
-      local _e
-      _e="curl failed to download file, perhaps curl doesn't have"
-      _e="$_e SSL support and/or no CA certificates are present?"
-      e_warn "$_e"
-      unset _e
-    fi
-  fi
-
-  # Attempt to download with wget, if found. If successful, quick return
-  if check_cmd wget; then
-    info "Downloading $_url (wget)"
-    _orig_flags="$-"
-    set +e
-    wget -q -O - "$_url"
-    _code="$?"
-    set "-$(echo "$_orig_flags" | sed s/s//g)"
-    if [ $_code -eq 0 ]; then
-      unset _url _code _orig_flags
-      return 0
-    else
-      local _e
-      _e="wget failed to download file, perhaps wget doesn't have"
-      _e="$_e SSL support and/or no CA certificates are present?"
-      e_warn "$_e"
-      unset _e
-    fi
-  fi
-
-  # Attempt to download with fetch, if found. If successful, quick return
-  if check_cmd fetch; then
-    info "Downloading $_url (fetch)"
-    _orig_flags="$-"
-    set +e
-    fetch -qR -o - "$_url"
-    _code="$?"
-    set "-$(echo "$_orig_flags" | sed s/s//g)"
-    if [ $_code -eq 0 ]; then
-      unset _url _code _orig_flags
-      return 0
-    else
-      local _e
-      _e="fetch failed to download file, perhaps fetch doesn't have"
-      _e="$_e SSL support and/or no CA certificates are present?"
-      e_warn "$_e"
-      unset _e
-    fi
-  fi
-
-  unset _url _code _orig_flags
-  # If we reach this point, curl, wget and ftp have failed and we're out of
-  # options
-  e_warn "Downloading requires SSL-enabled 'curl', 'wget', or 'fetch' on PATH"
-  return 1
-}
-
 # Indents the output from a command while preserving the command's exit code.
 #
 # In minimal/POSIX shells there is no support for `set -o pipefail` which means
@@ -1513,6 +1440,13 @@ spinner() {
 
 if check_cmd bat; then
   BAT_BIN=$(command -v bat)
+fi
+if check_cmd curl; then
+  DOWNLOAD_CMD=$(curl -sSfL)
+elif check_cmd wget; then
+  DOWNLOAD_CMD=$(wget -q -O - )
+elif check_cmd fetch; then
+  DOWNLOAD_CMD=$(fetch -qR -o - )
 fi
 if check_cmd cat; then
   CAT_BIN=$(command -v cat)
