@@ -23,7 +23,7 @@ rm ~/kitty.terminfo
 {{ if .gotroot }}
 $MKDIR /usr/local/etc/pkg/repos
 {{ if or (eq .hostname "dev") (eq .hostname "pdr") (eq .hostname "rpi4a") }}
-$SED -e 's/quarterly/latest/g; s/yes/no/g' /etc/pkg/FreeBSD.conf > /usr/local/etc/pkg/repos/FreeBSD.conf
+$SED -i '' -e 's/quarterly/latest/g; s/yes/no/g' /etc/pkg/FreeBSD.conf > /usr/local/etc/pkg/repos/FreeBSD.conf
 $CAT <<EOF > /usr/local/etc/pkg/repos/infrastructure.conf
 infrastructure: {
 	url: "http://{{- .chezmoi.hostname }}.bofh.network/\${ABI}/infrastructure",
@@ -32,7 +32,7 @@ infrastructure: {
 }
 EOF
 {{ else }}
-$SED -e 's/quarterly/latest/g' /etc/pkg/FreeBSD.conf > /usr/local/etc/pkg/repos/FreeBSD.conf
+$SED -i '' -e 's/quarterly/latest/g' /etc/pkg/FreeBSD.conf > /usr/local/etc/pkg/repos/FreeBSD.conf
 {{ end }}
 env ASSUME_ALWAYS_YES=yes pkg bootstrap -f
 pkg update -f
@@ -72,7 +72,7 @@ if [ -z "$FZF_BIN" ]; then
 $PKG_CMD $FZF_PKG
 {{ else }}
 if [ ! -x "$HOME"/.local/bin/fzf ]; then
-	download https://github.com/junegunn/fzf/releases/download/"$FZF_VERSION"/fzf-"$FZF_VERSION"-"$CHEZMOI_OS"_"$CHEZMOI_ARCH".tar.gz - | tar -xzf - -C $HOME/.local/bin
+	stdoutdownload https://github.com/junegunn/fzf/releases/download/"$FZF_VERSION"/fzf-"$FZF_VERSION"-"$CHEZMOI_OS"_"$CHEZMOI_ARCH".tar.gz | tar -xzf - -C $HOME/.local/bin
 fi
 {{ end }}
 fi
