@@ -65,12 +65,6 @@
 #      cp -a "${filename}" "${filename}_${filetime}"
 #    }
 #
-#   del:  move files to hidden folder in tmp, that gets cleared on each reboot
-#   ---------------------------------------------------------
-#    del() {
-#      mkdir -p /tmp/.trash && mv "$@" /tmp/.trash;
-#    }
-
 #   ---------------------------
 #   3.  SEARCHING
 #   ---------------------------
@@ -128,13 +122,6 @@
 #      curl -s "http://www.downforeveryoneorjustme.com/$1" | sed '/just you/!d;s/<[^>]*>//g'
 #    }
 
-#   myip:  displays your ip address, as seen by the Internet
-#   -------------------------------------------------------------------
-#    myip () {
-#      res=$(curl -s checkip.dyndns.org | grep -Eo '[0-9\.]+')
-#      echo -e "Your public IP is: ${echo_bold_green} $res ${echo_normal}"
-#    }
-
 #   ii:  display useful host related informaton
 #   -------------------------------------------------------------------
 #    ii() {
@@ -175,27 +162,6 @@
 #          du -h --max-depth=1
 #        fi
 #      fi
-#    }
-
-#   pickfrom: picks random line from file
-#   -------------------------------------------------------------------
-#    pickfrom () {
-#      local file=$1
-#      [ -z "$file" ] && reference "$FUNCNAME" && return
-#      length=$(wc -l < "$file")
-#      n=$( ($RANDOM \* "$length" / 32768 + 1))
-#      head -n "$n" "$file" | tail -1
-#    }
-#
-#   passgen: generates random password from dictionary words
-#       Note default length of generated password is 4, you can pass it to the command
-#       E.g. passgen 15
-#   -------------------------------------------------------------------
-#    passgen () {
-#      local i pass length=${1:-4}
-#      pass=$(echo $(for i in $(eval echo "{1..$length}"); do pickfrom /usr/share/dict/words; done))
-#      echo "With spaces (easier to memorize): $pass"
-#      echo "Without (use this as the password): $(echo $pass | tr -d ' ')"
 #    }
 
 #httpHeaders () { /usr/bin/curl -I -L "$@" ; }             # httpHeaders:      Grabs headers from web page
