@@ -6,6 +6,7 @@ Host freefall
   {{-   end }}
 {{-   end }}
   User bofh
+  ForwardAgent yes
 Host fbsd-admin-svn
   Hostname admin-svn.freebsd.org
 Host fbsd-admin.nyi fbsd-ntp0.nyi
@@ -38,6 +39,12 @@ Host fbsd-gohan05.nyi
   HostName gohan05.nyi.freebsd.org
 Host fbsd-grind.nyi fbsd-portscout fbsd-portscout.nyi fbsd-socsvn fbsd-distfetch.nyi fbsd-docbuild fbsd-portsindexbuild.nyi fbsd-bit0.nyi
   Hostname grind.nyi.freebsd.org
+Host fbsd-geegee1.chi fbsd-websync0.chi fbsd-wbe0.chi fbsd-wfe0.chi
+  HostName geegee1.chi.freebsd.org
+Host fbsd-geegee2.chi
+  HostName geegee2.chi.freebsd.org
+Host fbsd-geegee3.chi
+  HostName geegee3.chi.freebsd.org
 Host fbsd-halo fbsd-admin-http fbsd-admin-http.nyi
   HostName halo.nyi.freebsd.org
 Host fbsd-igw-ext.syd
@@ -62,6 +69,8 @@ Host fbsd-update2 fbsd-westy.tuk
   HostName westy.tuk.freebsd.org
 Host fbsd-whelp fbsd-whelp.jinx fbsd-pkg0.jinx
   HostName whelp.jinx.freebsd.org
+Host fbsd-universe15b
+  HostName universe15b.freebsd.org
 Host fbsd-*
   User bofh
 {{- if .personal }}
