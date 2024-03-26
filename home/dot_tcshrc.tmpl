@@ -195,4 +195,11 @@ endif
 
 # Clean up after ourselves...
 unset red green yellow blue magenta cyan yellow white end
+if ( -r "$XDG_CONFIG_HOME/tcsh/plugins/fzf-csh.csh" ) then
+    setenv FZF_CSH_TMP_DIR $XDG_DATA_HOME/fzf
+    source $XDG_CONFIG_HOME/tcsh/plugins/fzf-csh.csh
+endif
+{{- if and (.fcluster) (eq .chezmoi.arch "amd64") }}
+eval `starship init tcsh`
+{{- end }}
 ## vi: ft=sh

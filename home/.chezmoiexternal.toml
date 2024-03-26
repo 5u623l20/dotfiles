@@ -1,3 +1,25 @@
+{{- if and (.fcluster) (eq .chezmoi.arch "amd64") }}
+[".local/bin/starship"]
+    type = "archive-file"
+    url = "https://github.com/starship/starship/releases/latest/download/starship-x86_64-unknown-freebsd.tar.gz"
+    path = "starship"
+{{- end }}
+{{- if .fcluster }}
+[".config/tcsh/plugins/fzf-csh.csh"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/graahnul-grom/fzf-csh/master/fzf-csh.csh"
+    refreshPeriod = "84h"
+[".local/bin/fzf-csh-find.sh"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/graahnul-grom/fzf-csh/master/fzf-csh-find.sh"
+    refreshPeriod = "84h"
+    executable = true
+[".local/bin/fzf-csh-impl.sh"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/graahnul-grom/fzf-csh/master/fzf-csh-impl.sh"
+    refreshPeriod = "84h"
+    executable = true
+{{- end }}
 {{- if not .fcluster }}
 [".config/vim/autoload/plug.vim"]
     type = "file"
