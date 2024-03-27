@@ -70,5 +70,5 @@ jobs:
       - name: Install | Test | ${{ matrix.description }}
         run: |
           cd
-          { command -v curl > /dev/null && sudo sh -c "$(curl -fsLS https://raw.githubusercontent.com/5u623l20/dotfiles/main/install)"; } || { command -v wget > /dev/null && sudo sh -c "$(wget -qO- https://raw.githubusercontent.com/5u623l20/dotfiles/main/install)"; } || { command -v fetch > /dev/null && sudo sh -c "$(fetch -q -o - https://raw.githubusercontent.com/5u623l20/dotfiles/main/install)"; }
+          { command -v curl > /dev/null && sh -c "$(curl -fsLS https://raw.githubusercontent.com/5u623l20/dotfiles/main/install)"; } || { command -v wget > /dev/null && sh -c "$(wget -qO- https://raw.githubusercontent.com/5u623l20/dotfiles/main/install)"; } || { command -v fetch > /dev/null && sh -c "$(fetch -q -o - https://raw.githubusercontent.com/5u623l20/dotfiles/main/install)"; }
           find ~/ -type f | grep -E -v '.*ActionsService|.Azure|.Trash|.aliyun|.android|.azcopy|.azure-devops|.bash_sessions|.cabal|.cargo|.composer|.conda|.docker|.dotnet|.factory|.fastlane|.ghcup|.gradle|.npm|.nvm|.rustup|.sbt|.ssh|.subversion|.vcpkg|.yarn|Desktop|Documents|Downloads|Library|Movies|Music|Pictures|bootstrap|hostedtoolcache|perflog|project|runners|target|warmup|work'
