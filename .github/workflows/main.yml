@@ -58,10 +58,10 @@ jobs:
             image: alpine:latest
           - description: Ubuntu
             image: ubuntu:latest
+          - description: Debian
+            image: debian:latest
 #          - name: CentOS7
 #            distro: centos/7
-#          - name: Debian11
-#            distro: debian/bullseye64
 #          - name: Fedora35
 #            distro: fedora/35-cloud-base
 #          - name: RockyLinux8
