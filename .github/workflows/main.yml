@@ -64,8 +64,8 @@ jobs:
             image: fedora:latest
           - description: RockyLinux
             image: rockylinux:9
-#          - name: CentOS7
-#            distro: centos/7
+          - description: AlmaLinux
+            image: almalinux:latest
     steps:
       - name: Install | Test | ${{ matrix.description }}
         run: |
