@@ -62,10 +62,10 @@ jobs:
             image: debian:latest
           - description: Fedora
             image: fedora:latest
+          - description: RockyLinux
+            image: rockylinux:9
 #          - name: CentOS7
 #            distro: centos/7
-#          - name: RockyLinux8
-#            distro: rockylinux/8
     steps:
       - name: Install | Test | ${{ matrix.description }}
         run: |
