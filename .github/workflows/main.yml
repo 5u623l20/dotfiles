@@ -60,10 +60,10 @@ jobs:
             image: ubuntu:latest
           - description: Debian
             image: debian:latest
+          - description: Fedora
+            image: fedora:latest
 #          - name: CentOS7
 #            distro: centos/7
-#          - name: Fedora35
-#            distro: fedora/35-cloud-base
 #          - name: RockyLinux8
 #            distro: rockylinux/8
     steps:
