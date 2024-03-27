@@ -56,8 +56,8 @@ jobs:
         include:
           - description: Alpine
             image: alpine:latest
-#         - name: Ubuntu
-#            distro: ubuntu/focal64
+          - description: Ubuntu
+            image: ubuntu/latest
 #          - name: CentOS7
 #            distro: centos/7
 #          - name: Debian11
