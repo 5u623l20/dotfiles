@@ -19,7 +19,7 @@ jobs:
       matrix:
         include:
           - name: FreeBSD
-            distro: freebsd/FreeBSD-12.4-STABLE
+            distro: freebsd/FreeBSD-13.2-STABLE
           - name: Alpine
             distro: roboxes/alpine317
           - name: MacOS
