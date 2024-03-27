@@ -16,7 +16,6 @@ jobs:
     runs-on: macos-12
     strategy:
       fail-fast: false
-      max-parallel: 1
       matrix:
         include:
           - name: FreeBSD
@@ -61,14 +60,9 @@ jobs:
           - name: freebsd
             architecture: x86-64
             version: '14.0'
-
           - name: openbsd
             architecture: x86-64
             version: '7.4'
-
-          - name: netbsd
-            architecture: x86-64
-            version: '9.3'
 
     steps:
       - uses: actions/checkout@v4
