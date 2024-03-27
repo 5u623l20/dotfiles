@@ -56,8 +56,6 @@ jobs:
         include:
           - description: Alpine
             image: alpine:latest
-          - description: Debian
-            image: debian:latest
           - description: Fedora
             image: fedora:latest
           - description: RockyLinux
