@@ -12,7 +12,8 @@ concurrency:
 
 jobs:
   deploy-macos:
-    name: Install Chezmoi from Github repo | ${{ matrix.description }}
+    name: ${{ matrix.description }} | Install Chezmoi from Github repo
+    runs-on: ubuntu-latest
     runs-on: macos-12
     strategy:
       fail-fast: false
@@ -47,7 +48,7 @@ jobs:
           ./bin/chezmoi data
           find ~/ -type f | grep -E -v '.*ActionsService|.Azure|.Trash|.aliyun|.android|.azcopy|.azure-devops|.bash_sessions|.cabal|.cargo|.composer|.conda|.docker|.dotnet|.factory|.fastlane|.ghcup|.gradle|.npm|.nvm|.rustup|.sbt|.ssh|.subversion|.vcpkg|.yarn|Desktop|Documents|Downloads|Library|Movies|Music|Pictures|bootstrap|hostedtoolcache|perflog|project|runners|target|warmup|work'
   deploy-linux:
-    name: Install Chezmoi from Github repo | ${{ matrix.description }}
+    name: ${{ matrix.description }} | Install Chezmoi from Github repo
     runs-on: ubuntu-latest
     container: ${{ matrix.image }}
     strategy:
@@ -56,8 +57,6 @@ jobs:
         include:
           - description: Alpine
             image: alpine:latest
-          - description: Ubuntu
-            image: ubuntu:latest
           - description: Debian
             image: debian:latest
           - description: Fedora
@@ -68,6 +67,15 @@ jobs:
             image: almalinux:latest
     steps:
       - name: Install | Test | ${{ matrix.description }}
+        run: |
+          cd
+          { command -v curl > /dev/null && sh -c "$(curl -fsLS https://raw.githubusercontent.com/5u623l20/dotfiles/main/install)"; } || { command -v wget > /dev/null && sh -c "$(wget -qO- https://raw.githubusercontent.com/5u623l20/dotfiles/main/install)"; } || { command -v fetch > /dev/null && sh -c "$(fetch -q -o - https://raw.githubusercontent.com/5u623l20/dotfiles/main/install)"; }
+          find ~/ -type f | grep -E -v '.*ActionsService|.Azure|.Trash|.aliyun|.android|.azcopy|.azure-devops|.bash_sessions|.cabal|.cargo|.composer|.conda|.docker|.dotnet|.factory|.fastlane|.ghcup|.gradle|.npm|.nvm|.rustup|.sbt|.ssh|.subversion|.vcpkg|.yarn|Desktop|Documents|Downloads|Library|Movies|Music|Pictures|bootstrap|hostedtoolcache|perflog|project|runners|target|warmup|work'
+  deploy-ubuntu:
+    name: Ubuntu | Install Chezmoi from Github repo
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install | Test | Ubuntu
         run: |
           cd
           { command -v curl > /dev/null && sh -c "$(curl -fsLS https://raw.githubusercontent.com/5u623l20/dotfiles/main/install)"; } || { command -v wget > /dev/null && sh -c "$(wget -qO- https://raw.githubusercontent.com/5u623l20/dotfiles/main/install)"; } || { command -v fetch > /dev/null && sh -c "$(fetch -q -o - https://raw.githubusercontent.com/5u623l20/dotfiles/main/install)"; }
