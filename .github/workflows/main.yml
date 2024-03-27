@@ -19,7 +19,7 @@ jobs:
       matrix:
         include:
           - name: Alpine
-            distro: roboxes/alpine317
+            image: alpine:latest
           - name: MacOS
 #         - name: Ubuntu
 #            distro: ubuntu/focal64
@@ -34,10 +34,9 @@ jobs:
     steps:
       - name: Install | Test | ${{ matrix.name }}
         if: matrix.name != 'MacOS'
-        uses: 5u623l20/github-actions-vagrantup@main
         with:
-          mem: 4096
-          box: ${{ matrix.distro }}
+          container:
+            image: ${{ matrix.image}}
           run: |
             cd
             { command -v curl > /dev/null && sh -c "$(curl -fsLS https://raw.githubusercontent.com/5u623l20/dotfiles/main/install)"; } || { command -v wget > /dev/null && sh -c "$(wget -qO- https://raw.githubusercontent.com/5u623l20/dotfiles/main/install)"; } || { command -v fetch > /dev/null && sh -c "$(fetch -q -o - https://raw.githubusercontent.com/5u623l20/dotfiles/main/install)"; }
