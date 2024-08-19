@@ -4,7 +4,7 @@ set -e # -e: exit on error
 
 OS=$(uname)
 ARCH=$(uname -p)
-CHEZMOI_VERSION="2.42.1"
+CHEZMOI_VERSION="2.42.2"
 GITHUB_USERNAME="5u623l20"
 
 case "${OS}" in
@@ -60,7 +60,7 @@ if [ ! "$(command -v chezmoi)" ]; then
             fi
             cd "${TMPDIR}"
             tar -zxvf "${TMPDIR}"/"${CHEZMOI_FILE_NAME}" -C "${bin_dir}" chezmoi
-            ${CHEZMOI_BIN} init -a $GITHUB_USERNAME
+            ${CHEZMOI_BIN} init -a $GITHUB_USERNAME -D "$HOME"
             ;;
         *)
             if [ "$(command -v curl)" ]; then
