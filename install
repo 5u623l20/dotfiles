@@ -3,8 +3,8 @@
 set -e # -e: exit on error
 
 OS=$(uname)
-ARCH=$(uname -p)
-CHEZMOI_VERSION="2.42.3"
+ARCH=$(uname -m)
+CHEZMOI_VERSION="2.43.0"
 GITHUB_USERNAME="5u623l20"
 
 case "${OS}" in
