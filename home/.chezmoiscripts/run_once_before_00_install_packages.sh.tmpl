@@ -22,8 +22,17 @@ rm ~/kitty.terminfo
 {{ if eq .chezmoi.os "freebsd" -}}
 {{ if .gotroot }}
 ${MKDIR} /usr/local/etc/pkg/repos
-{{ if or (eq .hostname "dev") (eq .hostname "pdr") (eq .hostname "rpi4a") }}
-$SED -i '' -e 's/quarterly/latest/g; s/yes/no/g' /etc/pkg/FreeBSD.conf > /usr/local/etc/pkg/repos/FreeBSD.conf
+$CAT <<EOF > /usr/local/etc/pkg/repos/base.conf
+base: {
+	url: "pkg+https://pkg.FreeBSD.org/\${ABI}/base_release_1",
+	mirror_type: "srv",
+	signature_type: "fingerprints",
+	fingerprints: "/usr/share/keys/pkg",
+	enabled: yes
+}
+EOF
+{{ if or (eq .hostname "dev") (eq .hostname "pdr") (eq .hostname "rpi4a") (eq .hostname "rpi4b") }}
+$SED -e 's/quarterly/latest/g; s/yes/no/g' /etc/pkg/FreeBSD.conf > /usr/local/etc/pkg/repos/FreeBSD.conf
 $CAT <<EOF > /usr/local/etc/pkg/repos/infrastructure.conf
 infrastructure: {
 	url: "http://{{- .chezmoi.hostname }}.bofh.network/\${ABI}/infrastructure",
@@ -31,8 +40,17 @@ infrastructure: {
 	priority: 10
 }
 EOF
+{{ else if (eq .hostname "rpi4a") }}
+$SED -e 's/quarterly/latest/g; s/yes/no/g' /etc/pkg/FreeBSD.conf > /usr/local/etc/pkg/repos/FreeBSD.conf
+$CAT <<EOF > /usr/local/etc/pkg/repos/infrastructure.conf
+infrastructure: {
+	url: "http://rpi4b.bofh.network/\${ABI}/infrastructure",
+	enabled: yes,
+	priority: 10
+}
+EOF
 {{ else }}
-$SED -i '' -e 's/quarterly/latest/g' /etc/pkg/FreeBSD.conf > /usr/local/etc/pkg/repos/FreeBSD.conf
+$SED -e 's/quarterly/latest/g' /etc/pkg/FreeBSD.conf > /usr/local/etc/pkg/repos/FreeBSD.conf
 {{ end }}
 env ASSUME_ALWAYS_YES=yes pkg bootstrap -f
 pkg update -f

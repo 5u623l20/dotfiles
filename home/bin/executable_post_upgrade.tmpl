@@ -5,7 +5,8 @@ RM="$(command -v rm) -f"
 
 [ -e /etc/ssh/sshd_config.pkgsave ] && ${MV} /etc/ssh/sshd_config.pkgsave /etc/ssh/sshd_config && service sshd restart
 [ -e /etc/master.passwd.pkgsave ] && ${MV} /etc/master.passwd.pkgsave /etc/master.passwd
-[ -e /etc/group.pkgsave ] && ${MV} /etc/group.pkgsave /etc/group pwd_mkdb -p /etc/master.passwd
+[ -e /etc/group.pkgsave ] && ${MV} /etc/group.pkgsave /etc/group
+pwd_mkdb -p /etc/master.passwd
 [ -e /etc/sysctl.conf.pkgsave ] && ${MV} /etc/sysctl.conf.pkgsave /etc/sysctl.conf
 find /bin -name \*.pkgsave -delete
 find /boot -name \*.pkgsave -delete
