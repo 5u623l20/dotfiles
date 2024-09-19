@@ -1,0 +1,33 @@
+#!/bin/sh
+
+MV="$(command -v mv) -f"
+RM="$(command -v rm) -f"
+
+[ -e /etc/ssh/sshd_config.pkgsave ] && ${MV} /etc/ssh/sshd_config.pkgsave
+/etc/ssh/sshd_config && service sshd restart
+[ -e /etc/master.passwd.pkgsave ] && ${MV} /etc/master.passwd.pkgsave
+/etc/master.passwd
+[ -e /etc/group.pkgsave ] && ${MV} /etc/group.pkgsave /etc/group
+pwd_mkdb -p /etc/master.passwd
+[ -e /etc/sysctl.conf.pkgsave ] && ${MV} /etc/sysctl.conf.pkgsave
+/etc/sysctl.conf
+find /bin -name \*.pkgsave -delete
+find /boot -name \*.pkgsave -delete
+find /lib -name \*.pkgsave -delete
+find /libexec -name \*.pkgsave -delete
+find /rescue -name \*.pkgsave -delete
+find /sbin -name \*.pkgsave -delete
+find /usr/bin -name \*.pkgsave -delete
+find /usr/include -name \*.pkgsave -delete
+find /usr/lib -name \*.pkgsave -delete
+find /usr/lib32 -name \*.pkgsave -delete
+find /usr/libexec -name \*.pkgsave -delete
+find /usr/local -name \*.pkgsave -delete
+find /usr/sbin -name \*.pkgsave -delete
+find /usr/share/man -name \*.pkgsave -delete
+find /usr/tests -name \*.pkgsave -delete
+find / -name "*.pkgsave" -type f -exec sh -c "f='{}'; cmp \${f%.pkgsave} \${f}
+&& rm -f \${f} || (diff -uN \${f} \${f%.pkgsave} || rm -vi \${f} ); [ -e \${f}
+] && cp -vi \${f} \${f%.pkgsave}" \;
+pkg remove -g 'FreeBSD-*dbg*'
+pkg remove -g 'FreeBSD-*lib32*'
