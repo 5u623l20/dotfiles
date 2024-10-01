@@ -5,15 +5,19 @@
 _GIT_BIN=/usr/local/bin/git
 {{ if eq .chezmoi.fqdnHostname "pdr.bofh.network" -}}
     _INFRASTRUCTURE_JAIL="MAIN"
-    _JAIL_LIST="133 140 141 MAIN"
+    _JAIL_LIST="133 134 141 MAIN"
 {{- end }}
 {{ if eq .chezmoi.fqdnHostname "rpi4a.bofh.network" -}}
 _INFRASTRUCTURE_JAIL="141"
 _JAIL_LIST="141"
 {{- end }}
+{{ if eq .chezmoi.fqdnHostname "rpi4b.bofh.network" -}}
+_INFRASTRUCTURE_JAIL="141"
+_JAIL_LIST="141"
+{{- end }}
 {{ if eq .chezmoi.fqdnHostname "dev.bofh.network" -}}
 _INFRASTRUCTURE_JAIL="141"
-_JAIL_LIST="133 140 141"
+_JAIL_LIST="133 134 141"
 {{- end }}
 _INFRASTRUCTURE_LIST="/usr/local/etc/poudriere.d/ports-list/infrastructure"
 _INFRASTRUCTURE_SET="infrastructure"
