@@ -74,14 +74,14 @@
 	log = true
 	tool = vimdiff
 	conflictStyle = diff3
-[url "git@codeberg.org:"]
+[url "git@codeberg.org:5u623l20"]
 	insteadOf = "cb:5u623l20"
 	insteadOf = "codeberg:5u623l20"
 	insteadOf = "git://codeberg.org/5u623l20"
 	insteadOf = "https://codeberg.org/5u623l20"
 	pushInsteadOf = "git://codeberg.org/5u623l20"
 	pushInsteadOf = "https://codeberg.org/5u623l20"
-[url "git@github.com:"]
+[url "git@github.com:5u623l20"]
 	insteadOf = "gh:5u623l20"
 	insteadOf = "github:5u623l20"
 	insteadOf = "git://github.com/5u623l20"
@@ -89,10 +89,10 @@
 	pushInsteadOf = "git://github.com/5u623l20"
 	pushInsteadOf = "https://gist.github.com/5u623l20/"
 	pushInsteadOf = "https://github.com/5u623l20"
-[url "git@gist.github.com:"]
+[url "git@gist.github.com:5u623l20"]
 	insteadOf = "gist:5u623l20"
 	insteadOf = "gst:5u623l20"
-[url "git@gitlab.com:"]
+[url "git@gitlab.com:5u623l20"]
 	insteadOf = "gl:5u623l20"
 	insteadOf = "gitlab:5u623l20"
 	insteadOf = "git://gitlab.com/5u623l20"
