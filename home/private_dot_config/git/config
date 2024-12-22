@@ -46,7 +46,11 @@
 	autoSetupRemote = true
 [includeIf "gitdir:/usr/local/poudriere/ports/default/"]
 	path = ~/.config/git/freebsd-ports
+[includeIf "gitdir:/usr/ports/"]
+	path = ~/.config/git/freebsd-ports
 [includeIf "gitdir:~/Projects/FreeBSD/src/"]
+	path = ~/.config/git/freebsd-src
+[includeIf "gitdir:/usr/src/"]
 	path = ~/.config/git/freebsd-src
 [includeIf "gitdir:~/Projects/FreeBSD/doc/"]
 	path = ~/.config/git/freebsd-doc

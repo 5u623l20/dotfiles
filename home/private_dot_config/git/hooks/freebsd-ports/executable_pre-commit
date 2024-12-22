@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Fallback to the local repository's pre-commit hook, if it exists
+LOCAL_HOOK="$(git rev-parse --show-toplevel)/.hooks/pre-commit"
+if [ -x "$LOCAL_HOOK" ]; then
+    "$LOCAL_HOOK" "$@"
+fi

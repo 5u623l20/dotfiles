@@ -3,19 +3,25 @@
 	filemode = true
 	bare = false
 	logallrefupdates = true
+	hooksPath = ~/.config/git/hooks/freebsd-ports
 [remote "freebsd"]
 	fetch = +refs/notes/*:refs/notes/*
 	url = https://git.freebsd.org/ports.git
 	fetch = +refs/heads/*:refs/remotes/freebsd/*
 	pushurl = git@gitrepo.freebsd.org:ports.git
 	fetch = +refs/internal/*:refs/internal/*
-[branch "main"]
-	remote = freebsd
-	merge = refs/heads/main
 [user]
 	name = Muhammad Moinur Rahman
 	email = bofh@FreeBSD.org
 	signingKey = BDB9B5A617C0BC91
+[log]
+	date = iso-strict
+[push]
+	pushoption = confirm-subject
+	pushoption = confirm-author
+[branch "main"]
+	remote = freebsd
+	merge = refs/heads/main
 [branch "admin"]
 	remote = freebsd
 	merge = refs/internal/admin

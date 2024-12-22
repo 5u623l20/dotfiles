@@ -3,6 +3,7 @@
 	filemode = true
 	bare = false
 	logallrefupdates = true
+	hooksPath = ~/.config/git/hooks/freebsd-src
 [remote "freebsd"]
 	fetch = +refs/notes/*:refs/notes/*
 	url = https://git.freebsd.org/src.git
