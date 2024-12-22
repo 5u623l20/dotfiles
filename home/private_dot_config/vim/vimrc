@@ -482,11 +482,68 @@ imap <expr><TAB>
  \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 " ale
+if has("autocmd")
+  au BufNewFile,BufRead *.adoc call Set_ADOC()
+  au BufNewFile,BufRead *.[1-9] call Set_MAN()
+endif " has(autocmd)
+
+function Set_Highlights()
+  "match ExtraWhitespace /^\s* \s*\|\s\+$/
+  return 0
+endfunction " Set_Highlights_Adoc()
+
+function Set_Highlights_MAN()
+  highlight default link OverLength ErrorMsg
+  match OverLength /\%71v.\+/
+  return 0
+endfunction " Set_Highlights_MAN()
+
+function ShowSpecial()
+  setlocal list listchars=tab:>>,trail:*,eol:$
+  hi def link nontext ErrorMsg
+  return 0
+endfunction " ShowSpecial()
+
+function Set_COMMON()
+  setlocal number
+  setlocal shiftwidth=2
+  "setlocal tabstop=8
+  "setlocal softtabstop=2
+  setlocal formatprg="fmt -p"
+  setlocal autoindent
+  setlocal smartindent
+  call ShowSpecial()
+  call Set_Highlights()
+  return 0
+endfunction " Set_COMMON()
+
+function Set_ADOC()
+  setlocal syntax=asciidoc
+  setlocal filetype=asciidoc
+  call Set_COMMON()
+  return 0
+endfunction " Set_ADOC()
+
+function Set_MAN()
+  setlocal syntax=man
+  setlocal filetype=man
+  setlocal textwidth=70
+  " Rewrap paragraphs
+  noremap P gqj
+  " Replace spaces with tabs
+  noremap T :s/        /\t/<CR>
+  call Set_COMMON()
+  call Set_Highlights_MAN()
+  return 0
+endfunction " Set_Man()
+
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'go': ['golint', 'go vet'],
 \}
+
 let g:ale_linters = {
+\   'asciidoc': ['vale'],
 \   'bash': ['shellcheck'],
 \   "go": ['golint', 'go vet'],
 \   'python': ['flake8'],
