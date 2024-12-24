@@ -49,8 +49,20 @@ then
 
 			# Perform variable substitution for ${NEW_VERSION} if present in the URL
 			if [ -n "$NEW_VERSION" ]; then
-				# Replace ${NEW_VERSION} or any parameter expansion like ${NEW_VERSION%.*}
-				CHANGELOG_URL=$(eval "echo \"$RAW_CHANGELOG_URL\"")
+				# Perform transformations dynamically
+				if echo "$RAW_CHANGELOG_URL" | grep -q '${NEW_VERSION//./-}'; then
+					URL_VERSION=$(echo "$NEW_VERSION" | sed 's/\./-/g')
+					CHANGELOG_URL=$(echo "$RAW_CHANGELOG_URL" | sed "s|\${NEW_VERSION//./-}|$URL_VERSION|g")
+				elif echo "$RAW_CHANGELOG_URL" | grep -q '${NEW_VERSION//./}'; then
+					URL_VERSION=$(echo "$NEW_VERSION" | sed 's/\.//g')
+					CHANGELOG_URL=$(echo "$RAW_CHANGELOG_URL" | sed "s|\${NEW_VERSION//./}|$URL_VERSION|g")
+				elif echo "$RAW_CHANGELOG_URL" | grep -q '${NEW_VERSION//./_}'; then
+					URL_VERSION=$(echo "$NEW_VERSION" | sed 's/\./_/g')
+					CHANGELOG_URL=$(echo "$RAW_CHANGELOG_URL" | sed "s|\${NEW_VERSION//./_}|$URL_VERSION|g")
+				else
+					# Replace ${NEW_VERSION} or any parameter expansion like ${NEW_VERSION%.*}
+					CHANGELOG_URL=$(eval "echo \"$RAW_CHANGELOG_URL\"")
+				fi
 			else
 				# Use the URL as is if no NEW_VERSION is available
 				CHANGELOG_URL="$RAW_CHANGELOG_URL"
