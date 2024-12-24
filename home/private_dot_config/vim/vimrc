@@ -537,6 +537,16 @@ function Set_MAN()
   return 0
 endfunction " Set_Man()
 
+autocmd FileType gitcommit let b:ale_enabled = 0
+
+" Disable ALE for Git commit, merge, and rebase files
+let g:ale_pattern_options = {
+\   '.*\.git/.*': {'ale_enabled': 0, 'ale_fix_on_save': 0},
+\   'COMMIT_EDITMSG$': {'ale_enabled': 0, 'ale_fix_on_save': 0},
+\   'MERGE_MSG$': {'ale_enabled': 0, 'ale_fix_on_save': 0},
+\   'git-rebase-todo$': {'ale_enabled': 0, 'ale_fix_on_save': 0},
+\}
+
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'go': ['golint', 'go vet'],
