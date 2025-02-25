@@ -4,7 +4,7 @@ set -e # -e: exit on error
 
 OS=$(uname)
 ARCH=$(uname -m)
-CHEZMOI_VERSION="2.47.0"
+CHEZMOI_VERSION="2.47.1"
 GITHUB_USERNAME="5u623l20"
 
 case "${OS}" in
