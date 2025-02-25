@@ -21,3 +21,6 @@ web:include:cshtml,css,html,js
 
 # Use single line output
 --no-heading
+
+# By default search in hidden files and directories
+--hidden
