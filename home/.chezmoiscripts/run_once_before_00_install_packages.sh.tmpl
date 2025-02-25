@@ -61,7 +61,6 @@ EOF
 {{ else }}
 $SED -e 's/quarterly/latest/g' /etc/pkg/FreeBSD.conf > /usr/local/etc/pkg/repos/FreeBSD.conf
 {{ end }}
-env ASSUME_ALWAYS_YES=yes pkg bootstrap -f
 pkg update -f
 {{ end }}
 {{ end }}
