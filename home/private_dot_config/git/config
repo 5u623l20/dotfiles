@@ -89,7 +89,6 @@
 	insteadOf = "gh:5u623l20"
 	insteadOf = "github:5u623l20"
 	insteadOf = "git://github.com/5u623l20"
-	insteadOf = "https://github.com/5u623l20"
 	pushInsteadOf = "git://github.com/5u623l20"
 	pushInsteadOf = "https://gist.github.com/5u623l20/"
 	pushInsteadOf = "https://github.com/5u623l20"
