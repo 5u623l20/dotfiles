@@ -24,7 +24,7 @@ rm ~/kitty.terminfo
 ${MKDIR} /usr/local/etc/pkg/repos
 $CAT <<EOF > /usr/local/etc/pkg/repos/base.conf
 base: {
-	url: "pkg+https://pkg.FreeBSD.org/\${ABI}/base_release_1",
+	url: "pkg+https://pkg.FreeBSD.org/\${ABI}/base_release_2",
 	mirror_type: "srv",
 	signature_type: "fingerprints",
 	fingerprints: "/usr/share/keys/pkg",
@@ -45,6 +45,15 @@ $SED -e 's/quarterly/latest/g; s/yes/no/g' /etc/pkg/FreeBSD.conf > /usr/local/et
 $CAT <<EOF > /usr/local/etc/pkg/repos/infrastructure.conf
 infrastructure: {
 	url: "http://rpi4b.bofh.network/\${ABI}/infrastructure",
+	enabled: yes,
+	priority: 10
+}
+EOF
+{{ else if (eq .chezmoi.arch "amd64") }}
+$SED -e 's/quarterly/latest/g; s/yes/no/g' /etc/pkg/FreeBSD.conf > /usr/local/etc/pkg/repos/FreeBSD.conf
+$CAT <<EOF > /usr/local/etc/pkg/repos/infrastructure.conf
+infrastructure: {
+	url: "http://pkg.bofh.network/\${ABI}/infrastructure",
 	enabled: yes,
 	priority: 10
 }
