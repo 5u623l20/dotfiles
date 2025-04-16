@@ -17,7 +17,7 @@ _JAIL_LIST="141"
 {{- end }}
 {{ if eq .chezmoi.fqdnHostname "dev.bofh.network" -}}
 _INFRASTRUCTURE_JAIL="142"
-_JAIL_LIST="133 141"
+_JAIL_LIST="134 135 142"
 {{- end }}
 _INFRASTRUCTURE_LIST="/usr/local/etc/poudriere.d/ports-list/infrastructure"
 _INFRASTRUCTURE_SET="infrastructure"
@@ -32,7 +32,7 @@ _TEST_SET="test"
 _TEMPLIST="/tmp/tempPHP"
 _TEMPPDR=$(basename "$0")
 _TMPFILE=$(mktemp -q /tmp/${_TEMPPDR}.XXXXXX)
-_TESTQATJAIL="133"
+_TESTQATJAIL="134"
 _PORTSDIR=/usr/ports
 
 usage() {
@@ -125,6 +125,9 @@ build_infrastructure() {
         ${_POUDRIERE_BIN} pkgclean -j "$_JAILS" -p $_PORTSTREE -z $_INFRASTRUCTURE_SET -y -f $_INFRASTRUCTURE_LIST
         ${_POUDRIERE_BIN} logclean -j "$_JAILS" -p $_PORTSTREE -z $_INFRASTRUCTURE_SET -y 30
         ${_POUDRIERE_BIN} bulk -j "$_JAILS" -p $_PORTSTREE -z $_INFRASTRUCTURE_SET -f $_INFRASTRUCTURE_LIST
+        ${_POUDRIERE_BIN} logclean -j MAIN -p $_PORTSTREE -z $_INFRASTRUCTURE_SET -y 30
+        ${_POUDRIERE_BIN} pkgclean -j MAIN -p $_PORTSTREE -z $_INFRASTRUCTURE_SET -A -y
+        ${_POUDRIERE_BIN} bulk -j MAIN -p $_PORTSTREE -z $_INFRASTRUCTURE_SET -f /usr/local/etc/poudriere.d/ports-list/infrastructure15
     done
 }
 
