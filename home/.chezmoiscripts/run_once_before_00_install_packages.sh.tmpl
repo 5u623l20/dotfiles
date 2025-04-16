@@ -31,7 +31,7 @@ base: {
 	enabled: yes
 }
 EOF
-{{ if or (eq .hostname "dev") (eq .hostname "pdr") (eq .hostname "rpi4a") (eq .hostname "rpi4b") }}
+{{ if or (eq .hostname "pdr") (eq .hostname "rpi4a") (eq .hostname "rpi4b") }}
 $SED -e 's/quarterly/latest/g; s/yes/no/g' /etc/pkg/FreeBSD.conf > /usr/local/etc/pkg/repos/FreeBSD.conf
 $CAT <<EOF > /usr/local/etc/pkg/repos/infrastructure.conf
 infrastructure: {
@@ -61,7 +61,7 @@ EOF
 {{ else }}
 $SED -e 's/quarterly/latest/g' /etc/pkg/FreeBSD.conf > /usr/local/etc/pkg/repos/FreeBSD.conf
 {{ end }}
-pkg update -f
+pkg bootstrap -f -y -r infrastructure
 {{ end }}
 {{ end }}
 ###############################################################################
