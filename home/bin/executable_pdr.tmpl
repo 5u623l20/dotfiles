@@ -129,6 +129,9 @@ build_infrastructure() {
         ${_POUDRIERE_BIN} pkgclean -j MAIN -p $_PORTSTREE -z $_INFRASTRUCTURE_SET -A -y
         ${_POUDRIERE_BIN} bulk -j MAIN -p $_PORTSTREE -z $_INFRASTRUCTURE_SET -f /usr/local/etc/poudriere.d/ports-list/infrastructure15
     done
+    ${_POUDRIERE_BIN} logclean -j MAIN -p $_PORTSTREE -z $_INFRASTRUCTURE_SET -y 30
+    ${_POUDRIERE_BIN} pkgclean -j MAIN -p $_PORTSTREE -z $_INFRASTRUCTURE_SET -A -y
+    ${_POUDRIERE_BIN} bulk -j MAIN -p $_PORTSTREE -z $_INFRASTRUCTURE_SET -f /usr/local/etc/poudriere.d/ports-list/infrastructure15
 }
 
 test_ports() {
