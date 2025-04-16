@@ -46,23 +46,24 @@ then
 		# Check if a changelog URL exists for the port
 		if grep -q "^$WHAT|" "$CHANGELOG_DB"; then
 			RAW_CHANGELOG_URL=$(grep "^$WHAT|" "$CHANGELOG_DB" | cut -d'|' -f2)
+			# Compute all necessary transformations
+			NEW_VERSION_DASH=$(echo "$NEW_VERSION" | sed 's/\./-/g')  # Replace dots with dashes (4.5.2 -> 4-5-2)
+			NEW_VERSION_REMOVEDOT=$(echo "$NEW_VERSION" | sed 's/\.//g')  # Remove dots (4.5.2 -> 452)
+			NEW_VERSION_MAJOR=$(echo "$NEW_VERSION" | sed 's/\..*//')  # Extract major version (4.5.2 -> 4)
+			NEW_VERSION_MINOR=$(echo "$NEW_VERSION" | sed 's/\(.*\)\.[^.]*$/\1/')  # Remove last segment (4.5.2 -> 4.5)
+			NEW_VERSION_UNDERSCORE=$(echo "$NEW_VERSION" | sed 's/\./_/g')  # Replace dots with dashes (4.5.2 -> 4-5-2)
 
 			# Perform variable substitution for ${NEW_VERSION} if present in the URL
 			if [ -n "$NEW_VERSION" ]; then
 				# Perform transformations dynamically
-				if echo "$RAW_CHANGELOG_URL" | grep -q '${NEW_VERSION//./-}'; then
-					URL_VERSION=$(echo "$NEW_VERSION" | sed 's/\./-/g')
-					CHANGELOG_URL=$(echo "$RAW_CHANGELOG_URL" | sed "s|\${NEW_VERSION//./-}|$URL_VERSION|g")
-				elif echo "$RAW_CHANGELOG_URL" | grep -q '${NEW_VERSION//./}'; then
-					URL_VERSION=$(echo "$NEW_VERSION" | sed 's/\.//g')
-					CHANGELOG_URL=$(echo "$RAW_CHANGELOG_URL" | sed "s|\${NEW_VERSION//./}|$URL_VERSION|g")
-				elif echo "$RAW_CHANGELOG_URL" | grep -q '${NEW_VERSION//./_}'; then
-					URL_VERSION=$(echo "$NEW_VERSION" | sed 's/\./_/g')
-					CHANGELOG_URL=$(echo "$RAW_CHANGELOG_URL" | sed "s|\${NEW_VERSION//./_}|$URL_VERSION|g")
-				else
-					# Replace ${NEW_VERSION} or any parameter expansion like ${NEW_VERSION%.*}
-					CHANGELOG_URL=$(eval "echo \"$RAW_CHANGELOG_URL\"")
-				fi
+				# Replace all occurrences in the URL
+				CHANGELOG_URL=$(echo "$RAW_CHANGELOG_URL" | sed \
+								-e "s|\${NEW_VERSION}|$NEW_VERSION|g" \
+								-e "s|\${NEW_VERSION//./-}|$NEW_VERSION_DASH|g" \
+								-e "s|\${NEW_VERSION//./_}|$NEW_VERSION_UNDERSCORE|g" \
+								-e "s|\${NEW_VERSION//./}|$NEW_VERSION_REMOVEDOT|g" \
+								-e "s|\${NEW_VERSION%%.*}|$NEW_VERSION_MAJOR|g" \
+								-e "s|\${NEW_VERSION%.*}|$NEW_VERSION_MINOR|g")
 			else
 				# Use the URL as is if no NEW_VERSION is available
 				CHANGELOG_URL="$RAW_CHANGELOG_URL"
@@ -130,6 +131,7 @@ cat >&3 <<EOF
 # Security:	<Vulnerability reference (one per line) or description.>
 # Sponsored by:	Nepustil
 # Sponsored by:	The FreeBSD Foundation
+# Sponsored by: Cybermancer Infosec B.V.
 # Pull Request:	<https://github.com/freebsd/freebsd-ports/pull/###>
 # Differential Revision:	<https://reviews.freebsd.org/D###>
 #
