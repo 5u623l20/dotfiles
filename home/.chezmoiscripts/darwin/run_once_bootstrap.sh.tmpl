@@ -17,7 +17,6 @@ brew bundle --file=/dev/stdin <<EOF
 cask_args appdir: '/Applications'
 
 tap "homebrew/bundle"
-tap "homebrew/cask-versions"
 tap "homebrew/services"
 brew "bat"
 brew "fortune"
@@ -31,8 +30,8 @@ cask "microsoft-auto-update"
 cask "protonvpn"
 EOF
 
-{{   if or (eq .hostname "bofhs-mbp") (eq .hostname "bofhs-mini") (eq .hostname "cybermancer-mini") }}
-brew bundle --no-lock --file=/dev/stdin <<EOF
+{{   if or (eq .hostname "BOFHs-mbp") (eq .hostname "bofhs-mini") (eq .hostname "cybermancer-mini") }}
+brew bundle --file=/dev/stdin <<EOF
 tap "ko1nksm/getoptions"
 brew "ansible"
 brew "ansible-lint"
@@ -56,7 +55,6 @@ brew "docker"
 brew "dstask"
 brew "duf"
 brew "dust"
-brew "exa"
 brew "fd"
 brew "ffmpeg"
 brew "getdns"
@@ -98,7 +96,6 @@ brew "ranger"
 brew "rclone"
 brew "ripgrep"
 brew "rsync"
-brew "salt"
 brew "sd"
 brew "shellcheck"
 brew "tealdeer"
@@ -144,6 +141,7 @@ cask "progressive-downloader"
 cask "protonmail-bridge"
 cask "raspberry-pi-imager"
 cask "rectangle"
+cask "salt"
 cask "signal"
 cask "skype"
 cask "slack"
@@ -151,7 +149,7 @@ cask "softorino-youtube-converter"
 cask "stack-stack"
 cask "teamviewer"
 cask "telegram"
-cask "temurin8"
+cask "temurin@8"
 cask "the-unarchiver"
 cask "thunderbird"
 cask "transmission"
@@ -1046,38 +1044,6 @@ launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/nul
 
 # Randomize port on launch
 #defaults write org.m0k.transmission RandomPort -bool true
-
-###############################################################################
-# Twitter.app                                                               #
-###############################################################################
-
-# Disable smart quotes as it’s annoying for code tweets
-#defaults write com.twitter.twitter-mac AutomaticQuoteSubstitutionEnabled -bool false
-
-# Show the app window when clicking the menu bar icon
-#defaults write com.twitter.twitter-mac MenuItemBehavior -int 1
-
-# Enable the hidden ‘Develop’ menu
-#defaults write com.twitter.twitter-mac ShowDevelopMenu -bool true
-
-# Open links in the background
-#defaults write com.twitter.twitter-mac openLinksInBackground -bool true
-
-# Allow closing the ‘new tweet’ window by pressing `Esc`
-#defaults write com.twitter.twitter-mac ESCClosesComposeWindow -bool true
-
-# Show full names rather than Twitter handles
-#defaults write com.twitter.twitter-mac ShowFullNames -bool true
-
-# Hide the app in the background if it’s not the front-most window
-#defaults write com.twitter.twitter-mac HideInBackground -bool true
-
-###############################################################################
-# Tweetbot.app                                                              #
-###############################################################################
-
-# Bypass the annoyingly slow t.co URL shortener
-#defaults write com.tapbots.TweetbotMac OpenURLsDirectly -bool true
 
 ###############################################################################
 # Kill affected applications                                                #
