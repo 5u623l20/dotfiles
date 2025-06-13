@@ -12,7 +12,7 @@ if ! check_cmd brew; then
 fi
 
 # Install some applications applicable to all hosts
-brew bundle --no-lock --file=/dev/stdin <<EOF
+brew bundle --file=/dev/stdin <<EOF
 ## where to install homebrew-cask applications
 cask_args appdir: '/Applications'
 
