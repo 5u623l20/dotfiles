@@ -1,5 +1,5 @@
 archivers/libcomprex|
-archivers/py-libarchive-c|
+archivers/py-libarchive-c|https://github.com/Changaco/python-libarchive-c/releases/tag/${NEW_VERSION}
 archivers/rubygem-bzip2-ffi|
 astro/py-pymeeus|
 astro/qmapshack|
@@ -10,7 +10,7 @@ audio/caps-plugins|
 audio/fdk-aac|
 audio/p5-Net-FreeDB|
 audio/pocketsphinx|https://github.com/cmusphinx/pocketsphinx/releases/tag/v${NEW_VERSION}
-audio/umurmur|https://github.com/umurmur/umurmur/releases/tag/${NEW_VERSION}
+audio/umurmur|https://github.com/umurmur/umurmur/releases/tag/v${NEW_VERSION}
 benchmarks/siege|
 biology/R-cran-Biobase|
 biology/R-cran-BiocGenerics|
@@ -69,9 +69,9 @@ deskutils/p5-Goo|
 deskutils/py-bugwarrior|
 deskutils/py-taskw|
 deskutils/tasksh|
-deskutils/timewarrior|
+deskutils/timewarrior|https://github.com/GothenburgBitFactory/timewarrior/releases/tag/v${NEW_VERSION}
 devel/atf|
-devel/athens|
+devel/athens|https://github.com/gomods/athens/releases/tag/v${NEW_VERSION}
 devel/bcpp|
 devel/bcunit|https://gitlab.linphone.org/BC/public/bcunit/-/tags/${NEW_VERSION}
 devel/bloaty|
@@ -93,7 +93,7 @@ devel/go-bindata|
 devel/gocheese|
 devel/gsoap|https://www.genivia.com/changelog.html#latest
 devel/icmake|
-devel/include-what-you-use|
+devel/include-what-you-use|https://github.com/include-what-you-use/include-what-you-use/releases/tag/${NEW_VERSION}
 devel/jiri|
 devel/kyua|https://github.com/freebsd/kyua/releases/tag/kyua-${NEW_VERSION}
 devel/lab|
@@ -119,7 +119,7 @@ devel/libserialport|
 devel/libshbuf|
 devel/libsigrokdecode|
 devel/libsigrok|
-devel/libspice-server|
+devel/libspice-server|https://gitlab.freedesktop.org/spice/spice/-/tags/v${NEW_VERSION}
 devel/libthmap|
 devel/libthreadar|https://github.com/Edrusb/libthreadar/releases/tag/v${NEW_VERSION}
 devel/lightning|
@@ -307,7 +307,7 @@ devel/py-fam|
 devel/py-fastentrypoints|
 devel/py-flatland|
 devel/py-freenas.utils|
-devel/py-freezegun|
+devel/py-freezegun|https://github.com/spulec/freezegun/releases/tag/${NEW_VERSION}
 devel/py-future|
 devel/py-graal|https://github.com/chaoss/grimoirelab-graal/releases/tag/${NEW_VERSION}
 devel/py-grimoirelab-toolkit|https://github.com/chaoss/grimoirelab-toolkit/releases/tag/${NEW_VERSION}
@@ -320,7 +320,7 @@ devel/py-importlib-resources|https://github.com/python/importlib_resources/relea
 devel/py-jaraco.stream|
 devel/py-jira|
 devel/py-jitterentropy|
-devel/py-jsonschema|
+devel/py-jsonschema|https://github.com/python-jsonschema/jsonschema/releases/tag/v${NEW_VERSION}
 devel/py-jupyter_console|
 devel/py-lazy|
 devel/py-lizard|
@@ -346,7 +346,7 @@ devel/py-perceval|https://github.com/chaoss/grimoirelab-perceval/releases/tag/${
 devel/py-pika|
 devel/py-pipdeptree|https://github.com/tox-dev/pipdeptree/releases/tag/${NEW_VERSION}
 devel/py-polib|
-devel/py-posix_ipc|
+devel/py-posix_ipc|https://github.com/osvenskan/posix_ipc/releases/tag/rel${NEW_VERSION}
 devel/py-pre-commit|https://github.com/pre-commit/pre-commit/releases/tag/v${NEW_VERSION}
 devel/py-pretend|
 devel/py-proselint|
@@ -369,23 +369,23 @@ devel/py-pytest-runner|
 devel/py-pytest-shutil|
 devel/py-pytest-verbose-parametrize|
 devel/py-pytest-virtualenv|
-devel/py-pytest-xdist|
+devel/py-pytest-xdist|https://github.com/pytest-dev/pytest-xdist/releases/tag/v${NEW_VERSION}
 devel/py-python-easyconfig|
 devel/py-pytrie|
-devel/py-pyupgrade|
+devel/py-pyupgrade|https://github.com/asottile/pyupgrade/releases/tag/v${NEW_VERSION}
 devel/py-rauth|
 devel/py-rednose|
 devel/py-repoze.who|
 devel/py-resource|
 devel/py-rose|
 devel/py-setuptools-pkg|
-devel/py-sgqlc|
+devel/py-sgqlc|https://github.com/profusion/sgqlc/releases/tag/v${NEW_VERSION}
 devel/py-sirmordred|https://github.com/chaoss/grimoirelab-sirmordred/releases/tag/${NEW_VERSION}
 devel/py-sortinghat|https://github.com/chaoss/grimoirelab-sortinghat/releases/tag/${NEW_VERSION}
 devel/py-sure|
 devel/py-swig|
 devel/py-termstyle|
-devel/py-tokenize-rt|
+devel/py-tokenize-rt|https://github.com/asottile/tokenize-rt/releases/tag/v${NEW_VERSION}
 devel/py-tox|https://github.com/tox-dev/tox/releases/tag/${NEW_VERSION}
 devel/py-twiggy|
 devel/py-txaio|
@@ -497,7 +497,7 @@ mail/dbmail|https://github.com/dbmail/dbmail/releases/tag/v${NEW_VERSION}
 mail/gmime26|
 mail/gnumail|
 mail/hbiff|
-mail/imapfilter|
+mail/imapfilter|https://github.com/lefcha/imapfilter/releases/tag/v${NEW_VERSION}
 mail/imaptools|
 mail/masqmail|
 mail/p5-Email-Reply|
@@ -648,7 +648,7 @@ net/p5-Socks|
 net/p5-URI-OpenURL|
 net/pear-Auth_RADIUS|
 net/py-ec2-cli-tools|
-net/py-h11|
+net/py-h11|https://github.com/python-hyper/h11/releases/tag/v${NEW_VERSION}
 net/py-magic-wormhole|
 net/py-netaddr|
 net/py-netifaces|
@@ -698,6 +698,7 @@ security/barnyard2|
 security/bzrtp|https://gitlab.linphone.org/BC/public/bzrtp/-/tags/${NEW_VERSION}
 security/fcrackzip|
 security/gnome-ssh-askpass|
+security/go-tuf|https://github.com/theupdateframework/go-tuf/releases/tag/v${NEW_VERSION}
 security/identify|
 security/lasso|
 security/libpreludedb|
@@ -729,7 +730,7 @@ security/rubygem-omniauth-saml1|https://github.com/omniauth/omniauth-saml/releas
 security/rubygem-pundit61|
 security/snort3|https://github.com/snort3/snort3/releases/tag/${NEW_VERSION}
 security/sops|https://github.com/getsops/sops/releases/tag/v${NEW_VERSION}
-security/sslproxy|
+security/sslproxy|https://github.com/sonertari/SSLproxy/releases/tag/v${NEW_VERSION}
 security/sslsplit|
 security/starttls|
 security/vault|https://github.com/hashicorp/vault/releases/tag/v${NEW_VERSION}
@@ -917,7 +918,7 @@ www/py-splinter|
 www/py-textile|
 www/py-tvdb_api|
 www/py-wsaccel|
-www/rubygem-rqrcode_core|
+www/rubygem-rqrcode_core|https://github.com/whomwah/rqrcode_core/releases/tag/v${NEW_VERSION}
 x11-fonts/p5-Font-TTFMetrics|
 x11-fonts/powerline-fonts|
 x11-toolkits/SoXt|
