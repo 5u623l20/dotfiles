@@ -17,7 +17,7 @@ biology/R-cran-BiocGenerics|
 biology/R-cran-BiocManager|
 biology/seaview|https://doua.prabi.fr/software/seaview_data/CHANGES
 comms/dfu-util|
-comms/libmodbus|
+comms/libmodbus|https://github.com/stephane/libmodbus/releases/tag/v${NEW_VERSION}
 comms/librs232|
 converters/iconv-extra|
 converters/iconv-rfc1345|
@@ -77,7 +77,7 @@ devel/bcunit|https://gitlab.linphone.org/BC/public/bcunit/-/tags/${NEW_VERSION}
 devel/bloaty|
 devel/bnf|
 devel/capstone|https://github.com/capstone-engine/capstone/releases/tag/${NEW_VERSION}
-devel/cirrus-cli|
+devel/cirrus-cli|https://github.com/cirruslabs/cirrus-cli/releases/tag/v${NEW_VERSION}
 devel/clojure-cider|https://github.com/clojure-emacs/cider/releases/tag/v${NEW_VERSION}
 devel/concurrencykit|
 devel/ctypes.sh|
@@ -91,6 +91,7 @@ devel/getoptions|
 devel/gitea-act_runner|
 devel/go-bindata|
 devel/gocheese|
+devel/grpc-gateway|https://github.com/grpc-ecosystem/grpc-gateway/releases/tag/v${NEW_VERSION}
 devel/gsoap|https://www.genivia.com/changelog.html#latest
 devel/icmake|
 devel/include-what-you-use|https://github.com/include-what-you-use/include-what-you-use/releases/tag/${NEW_VERSION}
@@ -487,7 +488,6 @@ lang/php81|https://www.php.net/ChangeLog-8.php#${NEW_VERSION}
 lang/php82|https://www.php.net/ChangeLog-8.php#${NEW_VERSION}
 lang/php83|https://www.php.net/ChangeLog-8.php#${NEW_VERSION}
 lang/php84|https://www.php.net/ChangeLog-8.php#${NEW_VERSION}
-lang/ratfor|
 lang/sketchy|
 lang/slib-guile|
 lang/slib|
@@ -696,10 +696,12 @@ science/sigrok-firmware|
 security/afterglow|
 security/barnyard2|
 security/bzrtp|https://gitlab.linphone.org/BC/public/bzrtp/-/tags/${NEW_VERSION}
+security/cosign|https://github.com/sigstore/cosign/releases/tag/v${NEW_VERSION}
 security/fcrackzip|
 security/gnome-ssh-askpass|
 security/go-tuf|https://github.com/theupdateframework/go-tuf/releases/tag/v${NEW_VERSION}
 security/identify|
+security/kanidm|https://github.com/kanidm/kanidm/releases/tag/v${NEW_VERSION}
 security/lasso|
 security/libpreludedb|
 security/libprelude|
@@ -714,7 +716,7 @@ security/p5-PGP-Sign|
 security/p5-PGP|
 security/p5-Snort-Rule|
 security/p5-Tree-Authz|
-security/please|
+security/please|https://github.com/thought-machine/please/releases/tag/v${NEW_VERSION}
 security/proxycheck|
 security/py-PyKCS11|
 security/py-cpe|
@@ -794,7 +796,7 @@ textproc/p5-Pod-Abstract|
 textproc/p5-RADIUS-UserFile|
 textproc/p5-Spreadsheet-WriteExcel-Styler|
 textproc/p5-String-Tokenizer|
-textproc/p5-Template-Tiny|
+textproc/p5-Template-Tiny|https://metacpan.org/dist/Template-Tiny/changes
 textproc/p5-Text-Decorator|
 textproc/p5-Text-Diff-Parser|
 textproc/p5-Text-EtText|
@@ -844,7 +846,7 @@ www/dojo|
 www/mattermost-server|
 www/mattermost-webapp|
 www/minio|https://github.com/minio/minio/releases/tag/${NEW_VERSION}
-www/moin2|
+www/miniserve|https://github.com/svenstaro/miniserve/releases/tag/v${NEW_VERSION}
 www/p5-Apache-Session-SQLite3|
 www/p5-Apache-Session-SharedMem|
 www/p5-Apache-Singleton|
