@@ -66,14 +66,14 @@ update_tree() {
 generate_ports_list() {
     e_info_start "Creating bofh ports list"
     ${_PORTGREP_BIN} -R ${_PORTSDIR} -o -m bofh@FreeBSD.org > "$_TMPFILE"
-    find $_PORTSDIR -type d -d 2 \( -iname "*php81*" -o -iname "*php82*" -o -iname "*php83*" -o -iname "*php84*" \) | sed -e "s|$_PORTSDIR/||g" >> "$_TMPFILE"
+    find $_PORTSDIR -type d -d 2 \( -iname "*php81*" -o -iname "*php82*" -o -iname "*php83*" -o -iname "*php84*" -o -iname "*php85*" \) | sed -e "s|$_PORTSDIR/||g" >> "$_TMPFILE"
     ${_SORT_BIN} "$_TMPFILE" > "$_PORTSLIST"
 
     e_info_start "Creating php ports list"
-    find $_PORTSDIR -type d -d 2 \( -iname "*php81*" -o -iname "*php82*" -o -iname "*php83*" -o -iname "*php84*" \) | sed -e "s|$_PORTSDIR/||g" > "$_PORTSLISTDIR"/PHP
+    find $_PORTSDIR -type d -d 2 \( -iname "*php81*" -o -iname "*php82*" -o -iname "*php83*" -o -iname "*php84*" -o -iname "*php85*" \) | sed -e "s|$_PORTSDIR/||g" > "$_PORTSLISTDIR"/PHP
 
     e_info_start "Creating php consumers ports list"
-    portgrep -R $_PORTSDIR -u php -o | grep -v -E 'icingaweb2-module-idoreports|icingaweb2-module-pdfexport|icingaweb2-module-reporting|php81|php82|php83|php84' > $_TEMPLIST
+    portgrep -R $_PORTSDIR -u php -o | grep -v -E 'icingaweb2-module-idoreports|icingaweb2-module-pdfexport|icingaweb2-module-reporting|php81|php82|php83|php84|php85' > $_TEMPLIST
     portgrep -R $_PORTSDIR -u pear -o >> $_TEMPLIST
     sort -u $_TEMPLIST > "$_PORTSLISTDIR"/php
     rm $_TEMPLIST
@@ -105,7 +105,7 @@ build_php_ports() {
 }
 
 build_php_consumer_ports() {
-    for _SETS in testPHP81 testPHP82 testPHP83 testPHP84
+    for _SETS in testPHP81 testPHP82 testPHP83 testPHP84 testPHP85
     do
         e_info_start "Starting bulk for: $_TESTQATJAIL with $_SETS"
         ${_POUDRIERE_BIN} bulk -j $_TESTQATJAIL -p ${_PORTSTREE} -z $_SETS -b latest -f "$_PORTSLISTDIR"/php
@@ -124,7 +124,7 @@ build_infrastructure() {
     do
         ${_POUDRIERE_BIN} pkgclean -j "$_JAILS" -p $_PORTSTREE -z $_INFRASTRUCTURE_SET -y -f $_INFRASTRUCTURE_LIST
         ${_POUDRIERE_BIN} logclean -j "$_JAILS" -p $_PORTSTREE -z $_INFRASTRUCTURE_SET -y 30
-        ${_POUDRIERE_BIN} bulk -j "$_JAILS" -p $_PORTSTREE -z $_INFRASTRUCTURE_SET -f $_INFRASTRUCTURE_LIST
+        ${_POUDRIERE_BIN} bulk -j "$_JAILS" -p $_PORTSTREE -z $_INFRASTRUCTURE_SET -b latest -f $_INFRASTRUCTURE_LIST
     done
     ${_POUDRIERE_BIN} logclean -j MAIN -p $_PORTSTREE -z $_INFRASTRUCTURE_SET -y 30
     ${_POUDRIERE_BIN} pkgclean -j MAIN -p $_PORTSTREE -z $_INFRASTRUCTURE_SET -A -y
@@ -139,7 +139,7 @@ test_ports() {
 }
 
 test_php_ports() {
-    for _SETS in testPHP81 testPHP82 testPHP83 testPHP84
+    for _SETS in testPHP81 testPHP82 testPHP83 testPHP84 testPHP85
     do
         e_info_start "Starting bulk for: $_TESTQATJAIL with $_SETS"
         ${_POUDRIERE_BIN} bulk -j $_TESTQATJAIL -p ${_PORTSTREE} -z $_SETS -t "$@"
@@ -183,8 +183,8 @@ main() {
         # Build all
         update_tree
         generate_ports_list
-        build_infrastructure
         build_ports
+        build_infrastructure
 {{ if eq .chezmoi.fqdnHostname "pdr.bofh.network" }}
         build_php_ports
         build_php_consumer_ports
