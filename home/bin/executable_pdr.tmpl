@@ -5,19 +5,19 @@
 _GIT_BIN=/usr/local/bin/git
 {{ if eq .chezmoi.fqdnHostname "pdr.bofh.network" -}}
     _INFRASTRUCTURE_JAIL="MAIN"
-    _JAIL_LIST="142 MAIN"
+    _JAIL_LIST="143 MAIN"
 {{- end }}
 {{ if eq .chezmoi.fqdnHostname "rpi4a.bofh.network" -}}
-_INFRASTRUCTURE_JAIL="142"
-_JAIL_LIST="142"
+_INFRASTRUCTURE_JAIL="143"
+_JAIL_LIST="143"
 {{- end }}
 {{ if eq .chezmoi.fqdnHostname "rpi4b.bofh.network" -}}
-_INFRASTRUCTURE_JAIL="142"
-_JAIL_LIST="142"
+_INFRASTRUCTURE_JAIL="143"
+_JAIL_LIST="143"
 {{- end }}
 {{ if eq .chezmoi.fqdnHostname "dev.bofh.network" -}}
-_INFRASTRUCTURE_JAIL="142"
-_JAIL_LIST="135 142"
+_INFRASTRUCTURE_JAIL="143"
+_JAIL_LIST="135 143"
 {{- end }}
 _INFRASTRUCTURE_LIST="/usr/local/etc/poudriere.d/ports-list/infrastructure"
 _INFRASTRUCTURE_SET="infrastructure"
@@ -127,7 +127,6 @@ build_infrastructure() {
         ${_POUDRIERE_BIN} bulk -j "$_JAILS" -p $_PORTSTREE -z $_INFRASTRUCTURE_SET -b latest -f $_INFRASTRUCTURE_LIST
     done
     ${_POUDRIERE_BIN} logclean -j MAIN -p $_PORTSTREE -z $_INFRASTRUCTURE_SET -y 30
-    ${_POUDRIERE_BIN} pkgclean -j MAIN -p $_PORTSTREE -z $_INFRASTRUCTURE_SET -A -y
     ${_POUDRIERE_BIN} bulk -j MAIN -p $_PORTSTREE -z $_INFRASTRUCTURE_SET -f /usr/local/etc/poudriere.d/ports-list/infrastructure15
 }
 
