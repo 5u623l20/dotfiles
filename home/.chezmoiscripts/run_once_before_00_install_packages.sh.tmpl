@@ -6,7 +6,7 @@
 
 {{ template "helpers.tmpl" . }}
 {{ if hasKey .chezmoi.osRelease "id" }}
-{{ if or (eq .chezmoi.osRelease.id "ubuntu") (eq .chezmoi.osRelease.id "debian") }}
+{{ if or (eq .chezmoi.osRelease.id "almalinux") (eq .chezmoi.osRelease.id "debian") (eq .chezmoi.osRelease.id "debian") }}
 ###############################################################################
 ##############################Install terminfo ################################
 ###############################################################################

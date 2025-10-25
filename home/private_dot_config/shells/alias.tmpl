@@ -307,7 +307,7 @@ fi
 ############################command specific aliases#############################
 #################################################################################
 if [ -x /usr/local/bin/ssh ]; then
-    alias ssh="/usr/local/bin/ssh"
+	alias ssh="/usr/local/bin/ssh"
 fi
 alias ldd="otool -L"
 alias lock="pmset displaysleepnow"
@@ -330,28 +330,47 @@ alias puU="pu && puU"
 alias pv="pkg version"
 {{ else if eq .chezmoi.os "linux" -}}
 {{ if hasKey .chezmoi.osRelease "id" }}
-{{ if eq .chezmoi.osRelease.id "centos" -}}
-################################################################################
-################################centos ALIASES #################################
-################################################################################
+{{ if or (eq .chezmoi.osRelease.id "almalinux") (eq .chezmoi.osRelease.id "centos") (eq .chezmoi.osRelease.id "almalinux") }}
 ################################################################################
 ########################### yum specific aliases ###############################
 ################################################################################
-#        alias yc="${SUDO}yum clean all"               # Cleans the cache.
-#        alias yh="yum history"                        # Displays history.
-#        alias yi="${SUDO}yum install"                 # Installs package(s).
-#        alias ygl="yum grouplist"                     # list package groups
-#        alias yl="yum list"                           # Lists packages.
-#        alias yli="yum list installed"                # Lists installed packages.
-#        alias yp="yum info"                           # Displays package information.
-#        alias yr="${SUDO}yum remove"                  # Removes package(s).
-#        alias ys="yum search"                         # Searches for a package.
-#        alias yu="${SUDO}yum update"                  # Updates packages.
-#        alias yU="${SUDO}yum upgrade"                 # Upgrades packages.
-#        alias ymc="${SUDO}yum makecache"              # rebuilds the yum package list
-#        alias ygi="${SUDO}yum groupinstall"           # install package group
-#        alias ygr="${SUDO}yum groupremove"            # remove pagage group
-#        alias yrl="${SUDO}yum remove --remove-leaves" # remove package and leaves
+if check_cmd yum; then
+	alias yc="${SUDO}yum clean all"               # Cleans the cache.
+	alias yh="yum history"                        # Displays history.
+	alias yi="${SUDO}yum install"                 # Installs package(s).
+	alias ygl="yum grouplist"                     # list package groups
+	alias yl="yum list"                           # Lists packages.
+	alias yli="yum list installed"                # Lists installed packages.
+	alias yp="yum info"                           # Displays package information.
+	alias yr="${SUDO}yum remove"                  # Removes package(s).
+	alias ys="yum search"                         # Searches for a package.
+	alias yu="${SUDO}yum update"                  # Updates packages.
+	alias yU="${SUDO}yum upgrade"                 # Upgrades packages.
+	alias ymc="${SUDO}yum makecache"              # rebuilds the yum package list
+	alias ygi="${SUDO}yum groupinstall"           # install package group
+	alias ygr="${SUDO}yum groupremove"            # remove pagage group
+	alias yrl="${SUDO}yum remove --remove-leaves" # remove package and leaves
+fi
+###############################################################################
+########################## dnf specific aliases ###############################
+###############################################################################
+if check_cmd dnf; then
+	alias dnfc="${SUDO}dnf clean all"             # Cleans the cache.
+	alias dnfh="dnf history"                      # Displays history.
+	alias dnfi="${SUDO}dnf install"               # Installs package(s).
+	alias dnfl="dnf list"                         # Lists packages.
+	alias dnfL="dnf list installed"               # Lists installed packages.
+	alias dnfp="dnf info"                         # Displays package information.
+	alias dnfr="${SUDO}dnf remove"                # Removes package(s).
+	alias dnfs="dnf search"                       # Searches for a package.
+	alias dnfu="${SUDO}dnf update"                # Updates packages.
+	alias dnfU="${SUDO}dnf upgrade"               # Upgrades packages.
+	alias dnfgl="dnf grouplist"                   # List package groups
+	alias dnfmc="dnf makecache"                   # Generate metadata cache
+	alias dnfgi="${SUDO}dnf groupinstall"         # Install package group
+	alias dnfgr="${SUDO}dnf groupremove"          # Remove package group
+fi
+
 
 {{ else if eq .chezmoi.osRelease.id "debian" -}}
 ###############################################################################
@@ -474,28 +493,6 @@ alias pv="pkg version"
 #          sort -n | \
 #          awk '{print $1" "$2}'
 #        }
-
-{{ else if eq .chezmoi.osRelease.id "fedora" -}}
-###############################################################################
-#################################fedora ALIASES################################
-###############################################################################
-###############################################################################
-########################## dnf specific aliases ###############################
-###############################################################################
-#        alias dnfc="${SUDO}dnf clean all"             # Cleans the cache.
-#        alias dnfh="dnf history"                      # Displays history.
-#        alias dnfi="${SUDO}dnf install"               # Installs package(s).
-#        alias dnfl="dnf list"                         # Lists packages.
-#        alias dnfL="dnf list installed"               # Lists installed packages.
-#        alias dnfp="dnf info"                         # Displays package information.
-#        alias dnfr="${SUDO}dnf remove"                # Removes package(s).
-#        alias dnfs="dnf search"                       # Searches for a package.
-#        alias dnfu="${SUDO}dnf update"                # Updates packages.
-#        alias dnfU="${SUDO}dnf upgrade"               # Upgrades packages.
-#        alias dnfgl="dnf grouplist"                   # List package groups
-#        alias dnfmc="dnf makecache"                   # Generate metadata cache
-#        alias dnfgi="${SUDO}dnf groupinstall"         # Install package group
-#        alias dnfgr="${SUDO}dnf groupremove"          # Remove package group
 
 {{ else if eq .chezmoi.osRelease.id "opensuse" -}}
 ##############################################################################

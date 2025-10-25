@@ -40,7 +40,8 @@ xcuserdata/
 {{- else if (eq .chezmoi.os "solaris" ) }}
 {{- else if (eq .chezmoi.os "linux" ) }}
 {{- if hasKey .chezmoi.osRelease "id" }}
-{{- if (eq .chezmoi.osRelease.id "alpine" ) }}
+{{- if (eq .chezmoi.osRelease.id "almalinux" ) }}
+{{- else if (eq .chezmoi.osRelease.id "alpine" ) }}
 {{- else if (eq .chezmoi.osRelease.id "amzn" ) }}
 {{- else if (eq .chezmoi.osRelease.id "arch" ) }}
 {{- else if (eq .chezmoi.osRelease.id "centos" ) }}
