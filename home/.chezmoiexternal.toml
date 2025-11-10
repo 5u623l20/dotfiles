@@ -49,12 +49,14 @@
     exact = true
     stripComponents = 1
     refreshPeriod = "168h"
+{{- if (ne .hostname "BOFH-UK-mbp") }}
 [".config/zsh/plugins/zsh-nvm"]
     type = "archive"
     url = "https://github.com/lukechilds/zsh-nvm/archive/refs/heads/master.zip"
     exact = true
     stripComponents = 1
     refreshPeriod = "168h"
+{{-   end }}
 [".config/zsh/plugins/zsh-syntax-highlighting"]
     type = "archive"
     url = "https://github.com/zsh-users/zsh-syntax-highlighting/archive/refs/heads/master.zip"

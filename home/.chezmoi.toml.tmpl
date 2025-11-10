@@ -19,8 +19,6 @@
 {{-   $computerName := output "scutil" "--get" "ComputerName" | trim -}}
 {{-   if eq $computerName "BOFH’s MacBook Pro" -}}
 {{-     $hostname = "bofhs-mbp" -}}
-{{-   else if eq $computerName "BOFH’s Mac Mini" -}}
-{{-     $hostname = "bofhs-mini" -}}
 {{-   else if eq $computerName "CYBERMANCER-mini" -}}
 {{-     $hostname = "cybermancer-mini" -}}
 {{-   else -}}
@@ -32,8 +30,10 @@
 {{-   if eq $hostname "pdr" "rpi4a" -}}
 {{-     $headless = true -}}
 {{-     $gotroot = true -}}
-{{-   else if or (eq $hostname "bofhs-mbp") (eq .chezmoi.os "darwin") -}}
+{{-   else if or (eq $hostname "bofhs-mbp") (eq $hostname "BOFHs-vm") (eq $hostname "BOFHs-mini") (eq .chezmoi.os "darwin") -}}
 {{-     $personal = true -}}
+{{-     $gotroot = true -}}
+{{-   else if or (eq $hostname "BOFH-UK-mbp") (eq .chezmoi.os "darwin") -}}
 {{-     $gotroot = true -}}
 {{-   else if lookPath "sudo" }}
 {{-     $gotroot = output "sh" "-c" "sudo -vn 2>&1 || true" | regexMatch "password" }}

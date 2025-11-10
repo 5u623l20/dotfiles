@@ -19,12 +19,24 @@ cask_args appdir: '/Applications'
 brew "bat"
 brew "fortune"
 brew "fzf"
+brew "gpg"
 brew "mas"
 brew "openssh"
+brew "pinentry-mac"
 brew "tree"
+cask "1password"
+cask "1password-cli"
+cask "font-fira-code-nerd-font"
+cask "font-mononoki-nerd-font"
+cask "yubico-authenticator"
 EOF
 
-{{   if or (eq .hostname "BOFHs-mbp") (eq .hostname "bofhs-mini") (eq .hostname "cybermancer-mini") }}
+{{   if or (eq .hostname "BOFHs-mbp") (eq .hostname "BOFHs-mini") (eq .hostname "BOFH-UK-mbp") (eq .hostname "cybermancer-mini") }}
+brew bundle --file=/dev/stdin <<EOF
+EOF
+{{ end }}
+
+{{   if or (eq .hostname "BOFHs-mbp") (eq .hostname "BOFHs-mini") (eq .hostname "cybermancer-mini") }}
 brew bundle --file=/dev/stdin <<EOF
 tap "ko1nksm/getoptions"
 brew "ansible"
@@ -83,7 +95,6 @@ brew "neomutt"
 brew "nmap"
 brew "opensc"
 brew "pandoc"
-brew "pinentry-mac"
 brew "pwgen"
 brew "qemu"
 brew "ranger"
@@ -104,8 +115,6 @@ brew "wireguard-tools"
 brew "wrk"
 brew "wtfutil"
 brew "yamllint"
-cask "1password"
-cask "1password-cli"
 cask "adobe-acrobat-reader"
 cask "atomic-wallet"
 cask "basictex"
@@ -115,8 +124,6 @@ cask "discord"
 cask "double-commander"
 cask "emacs"
 cask "firefox"
-cask "font-fira-code-nerd-font"
-cask "font-mononoki-nerd-font"
 cask "gns3"
 cask "google-chrome"
 cask "google-cloud-sdk"
@@ -160,7 +167,12 @@ cask "schildichat"
 EOF
 {{ end }}
 
-# ~/.macos — https://mths.be/macos
+{{   if or (eq .hostname "BOFH-UK-mbp") (eq .hostname "BOFHs-mini") }}
+brew bundle --file=/dev/stdin <<EOF
+cask "linear-linear"
+cask "notion"
+EOF
+{{ end }}
 
 # Close any open System Preferences panes, to prevent them from overriding
 # settings we’re about to change

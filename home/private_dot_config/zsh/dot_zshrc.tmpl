@@ -69,8 +69,10 @@ fi
 # Load zsh-z
 [[ -f $ZDOTDIR/plugins/zsh-z/zsh-z.plugin.zsh ]] && source $ZDOTDIR/plugins/zsh-z/zsh-z.plugin.zsh
 
+{{ if (ne .hostname "BOFH-UK-mbp") }}
 # Load nvm
 [[ -f $ZDOTDIR/plugins/zsh-nvm/zsh-nvm.plugin.zsh ]] && source $ZDOTDIR/plugins/zsh-nvm/zsh-nvm.plugin.zsh
+{{- end }}
 
 HISTFILE="$XDG_DATA_HOME/zsh/history"
 [[ -f "$HISTFILE" ]] || { mkdir -p "$HISTFILE:h" && touch "$HISTFILE" }
