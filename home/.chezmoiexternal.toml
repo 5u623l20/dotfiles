@@ -25,12 +25,6 @@
     type = "file"
     url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
     refreshPeriod = "84h"
-[".config/zsh/plugins/fzf"]
-    type = "archive"
-    url = "https://github.com/junegunn/fzf/archive/refs/heads/master.zip"
-    exact = true
-    stripComponents = 1
-    refreshPeriod = "168h"
 [".config/zsh/plugins/powerlevel10k"]
     type = "archive"
     url = "https://github.com/romkatv/powerlevel10k/archive/refs/heads/master.zip"

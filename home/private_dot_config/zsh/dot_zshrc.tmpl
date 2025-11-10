@@ -62,10 +62,9 @@ if (( $+commands[broot] )); then
 fi
 
 # Load and Setup junegunn/fzf
-# Auto-completion
-[[ $- == *i* ]] && [[ -f $ZDOTDIR/plugins/fzf/shell/completion.zsh ]] && source $ZDOTDIR/plugins/fzf/shell/completion.zsh 2> /dev/null
-# Key bindings
-[[ -f $ZDOTDIR/plugins/fzf/shell/key-bindings.zsh ]] && source $ZDOTDIR/plugins/fzf/shell/key-bindings.zsh
+if (( $+commands[fzf] )); then
+    [[ $- == *i* ]] && source <(fzf --zsh) 2> /dev/null
+fi
 
 # Load zsh-z
 [[ -f $ZDOTDIR/plugins/zsh-z/zsh-z.plugin.zsh ]] && source $ZDOTDIR/plugins/zsh-z/zsh-z.plugin.zsh
