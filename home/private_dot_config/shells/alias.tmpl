@@ -330,27 +330,7 @@ alias puU="pu && puU"
 alias pv="pkg version"
 {{ else if eq .chezmoi.os "linux" -}}
 {{ if hasKey .chezmoi.osRelease "id" }}
-{{ if or (eq .chezmoi.osRelease.id "almalinux") (eq .chezmoi.osRelease.id "centos") (eq .chezmoi.osRelease.id "almalinux") }}
-################################################################################
-########################### yum specific aliases ###############################
-################################################################################
-if check_cmd yum; then
-	alias yc="${SUDO}yum clean all"               # Cleans the cache.
-	alias yh="yum history"                        # Displays history.
-	alias yi="${SUDO}yum install"                 # Installs package(s).
-	alias ygl="yum grouplist"                     # list package groups
-	alias yl="yum list"                           # Lists packages.
-	alias yli="yum list installed"                # Lists installed packages.
-	alias yp="yum info"                           # Displays package information.
-	alias yr="${SUDO}yum remove"                  # Removes package(s).
-	alias ys="yum search"                         # Searches for a package.
-	alias yu="${SUDO}yum update"                  # Updates packages.
-	alias yU="${SUDO}yum upgrade"                 # Upgrades packages.
-	alias ymc="${SUDO}yum makecache"              # rebuilds the yum package list
-	alias ygi="${SUDO}yum groupinstall"           # install package group
-	alias ygr="${SUDO}yum groupremove"            # remove pagage group
-	alias yrl="${SUDO}yum remove --remove-leaves" # remove package and leaves
-fi
+{{ if or (eq .chezmoi.osRelease.id "almalinux") (eq .chezmoi.osRelease.id "centos") }}
 ###############################################################################
 ########################## dnf specific aliases ###############################
 ###############################################################################

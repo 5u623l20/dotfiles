@@ -10,8 +10,8 @@ set_sudo() {
 
 {{ if (ne .chezmoi.os "darwin") -}}
 set_packagemgr() {
-  if check_cmd yum; then
-    PKG_BIN=$(command -v yum)
+  if check_cmd dnf; then
+    PKG_BIN=$(command -v dnf)
     PKG_CMD="$SUDO_CMD $PKG_BIN -y -qq install"
   elif check_cmd pkg; then
     PKG_BIN=$(command -v pkg)
