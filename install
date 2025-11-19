@@ -8,73 +8,79 @@ CHEZMOI_VERSION="2.48.0"
 GITHUB_USERNAME="5u623l20"
 
 case "${OS}" in
-  "SunOS")
-        OS=Solaris
-        OSSTR="${OS} ${REV}(${ARCH} $(uname -v))"
-        ;;
-  "AIX")
-        OS=AIX
-        ;;
-  "FreeBSD")
-        OS=FreeBSD
-        ;;
-  "Darwin")
-        OS=MacOS
-        ;;
-  "Linux")
-        if [ -f /etc/os-release ] ; then
-            . /etc/os-release
-            OS=$ID
-        fi
-        ;;
-  "*")
-        ;;
+	"SunOS")
+		OS=Solaris
+		OSSTR="${OS} ${REV}(${ARCH} $(uname -v))"
+		;;
+	"AIX")
+		OS=AIX
+		;;
+	"FreeBSD")
+		OS=FreeBSD
+		;;
+	"Darwin")
+		OS=MacOS
+		;;
+	"Linux")
+		if [ -f /etc/os-release ] ; then
+			. /etc/os-release
+			OS=$ID
+		fi
+		;;
+	"*")
+		;;
 esac
 
 readonly OS
 
+case "${OS}" in
+	"almalinux")
+		dnf install -y -qq tar
+		;;
+esac
+
 if [ ! "$(command -v chezmoi)" ]; then
-    bin_dir="$HOME/bin"
-    CHEZMOI_BIN="$bin_dir/chezmoi"
-    case "${OS}" in
-        "FreeBSD")
-            if [ ! -d "${bin_dir}" ]; then
-                mkdir -p "${bin_dir}"
-            fi
-            TMPDIR=$(mktemp -d)
-            CHEZMOI_FILE_NAME="chezmoi_${CHEZMOI_VERSION}_freebsd_${ARCH}.tar.gz"
-            CHEZMOI_URL="https://github.com/twpayne/chezmoi/releases/download/v${CHEZMOI_VERSION}/${CHEZMOI_FILE_NAME}"
-            CHECKSUMS="chezmoi_${CHEZMOI_VERSION}_checksums.txt"
-            CHECKSUMS_URL="https://github.com/twpayne/chezmoi/releases/download/v${CHEZMOI_VERSION}/${CHECKSUMS}"
-            fetch -o "${TMPDIR}/${CHECKSUMS}" "${CHECKSUMS_URL}" || exit 1
-            fetch -o "${TMPDIR}/${CHEZMOI_FILE_NAME}" "${CHEZMOI_URL}" || exit 1
-            HASH_GOT=$(sha256 -q "${TMPDIR}/${CHEZMOI_FILE_NAME}" 2>/dev/null) || return 1
-            HASH_WANT=$(grep "${CHEZMOI_FILE_NAME}" "${TMPDIR}/${CHECKSUMS}" 2>/dev/null | tr '\t' ' ' | cut -d ' ' -f 1)
-            if [ -z "${HASH_WANT}" ]; then
-                echo "Unable to find checksum for ${CHEZMOI_FILE_NAME} in ${CHECKSUMS}"
-                return 1
-            fi
-            if [ "${HASH_WANT}" != "${HASH_GOT}" ]; then
-                echo "Checksum for ${CHEZMOI_FILE_NAME} did not verify ${HASH_WANT} vs ${HASH_GOT}"
-                return 1
-            fi
-            cd "${TMPDIR}"
-            tar -zxvf "${TMPDIR}"/"${CHEZMOI_FILE_NAME}" -C "${bin_dir}" chezmoi
-            ${CHEZMOI_BIN} init -a $GITHUB_USERNAME -D "$HOME"
-            ;;
-        *)
-            if [ "$(command -v curl)" ]; then
-                sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply $GITHUB_USERNAME
-            elif [ "$(command -v wget)" ]; then
-                sh -c "$(wget -qO- chezmoi.io/get)" -- init --apply $GITHUB_USERNAME
-            else
-                echo "To install chezmoi, you must have curl or wget installed." >&2
-                exit 1
-            fi
-            ;;
-    esac
+	bin_dir="$HOME/bin"
+	CHEZMOI_BIN="$bin_dir/chezmoi"
+	case "${OS}" in
+	"FreeBSD")
+		if [ ! -d "${bin_dir}" ]; then
+			mkdir -p "${bin_dir}"
+		fi
+		TMPDIR=$(mktemp -d)
+		CHEZMOI_FILE_NAME="chezmoi_${CHEZMOI_VERSION}_freebsd_${ARCH}.tar.gz"
+		CHEZMOI_URL="https://github.com/twpayne/chezmoi/releases/download/v${CHEZMOI_VERSION}/${CHEZMOI_FILE_NAME}"
+		CHECKSUMS="chezmoi_${CHEZMOI_VERSION}_checksums.txt"
+		CHECKSUMS_URL="https://github.com/twpayne/chezmoi/releases/download/v${CHEZMOI_VERSION}/${CHECKSUMS}"
+		fetch -o "${TMPDIR}/${CHECKSUMS}" "${CHECKSUMS_URL}" || exit 1
+		fetch -o "${TMPDIR}/${CHEZMOI_FILE_NAME}" "${CHEZMOI_URL}" || exit 1
+		HASH_GOT=$(sha256 -q "${TMPDIR}/${CHEZMOI_FILE_NAME}" 2>/dev/null) || return 1
+		HASH_WANT=$(grep "${CHEZMOI_FILE_NAME}" "${TMPDIR}/${CHECKSUMS}" 2>/dev/null | tr '\t' ' ' | cut -d ' ' -f 1)
+		if [ -z "${HASH_WANT}" ]; then
+			echo "Unable to find checksum for ${CHEZMOI_FILE_NAME} in ${CHECKSUMS}"
+			return 1
+		fi
+		if [ "${HASH_WANT}" != "${HASH_GOT}" ]; then
+			echo "Checksum for ${CHEZMOI_FILE_NAME} did not verify ${HASH_WANT} vs ${HASH_GOT}"
+			return 1
+		fi
+		cd "${TMPDIR}"
+		tar -zxvf "${TMPDIR}"/"${CHEZMOI_FILE_NAME}" -C "${bin_dir}" chezmoi
+		${CHEZMOI_BIN} init -a $GITHUB_USERNAME -D "$HOME"
+		;;
+	*)
+		if [ "$(command -v curl)" ]; then
+			sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply $GITHUB_USERNAME
+		elif [ "$(command -v wget)" ]; then
+			sh -c "$(wget -qO- chezmoi.io/get)" -- init --apply $GITHUB_USERNAME
+		else
+			echo "To install chezmoi, you must have curl or wget installed." >&2
+			exit 1
+		fi
+		;;
+	esac
 else
-    CHEZMOI_BIN=chezmoi
-    ${CHEZMOI_BIN} upgrade
-    ${CHEZMOI_BIN} update
+	CHEZMOI_BIN=chezmoi
+	${CHEZMOI_BIN} upgrade
+	${CHEZMOI_BIN} update
 fi
