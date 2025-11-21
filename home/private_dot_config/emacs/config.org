@@ -204,7 +204,7 @@ them in a single buffer. Using setq-default we change the buffer-local
 variable’s default value.
 
 #+begin_src emacs-lisp
-(setq-default tab-width 4                       ; Smaller tabs
+(setq-default tab-width 8
               fill-column 79                    ; Maximum line width
               truncate-lines t                  ; Don't fold lines
               indent-tabs-mode nil              ; Use spaces instead of tabs
@@ -212,6 +212,12 @@ variable’s default value.
               split-height-threshold nil        ; Split verticly by default
               frame-resize-pixelwise t          ; Fine-grained frame resize
               auto-fill-function 'do-auto-fill) ; Auto-fill-mode everywhere
+#+end_src
+
+Enable auto-fill mode in text buffers
+
+#+begin_src emacs-lisp
+(add-hook 'text-mode-hook #'auto-fill-mode)
 #+end_src
 
 ** Turn off Audible Bell
@@ -524,15 +530,6 @@ Change Modeline To Doom’s Modeline
 ;;(setq doom-modeline-mu4e nil)
 ;; also enable the start of mu4e-alert
 ;;(mu4e-alert-enable-mode-line-display)
-
-;; Whether display the gnus notifications.
-;;(setq doom-modeline-gnus t)
-
-;; Whether gnus should automatically be updated and how often (set to 0 or smaller than 0 to disable)
-;;(setq doom-modeline-gnus-timer 2)
-
-;; Wheter groups should be excludede when gnus automatically being updated.
-;;(setq doom-modeline-gnus-excluded-groups '("dummy.group"))
 
 ;; Whether display the IRC notifications. It requires `circe' or `erc' package.
 ;;(setq doom-modeline-irc t)
@@ -847,6 +844,37 @@ exporting (useful for README files on GitHub).  Use :TOC: to create the table.
   :ensure nil)
 #+end_src
 
+* Mail with GNUs
+
+#+begin_src emacs-lisp
+(setq user-mail-address "bofh@freebsd.org"
+      user-full-name "Moin Rahman")
+(setq gnus-select-method '(nnnil nil))
+(setq gnus-secondary-select-methods
+      '((nnimap "FreeBSD"
+                (nnimap-address "imap.bofh.network")
+                (mml-secure-openpgp-signers '("BDB9B5A617C0BC91"))
+                (nnimap-server-port "imaps")
+                (nnimap-stream ssl)
+                (nnir-search-engine imap)
+                (nnimap-expunge t)
+                (nnmail-expiry-target "nnimap+FreeBSD:Trash")
+                (nnmail-expiry-wait 'immediate))))
+;; Reply to mails with matching email address
+(setq send-mail-function 'smtpmail-send-it)
+(setq smtpmail-stream-type 'starttls)
+(setq smtpmail-smtp-server "smtp.bofh.network")
+(setq smtpmail-smtp-service 587)
+
+#+end_src
+
+(setq gnus-posting-styles
+      '((".*" ; Matches all groups of messages
+         (address "bofh@freebsd.org"))
+         (organization "The FreeBSD Project")
+         ("X-Message-SMTP-Method" "smtp smtp.bofh.network 587 bsd")))
+(setq gnus-parameters '((".*" (display . all))))
+
 * Utilities
 
 ** Shell with Vterm
@@ -868,7 +896,19 @@ A git client for Emacs.  Often cited as a killer feature for Emacs.
 
 #+begin_src emacs-lisp
 (use-package magit)
- #+end_src
+#+end_src
+
+** Presentation with org-reveal
+#+begin_src emacs-lisp
+(use-package ox-reveal
+  :after org
+  :config
+  ;; Ensure Reveal.js uses MathJax (needed for print-pdf mode)
+  (setq org-reveal-mathjax t)
+  ;; Enable PDF export (adds ?print-pdf compatibility)
+  (setq org-reveal-pdf-fragment t)
+  (setq org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js"))  ;; or local path
+#+end_src
 
 * MacOS Specific Configurations
 
