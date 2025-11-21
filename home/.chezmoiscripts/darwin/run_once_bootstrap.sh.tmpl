@@ -141,7 +141,6 @@ cask "keyboard-maestro"
 cask "libreoffice"
 cask "logitech-camera-settings"
 cask "logitech-g-hub"
-cask "logitech-presentation"
 cask "macfuse"
 cask "microsoft-remote-desktop"
 cask "microsoft-teams"
@@ -170,6 +169,12 @@ cask "wireshark-app"
 cask "zoho-mail"
 cask "zoom"
 cask "schildichat"
+EOF
+{{ end }}
+
+{{   if or (eq .hostname "BOFH-UK-mbp") (eq .hostname "BOFHs-mbp") }}
+brew bundle --file=/dev/stdin <<EOF
+cask "logi-options+"
 EOF
 {{ end }}
 
