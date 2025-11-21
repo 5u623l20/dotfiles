@@ -41,6 +41,7 @@ EOF
 {{   if or (eq .hostname "BOFHs-mbp") (eq .hostname "BOFHs-mini") (eq .hostname "BOFH-UK-mbp") (eq .hostname "cybermancer-mini") }}
 brew bundle --file=/dev/stdin <<EOF
 cask "kitty"
+cask "utm"
 EOF
 {{ end }}
 
