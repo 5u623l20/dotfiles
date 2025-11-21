@@ -1,0 +1,27 @@
+fixed-list-mode
+keyid-format 0xlong
+
+personal-digest-preferences SHA512 SHA384 SHA256
+personal-cipher-preferences AES256 AES192 AES128
+cert-digest-algo SHA512
+
+default-preference-list SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES ZLIB BZIP2 ZIP Uncompressed
+
+use-agent
+verify-options show-uid-validity
+list-options show-uid-validity
+sig-notation issuer-fpr@notations.openpgp.fifthhorseman.net=%g
+
+no-emit-version
+no-comments
+ignore-time-conflict
+allow-freeform-uid
+allow-loopback-pinentry
+keyserver hkps://keys.openpgp.org
+{{- if (eq .hostname "BOFH-UK-mbp") }}
+pinentry-program /opt/homebrew/bin/pinentry-mac
+default-key 7AAC27CBE32E76875AF1E6B346F7C70CA8814C8F
+{{- else }}
+pinentry-program /usr/local/bin/pinentry-mac
+default-key 4DF7511285068D064A052F9FBDB9B5A617C0BC91
+{{- endif -}}
