@@ -40,11 +40,16 @@ EOF
 
 {{   if or (eq .hostname "BOFHs-mbp") (eq .hostname "BOFHs-mini") (eq .hostname "BOFH-UK-mbp") (eq .hostname "cybermancer-mini") }}
 brew bundle --file=/dev/stdin <<EOF
+brew "libvterm"
 cask "discord"
 cask "emacs-app"
+cask "firefox"
+cask "google-chrome"
+cask "google-drive"
 cask "kitty"
 cask "slack"
 cask "utm"
+cask "vivaldi"
 EOF
 {{ end }}
 
@@ -58,11 +63,9 @@ brew "awscli"
 brew "bottom"
 brew "bpytop"
 brew "broot"
-brew "glib"
 brew "coreutils"
 brew "cask"
 brew "cdrtools"
-brew "choose"
 brew "cmake"
 brew "cookiecutter", link:false
 brew "curl"
@@ -73,7 +76,6 @@ brew "dstask"
 brew "duf"
 brew "dust"
 brew "fd"
-brew "ffmpeg"
 brew "getdns"
 brew "gh"
 brew "git-delta"
@@ -81,9 +83,7 @@ brew "glances"
 brew "gnu-sed"
 brew "gopass"
 brew "grex"
-brew "hey"
 brew "htop"
-brew "httpd"
 brew "httpie"
 brew "hugo"
 brew "imapsync"
@@ -95,7 +95,6 @@ brew "kubernetes-cli", link: false
 brew "lbdb"
 brew "ldns"
 brew "lftp"
-brew "libvterm"
 brew "lynx"
 brew "minikube"
 brew "msmtp"
@@ -128,14 +127,10 @@ brew "yamllint"
 cask "adobe-acrobat-reader"
 cask "atomic-wallet"
 cask "basictex"
-cask "vivaldi"
 cask "caldigit-docking-utility"
 cask "double-commander"
-cask "firefox"
 cask "gcloud-cli"
 cask "gns3"
-cask "google-chrome"
-cask "google-drive"
 cask "imazing"
 cask "keyboard-maestro"
 cask "libreoffice"
@@ -148,7 +143,6 @@ cask "onedrive"
 cask "progressive-downloader"
 cask "protonvpn"
 cask "raspberry-pi-imager"
-cask "rectangle"
 cask "salt"
 cask "signal"
 cask "softorino-youtube-converter"
@@ -171,9 +165,16 @@ cask "schildichat"
 EOF
 {{ end }}
 
+{{   if or (eq .hostname "BOFHs-mini") (eq .hostname "cybermancer-mini") }}
+brew bundle --file=/dev/stdin <<EOF
+cask "bazecor"
+EOF
+{{ end }}
+
 {{   if or (eq .hostname "BOFH-UK-mbp") (eq .hostname "BOFHs-mbp") }}
 brew bundle --file=/dev/stdin <<EOF
 cask "logi-options+"
+cask "pallotron-yubiswitch"
 EOF
 {{ end }}
 
