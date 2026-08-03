@@ -69,7 +69,7 @@ fi
 # Load zsh-z
 [[ -f $ZDOTDIR/plugins/zsh-z/zsh-z.plugin.zsh ]] && source $ZDOTDIR/plugins/zsh-z/zsh-z.plugin.zsh
 
-{{ if (ne .hostname "BOFH-UK-mbp") }}
+{{ if (ne .hostname "BOFH-WORK-mbp") }}
 # Load nvm
 [[ -f $ZDOTDIR/plugins/zsh-nvm/zsh-nvm.plugin.zsh ]] && source $ZDOTDIR/plugins/zsh-nvm/zsh-nvm.plugin.zsh
 {{- end }}

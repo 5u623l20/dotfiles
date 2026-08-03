@@ -33,7 +33,7 @@
 {{-   else if or (eq $hostname "bofhs-mbp") (eq $hostname "BOFHs-vm") (eq $hostname "BOFHs-mini") (eq .chezmoi.os "darwin") -}}
 {{-     $personal = true -}}
 {{-     $gotroot = true -}}
-{{-   else if or (eq $hostname "BOFH-UK-mbp") (eq .chezmoi.os "darwin") -}}
+{{-   else if or (eq $hostname "BOFH-WORK-mbp") (eq .chezmoi.os "darwin") -}}
 {{-     $gotroot = true -}}
 {{-   else if lookPath "sudo" }}
 {{-     $gotroot = output "sh" "-c" "sudo -vn 2>&1 || true" | regexMatch "password" }}
