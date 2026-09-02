@@ -38,7 +38,7 @@ cask "gpg-suite"
 cask "yubico-authenticator"
 EOF
 
-{{   if or (eq .hostname "BOFHs-mbp") (eq .hostname "BOFHs-mini") (eq .hostname "BOFH-WORK-mbp") (eq .hostname "cybermancer-mini") }}
+{{   if or (eq .hostname "BOFHs-mbp") (eq .hostname "BOFHs-mini") (eq .hostname "BOFHs-WORK-mbp") (eq .hostname "cybermancer-mini") }}
 brew bundle --file=/dev/stdin <<EOF
 brew "cmake"
 brew "libvterm"
@@ -71,7 +71,6 @@ brew "cookiecutter", link:false
 brew "curl"
 brew "davmail"
 brew "dnscrypt-proxy"
-brew "docker"
 brew "dstask"
 brew "duf"
 brew "dust"
@@ -91,12 +90,10 @@ brew "inetutils", link: false
 brew "irssi"
 brew "isync", restart_service: true
 brew "jq"
-brew "kubernetes-cli", link: false
 brew "lbdb"
 brew "ldns"
 brew "lftp"
 brew "lynx"
-brew "minikube"
 brew "msmtp"
 brew "mtr"
 brew "neofetch"
@@ -127,7 +124,6 @@ cask "adobe-acrobat-reader"
 cask "atomic-wallet"
 cask "basictex"
 cask "caldigit-docking-utility"
-cask "double-commander"
 cask "gcloud-cli"
 cask "gns3"
 cask "imazing"
@@ -144,7 +140,6 @@ cask "raspberry-pi-imager"
 cask "salt"
 cask "signal"
 cask "softorino-youtube-converter"
-cask "teamviewer"
 cask "telegram"
 cask "temurin@8"
 cask "the-unarchiver"
@@ -158,7 +153,6 @@ cask "whatsapp"
 cask "wifi-explorer"
 cask "windows-app"
 cask "wireshark-app"
-cask "zoho-mail"
 cask "zoom"
 EOF
 {{ end }}
@@ -169,18 +163,15 @@ cask "bazecor"
 EOF
 {{ end }}
 
-{{   if or (eq .hostname "BOFH-WORK-mbp") (eq .hostname "BOFHs-mbp") }}
+{{   if or (eq .hostname "BOFHs-WORK-mbp") (eq .hostname "BOFHs-mbp") }}
 brew bundle --file=/dev/stdin <<EOF
 cask "logi-options+"
 cask "pallotron-yubiswitch"
 EOF
 {{ end }}
 
-{{   if or (eq .hostname "BOFH-WORK-mbp") (eq .hostname "BOFHs-mini") }}
+{{   if or (eq .hostname "BOFHs-WORK-mbp") (eq .hostname "BOFHs-mini") }}
 brew bundle --file=/dev/stdin <<EOF
-cask "linear-linear"
-cask "notion"
-cask "tailscale-app"
 EOF
 {{ end }}
 
@@ -204,6 +195,12 @@ sudo scutil --set ComputerName "BOFHs-mbp"
 sudo scutil --set HostName "BOFHs-mbp"
 sudo scutil --set LocalHostName "BOFHs-mbp"
 sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "BOFHs-mbp"
+{{ end }}
+{{ if eq .hostname "bofhs-work-mbp" }}
+sudo scutil --set ComputerName "BOFHs-WORK-mbp"
+sudo scutil --set HostName "BOFHs-WORK-mbp"
+sudo scutil --set LocalHostName "BOFHs-WORK-mbp"
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "BOFHs-WORK-mbp"
 {{ end }}
 {{ if eq .hostname "cybermancer-mini" }}
 sudo scutil --set ComputerName "CYBERMANCER-mini"
