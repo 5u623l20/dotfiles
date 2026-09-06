@@ -1438,6 +1438,9 @@ spinner() {
   esac
 }
 
+if check_cmd ansible; then
+  ANSIBLE_BIN=$(command -v ansible)
+fi
 if check_cmd bat; then
   BAT_BIN=$(command -v bat)
 fi
@@ -1533,19 +1536,19 @@ if check_cmd python; then
   PYTHON_BIN="python3"
 elif check_cmd python3; then
   PYTHON_BIN="python3"
-elif check_cmd python3.8; then
-  PYTHON_BIN="python3.8"
 elif check_cmd python3.9; then
   PYTHON_BIN="python3.9"
 elif check_cmd python3.10; then
   PYTHON_BIN="python3.10"
 elif check_cmd python3.11; then
   PYTHON_BIN="python3.11"
+elif check_cmd python3.12; then
+  PYTHON_BIN="python3.12"
 elif check_cmd python; then
   PYTHON_BIN="python"
 elif check_cmd python2; then
   PYTHON_BIN="python2"
 fi
-FREEBSD_PY_DEFAULT="py39-"
+FREEBSD_PY_DEFAULT="py312-"
 
 # vim: ft=sh

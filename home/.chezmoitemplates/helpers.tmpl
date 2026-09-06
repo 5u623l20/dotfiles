@@ -96,7 +96,6 @@ ZSH_PKG="zsh"
 #sd
 #shellcheck
 #tealdeer
-#thefuck
 #vegeta
 #w3m
 #wget
@@ -108,6 +107,7 @@ ZSH_PKG="zsh"
 {{- else if (eq .chezmoi.os "dragonfly" ) }}
 {{- else if (eq .chezmoi.os "freebsd" ) }}
 GIT_PKG="git-tiny"
+ANSIBLE_PKG="$FREEBSD_PY_DEFAULT-ansible"
 {{- else if (eq .chezmoi.os "netbsd" ) }}
 {{- else if (eq .chezmoi.os "openbsd" ) }}
 {{- else if (eq .chezmoi.os "solaris" ) }}
